@@ -1,0 +1,774 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>传统时间序列建模方法 &mdash; machine learning 1.0.0 alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="时间序列分解" href="timeseries-decomposition.html" />
+    <link rel="prev" title="timeseries" href="timeseries.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> machine learning
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ML</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../machine-learning-steps.html">机器学习项目清单</a></li>
+</ul>
+<p class="caption"><span class="caption-text">boosting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/decisiontree.html">Decision Tree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/adaboost.html">AdaBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/gbm.html">GBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/randomforest.html">Random Forest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/xgboost.html">XGBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/lightgbm.html">LightGBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/catboost.html">CatBoost</a></li>
+</ul>
+<p class="caption"><span class="caption-text">models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/logistic-regression.html">Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/Navie-Bayes.html">朴素贝叶斯(Navie Bayes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/PCA.html">PCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/SVD.html">奇异值分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/svm.html">SVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/EM-algorithm.html">EM (Expectation Maximization algorithm)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/clustering.html">Cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/AB-test.html">A/B test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/Ad.html">互联网广告</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/anti-fraud-model.html">反欺诈模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/moshishibie.html">模式识别在化学化工中的应用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/PLS.html">偏最小二乘回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/user-portrait.html">用户画像</a></li>
+</ul>
+<p class="caption"><span class="caption-text">tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/python-pycaret.html">PyCaret</a></li>
+</ul>
+<p class="caption"><span class="caption-text">topic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topic/overfitting.html">降低模型过拟合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/accuracy.html">提高模型精度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/model_performance_theory.html">模型表现理论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/model_ensemble.html">模型融合</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine class</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/feature_engine.html">特征工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/numeric.html">Numeric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/timeseries.html">Timeseries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/categorical.html">Categorical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/image.html">Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/video.html">Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/audio.html">Audio</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine step</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/feature_build.html">特征构建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/feature_selection.html">特征选择</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/missing.html">缺失值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/outlier.html">异常值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/resample.html">特征采样</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries.html">timeseries</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-models:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">传统时间序列建模方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#header-n3">1.时间序列介绍</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#header-n4">1.1 时间序列的定义</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n15">1.2 时间序列的性质</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n45">1.3 时间序列分析方法</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n51">2.时间序列的预处理</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#header-n52">2.1 平稳性检验</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n54">2.2 纯随机性检验</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n56">3.时间序列建模</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#header-n80">3.1 平稳时间序列分析</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#header-n103">3.1.1 差分</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#arma">3.1.2 ARMA模型</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n196">3.2 非平稳时间序列分析</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#header-n199">3.2.1 时间序列的分解</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#header-n201">3.2.2 差分运算</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#arima">3.2.3 ARIMA 模型</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n259">3.3 多元时间序列分析</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#header-n266">3.3.1 移动平均</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#header-n273">3.3.2 指数平滑</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-decomposition.html">时间序列分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-season-analysis.html">时间序列季节性分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-baseline.html">时间序列分析-baseline示例</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-preprocessing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/lvbo.html">滤波</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/statsmodels.html">statsmodels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-aggregation.html">时间序列聚合计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-interpolate.html">时间序列插值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-ma.html">移动平均光滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-outlier-detection-papers.html">时间序列异常值检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-pandas-api.html">时间序列-pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-sample.html">时间序列采样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-smooth.html">时间序列平滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-visual.html">时间序列可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tsfresh.html">tsfresh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tslearn.html">tslearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-base-rule.html">时间序列基本规则法–周期因子法</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-forecasting:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ARIMA2.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ar.html">AR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/arima.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/arma.html">ARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/hwes.html">HWES 模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ma.html">MA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/sarima.html">SARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/sarimax.html">SARIMAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ses.html">SES</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/var.html">VAR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/varma.html">VARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/varmax.html">VARMAX</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-lr:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-lr/timeseries-lr.html">时间序列分析-线性回归</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-ml:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-ml/timeseries-ml.html">时间序列分析-机器学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-dl:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-dl/timeseries-dl.html">时间序列分析-深度学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-prophet:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-doc.html">Prophet 入门</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet.html">Prophet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-paper.html">Paper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Saturating-Forecasts.html">Staturating Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Trend-Changepoints.html">Prophet 趋势变化点</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Seasonality-Holiday-Regressors.html">Seasonality, Holiday Effects, And Regressors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Multiplicative-Seasonality.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Uncertainty-Intervals.html">Prophet 不确定区间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Outliers.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Non-Daily-Data.html">Prophet 非日数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Diagnostics.html">Prophet 模型评估</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Additional-Topics.html">Prophet 其他话题</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-reports:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/Daily-Female-Births-Dataset.html">时间序列分析示例1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/timeseries-forecasting-Python.html">Time Series Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/timeseries-forecasting-R.html">R 时间序列建模</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-tutorial:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-tutorial/Forecasting.html">时间序列分析预测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-tutorial/Get-to-know-your-data.html">时间序列分析教程</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">machine learning</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>传统时间序列建模方法</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/timeseries/timeseries-modeling.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="header-n0">
+<span id="id1"></span><h1>传统时间序列建模方法<a class="headerlink" href="#header-n0" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="header-n3">
+<span id="id2"></span><h2>1.时间序列介绍<a class="headerlink" href="#header-n3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="header-n4">
+<span id="id3"></span><h3>1.1 时间序列的定义<a class="headerlink" href="#header-n4" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p>时间序列是指在一定时间内按时间顺序测量的某个变量的取值序列.</p></li>
+<li><p>时间序列分析就是使用统计的手段对这个序列的过去进行分析，以此对该变量的变化特性建模、并对未来进行预测.</p></li>
+<li><p>时间序列分析试图通过研究过去来预测未来.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="header-n15">
+<span id="id4"></span><h3>1.2 时间序列的性质<a class="headerlink" href="#header-n15" title="Permalink to this headline">¶</a></h3>
+<p>时间序列的性质:</p>
+<blockquote>
+<div><ul>
+<li><p>自相关</p></li>
+<li><p>平稳性</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>如何检验稳定性</p></li>
+<li><p>如何使得序列稳定</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>季节性</p></li>
+<li><p>趋势性</p></li>
+<li><p>随机噪声</p></li>
+</ul>
+</div></blockquote>
+<ul>
+<li><p>自相关</p>
+<ul class="simple">
+<li><p>自相关是时间序列观测值之间的相似度，是观测值之间时间滞后的函数</p></li>
+</ul>
+</li>
+<li><p>季节性</p>
+<ul class="simple">
+<li><p>季节性是指周期性的波动</p></li>
+</ul>
+</li>
+<li><p>平稳性</p>
+<ul>
+<li><p>平稳性是指如果时间序列的统计性质不随时间变化，则称该时间序列是平稳的，即：该时间序列有不变的均值和方差，协方差不随时间变化。通常，股票价格不是一个平稳的过程，因为可能看到一个增长的趋势，或者，其波动性会随着时间的推移而增加(方差在变)</p></li>
+<li><p>理想情况下，需要一个用于建模的固定时间序列。当然，不是所有的时间序列都是平稳的，但是可以通过做不同的变换使它们保持平稳</p></li>
+<li><p>如何检测过程是否平稳?</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Dickey-Fuller 检验可以检验时间序列是否是平稳的</p>
+<ul>
+<li><p>p&gt;0，过程不是平稳的</p></li>
+<li><p>p=0，过程是平稳的</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="header-n45">
+<span id="id5"></span><h3>1.3 时间序列分析方法<a class="headerlink" href="#header-n45" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>描述性时间序列分析</p></li>
+<li><p>统计时间序列分析</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-n51">
+<span id="id6"></span><h2>2.时间序列的预处理<a class="headerlink" href="#header-n51" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="header-n52">
+<span id="id7"></span><h3>2.1 平稳性检验<a class="headerlink" href="#header-n52" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="header-n54">
+<span id="id8"></span><h3>2.2 纯随机性检验<a class="headerlink" href="#header-n54" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="header-n56">
+<span id="id9"></span><h2>3.时间序列建模<a class="headerlink" href="#header-n56" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>时间序列预测的问题, 并不是普通的回归问题, 而是 <strong>自回归</strong>.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>一般的回归问题比如最简单的线性回归模型:
+<span class="math notranslate nohighlight">\(Y=a \cdot X_1+b \cdot X_2\)</span>, 讨论的是因变量 <span class="math notranslate nohighlight">\(Y\)</span>
+关于两个自变量 <span class="math notranslate nohighlight">\(X_1\)</span>和 <span class="math notranslate nohighlight">\(X_2\)</span> 的关系, 目的是找出最优的
+<span class="math notranslate nohighlight">\(a\)</span> 和 <span class="math notranslate nohighlight">\(b\)</span> 来使预测值 <span class="math notranslate nohighlight">\(y=a \cdot X_1+b \cdot X_2\)</span>
+逼近真实值 <span class="math notranslate nohighlight">\(Y\)</span>.</p></li>
+<li><p>自回归模型中, 自变量 <span class="math notranslate nohighlight">\(X_1\)</span> 和 <span class="math notranslate nohighlight">\(X_2\)</span> 都为 <span class="math notranslate nohighlight">\(Y\)</span> 本身,
+也就是说 <span class="math notranslate nohighlight">\(Y(t)=a \cdot Y(t-1)+ b \cdot Y(t-2)\)</span>,其中
+<span class="math notranslate nohighlight">\(Y(t-1)\)</span> 为 <span class="math notranslate nohighlight">\(Y\)</span> 在 <span class="math notranslate nohighlight">\(t-1\)</span> 时刻的值, 而
+<span class="math notranslate nohighlight">\(Y(t-2)\)</span> 为 <span class="math notranslate nohighlight">\(Y\)</span> 在 <span class="math notranslate nohighlight">\(t-2\)</span> 时刻的值, 换句话说, 现在的
+<span class="math notranslate nohighlight">\(Y\)</span> 值由过去的 <span class="math notranslate nohighlight">\(Y\)</span> 值决定, 因此自变量和因变量都为自身,
+因此这种回归叫自回归.</p></li>
+<li><p>自回归模型都有着严格理论基础,讲究时间的平稳性,
+需要对时间序列进行分析才能判断是否能使用此类模型.
+这些模型对质量良好的时间序列有比较高的精度。传统的自回归模型有：</p>
+<ul>
+<li><p>移动平均</p></li>
+<li><p>指数平滑</p></li>
+<li><p>自回归模型（AR）</p></li>
+<li><p>移动平均模型（MA）</p></li>
+<li><p>自回归移动平均模型（ARMA）</p></li>
+<li><p>差分自回归移动平均模型（ARIMA）</p></li>
+</ul>
+</li>
+</ul>
+<div class="section" id="header-n80">
+<span id="id10"></span><h3>3.1 平稳时间序列分析<a class="headerlink" href="#header-n80" title="Permalink to this headline">¶</a></h3>
+<p>一个时间序列经过预处理被识别为
+<strong>平稳非白噪声时间序列</strong>，就说明该序列是一个蕴含相关信息的平稳序列。在统计上，通常是建立一个线性模型来拟合该序列的发展，借此提取该序列中的有用信息。ARMA(auto
+regression moving average)模型就是目前最常用的平稳序列拟合模型.</p>
+<p>假设一个时间序列经过预处理被识别为 <strong>平稳非白噪声时间序列</strong>,就可以利用
+ARMA 模型对该序列建模. 建模的基本步骤为:</p>
+<ol class="arabic simple">
+<li><p>求出该观察序列的 <strong>样本自相关系数(ACF)</strong> 和
+<strong>样本偏自相关系数(PACF)</strong> 的值;</p></li>
+<li><p>根据样本自相关系数和偏自相关系数的性质,选择阶数适当的
+ARMA(<span class="math notranslate nohighlight">\(p\)</span>,<span class="math notranslate nohighlight">\(q\)</span>)模型进行拟合;</p></li>
+<li><p>估计模型中的位置参数的值;</p></li>
+<li><p>检验模型的有效性;</p>
+<ul class="simple">
+<li><p>如果拟合模型通不过检验,转向步骤2,重新选择模型再拟合</p></li>
+</ul>
+</li>
+<li><p>模型优化.</p>
+<ul class="simple">
+<li><p>如果拟合模型通过检验,仍然转向步骤2,充分考虑各种可能,建立多个拟合模型,从所有通过检验的拟合模型中选择最优模型</p></li>
+</ul>
+</li>
+<li><p>利用拟合模型,预测序列的将来走势.</p></li>
+</ol>
+<div class="section" id="header-n103">
+<span id="id11"></span><h4>3.1.1 差分<a class="headerlink" href="#header-n103" title="Permalink to this headline">¶</a></h4>
+<p><strong>差分运算:</strong></p>
+<p><span class="math notranslate nohighlight">\(p\)</span> 阶差分：相距一期的两个序列值至之间的减法运算称为 <span class="math notranslate nohighlight">\(1\)</span>
+阶差分运算；对 <span class="math notranslate nohighlight">\(1\)</span> 阶差分后序列在进行一次 <span class="math notranslate nohighlight">\(1\)</span> 阶差分运算称为
+<span class="math notranslate nohighlight">\(2\)</span> 阶差分；以此类推，对 <span class="math notranslate nohighlight">\(p-1\)</span> 阶差分后序列在进行一次
+<span class="math notranslate nohighlight">\(1\)</span> 阶差分运算称为 <span class="math notranslate nohighlight">\(p\)</span> 阶差分.</p>
+<p><span class="math notranslate nohighlight">\(\Delta x_{t} = x_{t-1} - x_{t-1}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\Delta^{2} x_{t} = \Delta x_{t} - \Delta x_{t-1}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\Delta^{p} x_{t} = \Delta^{p-1} x_{t} - \Delta^{p-1} x_{t-1}\)</span></p>
+<p><span class="math notranslate nohighlight">\(k\)</span> 步差分：相距 <span class="math notranslate nohighlight">\(k\)</span> 期的两个序列值之间的减法运算称为
+<span class="math notranslate nohighlight">\(k\)</span> 步差分运算.</p>
+<p><span class="math notranslate nohighlight">\(\Delta_{k}x_{t} = x_{t} - x_{t-k}\)</span></p>
+<p><strong>滞后算子：</strong></p>
+<p>滞后算子类似于一个时间指针，当前序列值乘以一个滞后算子，就相当于把当前序列值的时间向过去拨了一个时刻.</p>
+<p>假设 <span class="math notranslate nohighlight">\(B\)</span> 为滞后算子:</p>
+<p><span class="math notranslate nohighlight">\(x_{t-1} = Bx_{t}\)</span></p>
+<p><span class="math notranslate nohighlight">\(x_{t-2} = B^{2}x_{t}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\vdots\)</span></p>
+<p><span class="math notranslate nohighlight">\(x_{t-p} = B^{p}x_{t}\)</span></p>
+<p>也可以用滞后算子表示差分运算:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(p\)</span> 阶差分</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\Delta^{p}x_{t} = (1-B)^{p}x_{t} = \sum_{i=0}^{p}(-1)C_{p}^{i}x_{t-i}\)</span></p></li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(k\)</span> 步差分</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\Delta_{k}x_{t} = x_{t} - x_{t-k} = (1-B^{k})x_{t}\)</span></p></li>
+</ul>
+</li>
+</ul>
+<p><strong>线性差分方程：</strong></p>
+</div>
+<div class="section" id="arma">
+<span id="header-n132"></span><h4>3.1.2 ARMA模型<a class="headerlink" href="#arma" title="Permalink to this headline">¶</a></h4>
+<p>ARMA 模型的全称是
+<strong>自回归移动平均模型</strong>,它是目前最常用的拟合平稳序列的模型.它又可以细分为
+AR 模型, MA 模型, ARMA 模型三类.</p>
+<p><strong>AR(:math:`p`) 模型</strong></p>
+<p>AR(<span class="math notranslate nohighlight">\(p\)</span>) 模型结构:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\left\{
+\begin{array}{**lr**}
+x_{t}=\phi_{0} + \phi_{1}x_{t-1} + \phi_{2}x_{t-2} + \cdots + \phi_{p}x_{t-p} + \epsilon_{t} &amp; \\
+\phi_{p} \neq 0 &amp; \\
+E(\epsilon_{t}) = 0, Var(\epsilon_{t}) = \sigma_{\epsilon}^{2}, E(\epsilon_{t}\epsilon_{s}) = 0, s \neq t &amp; \\
+E(x_{s}\epsilon_{t}) = 0, \forall s &lt; t &amp;
+\end{array}
+\right.\end{split}\]</div>
+<p>其中：</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\epsilon_{t}\)</span> 是白噪声序列</p></li>
+<li><p><span class="math notranslate nohighlight">\(\phi_{0}\)</span> 是常数，表示时间序列没有进行 0 均值化</p></li>
+</ul>
+<p>AR(<span class="math notranslate nohighlight">\(p\)</span>) 模型的统计性质:</p>
+<ul class="simple">
+<li><p>均值</p></li>
+<li><p>方差</p></li>
+<li><p>自协方差函数</p></li>
+<li><p>自相关系数</p></li>
+<li><p>偏自相关系数</p></li>
+</ul>
+<p><strong>MA(:math:`q`) 模型</strong></p>
+<p>MA(<span class="math notranslate nohighlight">\(q\)</span>) 模型结构:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\left\{
+\begin{array}{**lr**}
+x_{t}=\mu + \epsilon_{t} + \theta_{1}\epsilon_{t-1} + \theta_{2}\epsilon_{t-2} + \cdots + \theta_{q}\epsilon_{t-q}&amp; \\
+\theta_{q} \neq 0 &amp; \\
+E(\epsilon_{t}) = 0, Var(\epsilon_{t}) = \sigma_{\epsilon}^{2}, E(\epsilon_{t}\epsilon_{s}) = 0, s \neq t &amp;
+\end{array}
+\right.\end{split}\]</div>
+<p>其中：</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\epsilon_{t}\)</span> 是白噪声序列</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mu\)</span> 是常数</p></li>
+</ul>
+<p>MA(<span class="math notranslate nohighlight">\(q\)</span>) 模型的统计性质:</p>
+<ul class="simple">
+<li><p>常数均值</p></li>
+<li><p>常数方差</p></li>
+<li><p>自协方差函数只与滞后阶数相关，且 <span class="math notranslate nohighlight">\(q\)</span> 阶截尾</p></li>
+<li><p>自相关系数 <span class="math notranslate nohighlight">\(q\)</span> 阶截尾</p></li>
+</ul>
+<p><strong>ARMA(:math:`p`, :math:`q`) 模型</strong></p>
+<p>ARMA(<span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(q\)</span>) 模型结构:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\left\{
+\begin{array}{**lr**}
+x_{t}=\phi_{0} + \phi_{1}x_{t-1} + \phi_{2}x_{t-2} + \cdots + \phi_{p}x_{t-p} + \epsilon_{t} + \theta_{1}\epsilon_{t-1} + \theta_{2}\epsilon_{t-2} + \cdots + \theta_{q}\epsilon_{t-q} &amp; \\
+\phi_{p} \neq 0, \theta_{q} \neq 0&amp; \\
+E(\epsilon_{t}) = 0, Var(\epsilon_{t}) = \sigma_{\epsilon}^{2}, E(\epsilon_{t}\epsilon_{s}) = 0, s \neq t &amp; \\
+E(x_{s}\epsilon_{t}) = 0, \forall s &lt; t &amp;
+\end{array}
+\right.\end{split}\]</div>
+<p>ARMA 模型的另一种形式：</p>
+<p><span class="math notranslate nohighlight">\((1-\sum_{i=1}^{p}\phi_{i}B^{i})x_{t} = (1 - \sum_{i=1}^{q}\theta_{i}B^{i})\epsilon_{t}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\Phi(B)x_{t} = \Theta(B)\epsilon_{t}\)</span></p>
+<ul class="simple">
+<li><p>当 <span class="math notranslate nohighlight">\(q = 0\)</span> 时, ARMA(<span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(q\)</span>) 模型就退化成了
+AR(<span class="math notranslate nohighlight">\(p\)</span>) 模型.</p></li>
+<li><p>当 <span class="math notranslate nohighlight">\(p = 0\)</span> 时, ARMA(<span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(q\)</span>) 模型就退化成了
+MA(<span class="math notranslate nohighlight">\(q\)</span>) 模型.</p></li>
+<li><p>所以 AR(<span class="math notranslate nohighlight">\(p\)</span>) 和 MA(<span class="math notranslate nohighlight">\(q\)</span>) 实际上是 ARMA(<span class="math notranslate nohighlight">\(p\)</span>,
+<span class="math notranslate nohighlight">\(p\)</span>) 模型的特例, 它们统称为 ARMA 模型. 而 ARMA(<span class="math notranslate nohighlight">\(p\)</span>,
+<span class="math notranslate nohighlight">\(p\)</span>) 模型的统计性质也正是 AR(<span class="math notranslate nohighlight">\(p\)</span>) 模型和
+MA(<span class="math notranslate nohighlight">\(p\)</span>) 模型统计性质的有机结合.</p></li>
+</ul>
+<p>ARMA(<span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(q\)</span>) 模型的统计性质:</p>
+<ul class="simple">
+<li><p>均值</p></li>
+<li><p>自协方差函数</p></li>
+<li><p>自相关系数</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-n196">
+<span id="id12"></span><h3>3.2 非平稳时间序列分析<a class="headerlink" href="#header-n196" title="Permalink to this headline">¶</a></h3>
+<p>在自然界中绝大部分序列都是非平稳的,因而对非平稳序列的分析更普遍、更重要.
+对非平稳时间序列分析方法可以分为 <strong>随机时间序列分析</strong> 和
+<strong>确定性时间序列分析</strong>.</p>
+<div class="section" id="header-n199">
+<span id="id13"></span><h4>3.2.1 时间序列的分解<a class="headerlink" href="#header-n199" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="header-n201">
+<span id="id14"></span><h4>3.2.2 差分运算<a class="headerlink" href="#header-n201" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="arima">
+<span id="header-n203"></span><h4>3.2.3 ARIMA 模型<a class="headerlink" href="#arima" title="Permalink to this headline">¶</a></h4>
+<p>差分运算具有强大的确定性信息提取能力，许多非平稳序列差分后会显示出平稳序列的性质，称这个非平稳序列为差分平稳序列，对差分平稳序列可以使用
+ARIMA(autoregression integrated moving average, 求和自回归移动平均)
+模型进行拟合.</p>
+<p>ARIMA 模型的实质就是差分运算和 ARMA
+模型的组合，说明任何非平稳序列如果能通过适当阶数的差分实现差分后平稳，就可以对差分后序列进行
+ARMA 模型拟合，而 ARMA 模型的分析方法非常成熟.</p>
+<p><strong>ARIMA(:math:`p`, :math:`d`, :math:`q`) 模型结构:</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\left\{
+\begin{array}{**lr**}
+\Phi(B)\Delta^{d}x_{t} = \Theta(B)\epsilon_{t}&amp; \\
+E(\epsilon_{t}) =0, Var(\epsilon_{t}) = \sigma_{\epsilon}^{2}, E(\epsilon_{s}\epsilon_{t}) = 0, s \neq t&amp; \\
+E(x_{s}\epsilon_{t}) = 0, \forall s &lt; t&amp;
+\end{array}
+\right.\end{split}\]</div>
+<p>其中：</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\({\epsilon_{t}}\)</span> 为零均值白噪声序列</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Delta^{d} = (1-B)^{d}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\Phi(B) = 1-\sum_{i=1}^{p}\phi_{i}B^{i}\)</span> 为平稳可逆
+ARMA(<span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(q\)</span>) 模型的自回归系数多项式</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Theta(B) = 1 + \sum_{i=1}^{q}\theta_{i}B^{i}\)</span> 为平稳可逆
+ARMA(<span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(q\)</span>) 模型的移动平滑系数多项式</p></li>
+</ul>
+<p>ARIMA 之所以叫 <strong>求和自回归移动平均</strong> 是因为：<span class="math notranslate nohighlight">\(d\)</span>
+阶差分后的序列可以表示为下面的表示形式，即差分后序列等于原序列的若干序列值的加权和，而对它又可以拟合
+ARMA 模型：</p>
+<p><span class="math notranslate nohighlight">\(\Delta^{d}x_{t} = \sum_{i=0}^{d}(-1)C_{d}^{i}x_{t-i}, 其中：C_{d}^{i} = \frac{d!}{i!(d-i)!}\)</span></p>
+<p>ARIMA 模型的另一种形式：</p>
+<p><span class="math notranslate nohighlight">\(\Delta^{d}x_{t} = \frac{\Theta(B)}{\Phi(B)}\epsilon_{t}\)</span></p>
+<p>其中：</p>
+<ul class="simple">
+<li><p>当 <span class="math notranslate nohighlight">\(d=0\)</span> 时 ARIMA(<span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(0\)</span>, <span class="math notranslate nohighlight">\(q\)</span>) 模型就是
+ARMA(<span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(q\)</span>) 模型</p></li>
+<li><p>当 <span class="math notranslate nohighlight">\(p=0\)</span> 时，ARIMA(<span class="math notranslate nohighlight">\(0\)</span>, <span class="math notranslate nohighlight">\(d\)</span>, <span class="math notranslate nohighlight">\(q\)</span>)
+模型可以简记为 IMA(<span class="math notranslate nohighlight">\(d\)</span>, <span class="math notranslate nohighlight">\(q\)</span>) 模型</p></li>
+<li><p>当 <span class="math notranslate nohighlight">\(q=0\)</span> 时，ARIMA(<span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(d\)</span>, <span class="math notranslate nohighlight">\(0\)</span>)
+模型可以简记为 ARI(<span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(d\)</span>) 模型</p></li>
+<li><p>当 <span class="math notranslate nohighlight">\(d=1, p=q=0\)</span> 时，ARIMA(<span class="math notranslate nohighlight">\(0\)</span>, <span class="math notranslate nohighlight">\(1\)</span>, <span class="math notranslate nohighlight">\(0\)</span>)
+模型为 随机游走 (random walk) 模型:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}\left\{
+\begin{array}{**lr**}
+x_{t} = x_{t-1} + \epsilon_{t}&amp; \\
+E(\epsilon_{t}) =0, Var(\epsilon_{t}) = \sigma_{\epsilon}^{2}, E(\epsilon_{s}\epsilon_{t}) = 0, s \neq t&amp; \\
+E(x_{s}\epsilon_{t}) = 0, \forall s &lt; t&amp;
+\end{array}
+\right.\end{split}\]</div>
+<p><strong>ARIMA(:math:`p`, :math:`d`, :math:`q`) 模型的统计性质:</strong></p>
+<ol class="arabic simple">
+<li><p>平稳性</p></li>
+<li><p>方差齐性</p></li>
+</ol>
+<p><strong>ARIMA 模型建模:</strong></p>
+<ol class="arabic simple">
+<li><p>获得时间序列观察值</p></li>
+<li><p>平稳性检验</p>
+<ul class="simple">
+<li><p>不平稳：差分运算 =&gt; 平稳性检验</p></li>
+<li><p>平稳：下一步</p></li>
+</ul>
+</li>
+<li><p>白噪声检验</p>
+<ul class="simple">
+<li><p>不通过：拟合 ARMA 模型 =&gt; 白噪声检验</p></li>
+<li><p>通过：分析结束</p></li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="header-n259">
+<span id="id15"></span><h3>3.3 多元时间序列分析<a class="headerlink" href="#header-n259" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="header-n266">
+<span id="id16"></span><h4>3.3.1 移动平均<a class="headerlink" href="#header-n266" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>移动平均模型是最简单的时间序列建模方法，即：下一个值是所有一个时间窗口中值的平均值</p></li>
+<li><p>时间窗口越长，预测值的趋势就越平滑</p></li>
+</ul>
+</div>
+<div class="section" id="header-n273">
+<span id="id17"></span><h4>3.3.2 指数平滑<a class="headerlink" href="#header-n273" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>指数平滑使用了与移动平均相似的逻辑，但是，指数平滑对每个观测值分配了不同的递减权重，即：离现在的时间距离越远，时间序列观测值的重要性就越低</p></li>
+<li><p>指数平滑的数学表示：</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(y=\alpha x_{t} + (1 - \alpha)y_{t-1}, t&gt;0\)</span></p>
+<p>其中:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\alpha \in [0, 1]\)</span>
+是一个平滑因子，决定了之前观测值的权重下降的速度。平滑因子越小，时间序列就越平滑，因为当平滑因子接近0时，指数平滑接近移动平均模型</p></li>
+</ul>
+<div class="section" id="header-n284">
+<span id="id18"></span><h5>3.3.2.1 双指数平滑<a class="headerlink" href="#header-n284" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li><p>当时间序列中存在趋势时，使用双指数平滑，它只是指数平滑的两次递归使用</p></li>
+<li><p>双指数平滑的数学表示：</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(y=\alpha x_{t} + (1 - \alpha)(y_{t-1} + b_{t-1})\)</span>
+<span class="math notranslate nohighlight">\(b_{t}=\beta (y_{t} - y_{t-1}) + (1 - \beta)b_{t-1}\)</span></p>
+<p>其中:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\alpha \in [0, 1]\)</span> 是一个平滑因子</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta \in [0, 1]\)</span> 是趋势平滑因子</p></li>
+</ul>
+</div>
+<div class="section" id="header-n298">
+<span id="id19"></span><h5>3.3.2.2 三指数平滑<a class="headerlink" href="#header-n298" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li><p>三指数平滑通过添加季节平滑因子扩展双指数平滑</p></li>
+<li><p>三指数平滑的数学表示：</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(y=\alpha \frac{x_{t}}{c_{t-L}} + (1 - \alpha)(y_{t-1} + b_{t-1})\)</span>
+<span class="math notranslate nohighlight">\(b_{t}=\beta (y_{t} - y_{t-1}) + (1 - \beta)b_{t-1}\)</span>
+<span class="math notranslate nohighlight">\(c_{t}=\gamma \frac{x_{t}}{y_{t}} + (1-\gamma)c_{t-L}\)</span></p>
+<p>其中:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\alpha \in [0, 1]\)</span> 是一个平滑因子</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta \in [0, 1]\)</span> 是趋势平滑因子</p></li>
+<li><p><span class="math notranslate nohighlight">\(\gamma\)</span> 是季节长度</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="timeseries-decomposition.html" class="btn btn-neutral float-right" title="时间序列分解" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="timeseries.html" class="btn btn-neutral float-left" title="timeseries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, wangzf.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

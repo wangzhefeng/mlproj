@@ -1,0 +1,494 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>PCA &mdash; machine learning 1.0.0 alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="奇异值分解" href="SVD.html" />
+    <link rel="prev" title="朴素贝叶斯(Navie Bayes)" href="Navie-Bayes.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> machine learning
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ML</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../machine-learning-steps.html">机器学习项目清单</a></li>
+</ul>
+<p class="caption"><span class="caption-text">boosting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/decisiontree.html">Decision Tree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/adaboost.html">AdaBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/gbm.html">GBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/randomforest.html">Random Forest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/xgboost.html">XGBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/lightgbm.html">LightGBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/catboost.html">CatBoost</a></li>
+</ul>
+<p class="caption"><span class="caption-text">models</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="logistic-regression.html">Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Navie-Bayes.html">朴素贝叶斯(Navie Bayes)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">PCA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#header-n3">数据降维</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n6">降维的目的：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n18">常见降维模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n27">主成分分析</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#header-n28">思想</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n42">原理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n54">算法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n76">优缺点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n87">算法实现</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="SVD.html">奇异值分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="svm.html">SVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="EM-algorithm.html">EM (Expectation Maximization algorithm)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clustering.html">Cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AB-test.html">A/B test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Ad.html">互联网广告</a></li>
+<li class="toctree-l1"><a class="reference internal" href="anti-fraud-model.html">反欺诈模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moshishibie.html">模式识别在化学化工中的应用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PLS.html">偏最小二乘回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user-portrait.html">用户画像</a></li>
+</ul>
+<p class="caption"><span class="caption-text">tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/python-pycaret.html">PyCaret</a></li>
+</ul>
+<p class="caption"><span class="caption-text">topic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topic/overfitting.html">降低模型过拟合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/accuracy.html">提高模型精度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/model_performance_theory.html">模型表现理论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/model_ensemble.html">模型融合</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine class</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/feature_engine.html">特征工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/numeric.html">Numeric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/timeseries.html">Timeseries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/categorical.html">Categorical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/image.html">Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/video.html">Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/audio.html">Audio</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine step</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/feature_build.html">特征构建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/feature_selection.html">特征选择</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/missing.html">缺失值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/outlier.html">异常值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/resample.html">特征采样</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries.html">timeseries</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-modeling.html">传统时间序列建模方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-decomposition.html">时间序列分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-season-analysis.html">时间序列季节性分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-baseline.html">时间序列分析-baseline示例</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-preprocessing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/lvbo.html">滤波</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/statsmodels.html">statsmodels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-aggregation.html">时间序列聚合计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-interpolate.html">时间序列插值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-ma.html">移动平均光滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-outlier-detection-papers.html">时间序列异常值检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-pandas-api.html">时间序列-pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-sample.html">时间序列采样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-smooth.html">时间序列平滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-visual.html">时间序列可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tsfresh.html">tsfresh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tslearn.html">tslearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-base-rule.html">时间序列基本规则法–周期因子法</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-forecasting:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ARIMA2.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ar.html">AR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/arima.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/arma.html">ARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/hwes.html">HWES 模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ma.html">MA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/sarima.html">SARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/sarimax.html">SARIMAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ses.html">SES</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/var.html">VAR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/varma.html">VARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/varmax.html">VARMAX</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-lr:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-lr/timeseries-lr.html">时间序列分析-线性回归</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-ml:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-ml/timeseries-ml.html">时间序列分析-机器学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-dl:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-dl/timeseries-dl.html">时间序列分析-深度学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-prophet:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-doc.html">Prophet 入门</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet.html">Prophet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-paper.html">Paper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Saturating-Forecasts.html">Staturating Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Trend-Changepoints.html">Prophet 趋势变化点</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Seasonality-Holiday-Regressors.html">Seasonality, Holiday Effects, And Regressors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Multiplicative-Seasonality.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Uncertainty-Intervals.html">Prophet 不确定区间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Outliers.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Non-Daily-Data.html">Prophet 非日数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Diagnostics.html">Prophet 模型评估</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Additional-Topics.html">Prophet 其他话题</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-reports:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/Daily-Female-Births-Dataset.html">时间序列分析示例1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/timeseries-forecasting-Python.html">Time Series Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/timeseries-forecasting-R.html">R 时间序列建模</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-tutorial:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-tutorial/Forecasting.html">时间序列分析预测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-tutorial/Get-to-know-your-data.html">时间序列分析教程</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">machine learning</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>PCA</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/models/PCA.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pca">
+<span id="header-n0"></span><h1>PCA<a class="headerlink" href="#pca" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="header-n3">
+<span id="id1"></span><h2>数据降维<a class="headerlink" href="#header-n3" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>降维是对数据高维度特征的一种预处理方法。降维是将高维度的数据保留下最重要的一些特征，去除噪声和不重要的特征，从而实现提升数据处理速度的目的。在实际的生产和应用中，降维在一定信息损失范围内，可以为我们节省大量的时间和成本。降维也称为了应用非常广泛的数据预处理方法。</p>
+</div></blockquote>
+</div>
+<div class="section" id="header-n6">
+<span id="id2"></span><h2>降维的目的：<a class="headerlink" href="#header-n6" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>使得数据更容易使用</p></li>
+<li><p>确保变量相互独立</p></li>
+<li><p>降低很多算法的计算开销</p></li>
+<li><p>去除噪音</p></li>
+<li><p>使得结果易懂，已解释</p></li>
+</ul>
+</div>
+<div class="section" id="header-n18">
+<span id="id3"></span><h2>常见降维模型<a class="headerlink" href="#header-n18" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>主成分分析(Principal Components Analysis)</p></li>
+<li><p>因子分析(Factor Analysis)</p></li>
+<li><p>独立成分分析(Independ Component Analysis, ICA)</p></li>
+</ul>
+</div>
+<div class="section" id="header-n27">
+<span id="id4"></span><h2>主成分分析<a class="headerlink" href="#header-n27" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="header-n28">
+<span id="id5"></span><h3>思想<a class="headerlink" href="#header-n28" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>去除平均值</p></li>
+<li><p>计算协方差矩阵</p></li>
+<li><p>计算协方差矩阵的特征值和特征向量</p></li>
+<li><p>将特征值排序</p></li>
+<li><p>保留前N个最大的特征值对应的特征向量</p></li>
+<li><p>将数据转换到上面得到的N个特征向量构建的新空间中（实现了特征压缩）</p></li>
+</ul>
+</div>
+<div class="section" id="header-n42">
+<span id="id6"></span><h3>原理<a class="headerlink" href="#header-n42" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>找出第一个主成分的方向，也就是数据方差最大的方向。</p></li>
+<li><p>找出第二个主成分的方向，也就是数据方差次大的方向，并且该方向与第一个主成分方向正交(orthogonal
+如果是二维空间就叫垂直)。</p></li>
+<li><p>通过这种方式计算出所有的主成分方向。</p></li>
+<li><p>通过数据集的协方差矩阵及其特征值分析，我们就可以得到这些主成分的值。</p></li>
+<li><p>一旦得到了协方差矩阵的特征值和特征向量，我们就可以保留最大的 N
+个特征。这些特征向量也给出了 N
+个最重要特征的真实结构，我们就可以通过将数据乘上这 N 个特征向量
+从而将它转换到新的空间上。</p></li>
+</ol>
+</div>
+<div class="section" id="header-n54">
+<span id="id7"></span><h3>算法<a class="headerlink" href="#header-n54" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p>输入：<span class="math notranslate nohighlight">\(m\)</span> 个 <span class="math notranslate nohighlight">\(n\)</span> 维样本数据
+<span class="math notranslate nohighlight">\(D = (x^{(1)}, x^{(2)}, \ldots, x^{(m)})\)</span></p></li>
+<li><p>输出：<span class="math notranslate nohighlight">\(m\)</span> 个 <span class="math notranslate nohighlight">\(k\)</span> 维样本数据</p></li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple">
+<li><p>对样本集进行标准化；</p></li>
+<li><p>计算样本的协方差矩阵 <span class="math notranslate nohighlight">\(XX^{T}\)</span>；</p></li>
+<li><p>对协方差矩阵进行特征分解，得到 <span class="math notranslate nohighlight">\(n\)</span> 个特征向量和其对应的特征值；</p></li>
+<li><p>取出最大的 <span class="math notranslate nohighlight">\(k\)</span> 个特征值对应的特征向量
+<span class="math notranslate nohighlight">\((\omega_1, \omega_2, \ldots, \omega_k)\)</span>，将所有的特征向量标准化后，组成特征向量矩阵
+<span class="math notranslate nohighlight">\(W\)</span>；</p></li>
+<li><p>对样本集中每一个样本 <span class="math notranslate nohighlight">\(x^{(i)}\)</span>，转化为新的样本
+<span class="math notranslate nohighlight">\(z^{(i)}=W^{T}x^{(i)}\)</span></p></li>
+<li><p>得到输出的样本数据
+<span class="math notranslate nohighlight">\(D_{pca} = (z^{(1)}, z^{(2)}, \ldots, z^{(m)})\)</span></p></li>
+</ol>
+</div>
+<div class="section" id="header-n76">
+<span id="id8"></span><h3>优缺点<a class="headerlink" href="#header-n76" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>优点：降低数据复杂性，识别最终要的多个特征</p></li>
+<li><p>缺点：</p>
+<ul>
+<li><p>可能损失有用信息</p></li>
+<li><p>只适用于数值型数据</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="header-n87">
+<span id="id9"></span><h3>算法实现<a class="headerlink" href="#header-n87" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="k">def</span> <span class="nf">loadData</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="n">delim</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">):</span>
+     <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="n">delim</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+
+     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mat</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">PCA</span><span class="p">(</span><span class="n">dataMat</span><span class="p">,</span> <span class="n">topNfeat</span> <span class="o">=</span> <span class="mi">9999999</span><span class="p">):</span>
+     <span class="n">meanVals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dataMat</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+     <span class="n">meanRemoved</span> <span class="o">=</span> <span class="n">dataMat</span> <span class="o">-</span> <span class="n">meanVals</span>                                        <span class="c1"># 标准化</span>
+     <span class="n">covMat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">meanRemoved</span><span class="p">,</span> <span class="n">rowvar</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>                        <span class="c1"># 计算样本协方差矩阵</span>
+     <span class="n">eigVals</span><span class="p">,</span> <span class="n">eigVects</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mat</span><span class="p">(</span><span class="n">covMat</span><span class="p">))</span>       <span class="c1"># 对样本协方差矩阵进行特征分解，得到特征向量和对应的特征值</span>
+     <span class="n">eigValInd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">eigVals</span><span class="p">)</span>                                         <span class="c1"># 对特征值进行排序</span>
+     <span class="n">eigValInd</span> <span class="o">=</span> <span class="n">eigValInd</span><span class="p">[:</span><span class="o">-</span><span class="p">(</span><span class="n">topNfeat</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>                      <span class="c1"># 取最大的topNfeat个特征向量对应的index序号</span>
+     <span class="n">redEigVects</span> <span class="o">=</span> <span class="n">eigVects</span><span class="p">[:,</span> <span class="n">eigValInd</span><span class="p">]</span>                            <span class="c1"># 根据取到的特征值对特征向量进行排序</span>
+     <span class="n">lowDDataMat</span> <span class="o">=</span> <span class="n">meanRemoved</span> <span class="o">*</span> <span class="n">redEigVects</span>                         <span class="c1"># 降维之后的数据集</span>
+     <span class="n">reconMat</span> <span class="o">=</span> <span class="p">(</span><span class="n">lowDDataMat</span> <span class="o">*</span> <span class="n">redEigVects</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="n">meanVals</span> <span class="c1"># 新的数据空间</span>
+
+     <span class="k">return</span> <span class="n">lowDDataMat</span><span class="p">,</span> <span class="n">reconMat</span>
+
+<span class="k">def</span> <span class="nf">show_picture</span><span class="p">(</span><span class="n">dataMat</span><span class="p">,</span> <span class="n">reconMat</span><span class="p">):</span>
+     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+     <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+     <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dataMat</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dataMat</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;^&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+     <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">reconMat</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">reconMat</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+     <span class="n">data</span> <span class="o">=</span> <span class="n">loadData</span><span class="p">(</span><span class="n">fileName</span> <span class="o">=</span> <span class="s2">&quot;PCA.txt&quot;</span><span class="p">,</span> <span class="n">delim</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+     <span class="n">lowDDataMat</span><span class="p">,</span> <span class="n">reconMat</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+     <span class="n">show_picture</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">reconMat</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+     <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="SVD.html" class="btn btn-neutral float-right" title="奇异值分解" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Navie-Bayes.html" class="btn btn-neutral float-left" title="朴素贝叶斯(Navie Bayes)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, wangzf.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,573 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Categorical &mdash; machine learning 1.0.0 alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Image" href="image.html" />
+    <link rel="prev" title="Timeseries" href="timeseries.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> machine learning
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ML</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../machine-learning-steps.html">机器学习项目清单</a></li>
+</ul>
+<p class="caption"><span class="caption-text">boosting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/decisiontree.html">Decision Tree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/adaboost.html">AdaBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/gbm.html">GBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/randomforest.html">Random Forest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/xgboost.html">XGBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/lightgbm.html">LightGBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/catboost.html">CatBoost</a></li>
+</ul>
+<p class="caption"><span class="caption-text">models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/logistic-regression.html">Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/Navie-Bayes.html">朴素贝叶斯(Navie Bayes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/PCA.html">PCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/SVD.html">奇异值分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/svm.html">SVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/EM-algorithm.html">EM (Expectation Maximization algorithm)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/clustering.html">Cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/AB-test.html">A/B test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/Ad.html">互联网广告</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/anti-fraud-model.html">反欺诈模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/moshishibie.html">模式识别在化学化工中的应用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/PLS.html">偏最小二乘回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/user-portrait.html">用户画像</a></li>
+</ul>
+<p class="caption"><span class="caption-text">tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/python-pycaret.html">PyCaret</a></li>
+</ul>
+<p class="caption"><span class="caption-text">topic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topic/overfitting.html">降低模型过拟合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/accuracy.html">提高模型精度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/model_performance_theory.html">模型表现理论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/model_ensemble.html">模型融合</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine class</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="feature_engine.html">特征工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numeric.html">Numeric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries.html">Timeseries</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Categorical</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#header-n3">1.类别特征编码</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ordinal-encoding">1.1 序号编码(Ordinal Encoding)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#one-hot-encoding">1.2 独热编码(One-Hot Encoding)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#binary-encoding">1.3 二进制编码(Binary Encoding)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n67">1.4 虚拟编码</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n77">1.5 效果编码</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n84">1.6 特征散列化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helmert-contrast">1.7 Helmert Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sum-contrast">1.8 Sum Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#polynomial-contrast">1.9 Polynomial Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#backward-difference-contrast">1.10 Backward Difference Contrast</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n102">2.分箱计数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n104">3.特征组合</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="image.html">Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="video.html">Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Audio</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine step</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/feature_build.html">特征构建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/feature_selection.html">特征选择</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/missing.html">缺失值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/outlier.html">异常值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/resample.html">特征采样</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries.html">timeseries</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-modeling.html">传统时间序列建模方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-decomposition.html">时间序列分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-season-analysis.html">时间序列季节性分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-baseline.html">时间序列分析-baseline示例</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-preprocessing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/lvbo.html">滤波</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/statsmodels.html">statsmodels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-aggregation.html">时间序列聚合计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-interpolate.html">时间序列插值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-ma.html">移动平均光滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-outlier-detection-papers.html">时间序列异常值检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-pandas-api.html">时间序列-pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-sample.html">时间序列采样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-smooth.html">时间序列平滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-visual.html">时间序列可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tsfresh.html">tsfresh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tslearn.html">tslearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-base-rule.html">时间序列基本规则法–周期因子法</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-forecasting:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ARIMA2.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ar.html">AR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/arima.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/arma.html">ARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/hwes.html">HWES 模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ma.html">MA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/sarima.html">SARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/sarimax.html">SARIMAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ses.html">SES</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/var.html">VAR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/varma.html">VARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/varmax.html">VARMAX</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-lr:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-lr/timeseries-lr.html">时间序列分析-线性回归</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-ml:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-ml/timeseries-ml.html">时间序列分析-机器学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-dl:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-dl/timeseries-dl.html">时间序列分析-深度学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-prophet:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-doc.html">Prophet 入门</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet.html">Prophet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-paper.html">Paper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Saturating-Forecasts.html">Staturating Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Trend-Changepoints.html">Prophet 趋势变化点</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Seasonality-Holiday-Regressors.html">Seasonality, Holiday Effects, And Regressors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Multiplicative-Seasonality.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Uncertainty-Intervals.html">Prophet 不确定区间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Outliers.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Non-Daily-Data.html">Prophet 非日数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Diagnostics.html">Prophet 模型评估</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Additional-Topics.html">Prophet 其他话题</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-reports:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/Daily-Female-Births-Dataset.html">时间序列分析示例1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/timeseries-forecasting-Python.html">Time Series Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/timeseries-forecasting-R.html">R 时间序列建模</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-tutorial:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-tutorial/Forecasting.html">时间序列分析预测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-tutorial/Get-to-know-your-data.html">时间序列分析教程</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">machine learning</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Categorical</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/feature_engine_class/categorical.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="categorical">
+<span id="header-n0"></span><h1>Categorical<a class="headerlink" href="#categorical" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="header-n3">
+<span id="id1"></span><h2>1.类别特征编码<a class="headerlink" href="#header-n3" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>类别性特征原始输入通常是字符串形式，除了基于决策树模型的少数模型能够直接处理字符串形式的输入，其他模型需要将类别型特征转换为数值型特征</p></li>
+<li><p>无序类别特征</p></li>
+<li><p>有序类别特征</p></li>
+</ul>
+</div></blockquote>
+<div class="section" id="ordinal-encoding">
+<span id="header-n12"></span><h3>1.1 序号编码(Ordinal Encoding)<a class="headerlink" href="#ordinal-encoding" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>序号编码通常用于处理类别间具有大小关系的特征，序号编码会按照大小关系对类别型特征赋予一个数值
+ID</p></li>
+<li><p>APIs:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">sklearn.preprocessing.LabelEncoder()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sklearn.preprocessing.</span></code></p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span>
+
+<span class="n">le</span> <span class="o">=</span>  <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="c1"># 类别型目标特征</span>
+<span class="n">classes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">new_classes</span> <span class="o">=</span> <span class="n">le</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">classes</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">le</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">new_classes</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span>
+
+<span class="n">le</span> <span class="o">=</span>  <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="c1"># 类别型目标特征</span>
+<span class="n">classes2</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;paris&quot;</span><span class="p">,</span> <span class="s2">&quot;paris&quot;</span><span class="p">,</span> <span class="s2">&quot;tokyo&quot;</span><span class="p">,</span> <span class="s2">&quot;amsterdam&quot;</span><span class="p">]</span>
+<span class="n">new_classes2</span> <span class="o">=</span> <span class="n">le</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">classes2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">le</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">new_classes1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
+
+<span class="n">enc</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">()</span>
+<span class="c1"># 类别特征</span>
+<span class="n">classes1</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="one-hot-encoding">
+<span id="header-n29"></span><h3>1.2 独热编码(One-Hot Encoding)<a class="headerlink" href="#one-hot-encoding" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>One-Hot Encoding 通常用于处理类别间不具有大小关系的特征</p></li>
+<li><p>One-Hot Encoding
+使用一组比特位，每个比特位表示一种可能的类别，如果特征不能同时属于多个类别，那么这组值中就只有一个比特位是“开”的</p></li>
+<li><p>One-Hot Encoding 的问题是它允许有 k 个自由度，二特征本身只需要 k-1
+个自由度</p></li>
+<li><p>One-Hot Encoding
+编码有冗余，这会使得同一个问题有多个有效模型，这种非唯一性有时候比较难以理解</p></li>
+<li><p>One-Hot Encoding
+的优点是每个特征都对应一个类别，而且可以把缺失数据编码为全零向量，模型输出也是目标变量的总体均值</p></li>
+<li><p>对于类别取值较多的特征的情况下使用 One-Hot Encoding 需要注意：</p>
+<ul>
+<li><p>使用稀疏向量节省空间</p></li>
+<li><p>配合特征选择降低维度</p>
+<ul>
+<li><p>高纬度特征的问题：</p>
+<ul>
+<li><p>高纬度空间下，两点之间的距离很难得到有效的衡量</p></li>
+<li><p>模型参数的数量增多，模型变得复杂，容易出现过拟合</p></li>
+<li><p>只有部分维度对预测有帮助</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">get_dummies</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;City&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;SF&quot;</span><span class="p">,</span> <span class="s2">&quot;SF&quot;</span><span class="p">,</span> <span class="s2">&quot;SF&quot;</span><span class="p">,</span> <span class="s2">&quot;NYC&quot;</span><span class="p">,</span> <span class="s2">&quot;NYC&quot;</span><span class="p">,</span> <span class="s2">&quot;NYC&quot;</span><span class="p">,</span> <span class="s2">&quot;Seattle&quot;</span><span class="p">,</span> <span class="s2">&quot;Seattle&quot;</span><span class="p">,</span> <span class="s2">&quot;Seattle&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;Rent&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3999</span><span class="p">,</span> <span class="mi">4000</span><span class="p">,</span> <span class="mi">4001</span><span class="p">,</span> <span class="mi">3499</span><span class="p">,</span> <span class="mi">3500</span><span class="p">,</span> <span class="mi">3501</span><span class="p">,</span> <span class="mi">2499</span><span class="p">,</span> <span class="mi">2500</span><span class="p">,</span> <span class="mi">2501</span><span class="p">]</span>
+<span class="p">})</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;Rent&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">one_hot_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;city&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">one_hot_df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="binary-encoding">
+<span id="header-n59"></span><h3>1.3 二进制编码(Binary Encoding)<a class="headerlink" href="#binary-encoding" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>二进制编码主要分为两步，先用序号编码给每个类别赋予一个类别ID，然后将类别ID对应的二进制编码作为结果。</p></li>
+<li><p>二进制编码本质上是利用二进制对ID进行哈希映射，最终得到 0/1
+特征向量，且维数少于 One-Hot Encoding，节省了存储空间</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">test</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="header-n67">
+<span id="id2"></span><h3>1.4 虚拟编码<a class="headerlink" href="#header-n67" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>虚拟编码在进行表示时只使用 k-1
+个自由度，除去了额外的自由度，没有被使用的那个特征通过一个全零向量表示，它称为参照类</p></li>
+<li><p>使用虚拟编码的模型结果比使用 One-Hot Encoding 的模型结果更具解释性</p></li>
+<li><p>虚拟编码的缺点是不太容易处理缺失数据，因为全零向量已经映射为参照类了</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;City&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;SF&quot;</span><span class="p">,</span> <span class="s2">&quot;SF&quot;</span><span class="p">,</span> <span class="s2">&quot;SF&quot;</span><span class="p">,</span> <span class="s2">&quot;NYC&quot;</span><span class="p">,</span> <span class="s2">&quot;NYC&quot;</span><span class="p">,</span> <span class="s2">&quot;NYC&quot;</span><span class="p">,</span> <span class="s2">&quot;Seattle&quot;</span><span class="p">,</span> <span class="s2">&quot;Seattle&quot;</span><span class="p">,</span> <span class="s2">&quot;Seattle&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;Rent&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3999</span><span class="p">,</span> <span class="mi">4000</span><span class="p">,</span> <span class="mi">4001</span><span class="p">,</span> <span class="mi">3499</span><span class="p">,</span> <span class="mi">3500</span><span class="p">,</span> <span class="mi">3501</span><span class="p">,</span> <span class="mi">2499</span><span class="p">,</span> <span class="mi">2500</span><span class="p">,</span> <span class="mi">2501</span><span class="p">]</span>
+<span class="p">})</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;Rent&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">vir_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;city&quot;</span><span class="p">,</span> <span class="n">drop_first</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">vir_df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="header-n77">
+<span id="id3"></span><h3>1.5 效果编码<a class="headerlink" href="#header-n77" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>效果编码与虚拟编码非常相似，区别在于参照类是用全部由 -1
+组成的向量表示的</p></li>
+<li><p>效果编码的优点是全由-1组成的向量是个密集向量，计算和存储的成本都比较高</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;City&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;SF&quot;</span><span class="p">,</span> <span class="s2">&quot;SF&quot;</span><span class="p">,</span> <span class="s2">&quot;SF&quot;</span><span class="p">,</span> <span class="s2">&quot;NYC&quot;</span><span class="p">,</span> <span class="s2">&quot;NYC&quot;</span><span class="p">,</span> <span class="s2">&quot;NYC&quot;</span><span class="p">,</span> <span class="s2">&quot;Seattle&quot;</span><span class="p">,</span> <span class="s2">&quot;Seattle&quot;</span><span class="p">,</span> <span class="s2">&quot;Seattle&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;Rent&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3999</span><span class="p">,</span> <span class="mi">4000</span><span class="p">,</span> <span class="mi">4001</span><span class="p">,</span> <span class="mi">3499</span><span class="p">,</span> <span class="mi">3500</span><span class="p">,</span> <span class="mi">3501</span><span class="p">,</span> <span class="mi">2499</span><span class="p">,</span> <span class="mi">2500</span><span class="p">,</span> <span class="mi">2501</span><span class="p">]</span>
+<span class="p">})</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;Rent&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">vir_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;city&quot;</span><span class="p">,</span> <span class="n">drop_first</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">effect_df</span> <span class="o">=</span> <span class="n">vir_df</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;city_SF&quot;</span><span class="p">,</span> <span class="s2">&quot;city_Seattle&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">effect_df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="header-n84">
+<span id="id4"></span><h3>1.6 特征散列化<a class="headerlink" href="#header-n84" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>散列函数是一种确定性函数，他可以将一个可能无界的整数映射到一个有限的整数范围
+<span class="math notranslate nohighlight">\([1, m]\)</span>
+中，因为输入域可能大于输出范围，所以可能有多个值被映射为同样的输出，这称为碰撞</p></li>
+<li><p>均匀散列函数可以确保将大致相同数量的数值映射到 m 个分箱中</p></li>
+<li><p>如果模型中涉及特征向量和系数的内积运算，那么就可以使用特征散列化</p></li>
+<li><p>特征散列化的一个缺点是散列后的特征失去了可解释性，只是初始特征的某种聚合</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction</span> <span class="kn">import</span> <span class="n">FeatureHasher</span>
+
+<span class="c1"># 单词特征的特征散列化</span>
+<span class="k">def</span> <span class="nf">hash_features</span><span class="p">(</span><span class="n">word_list</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">m</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">word_list</span><span class="p">:</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">hash_fcn</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">%</span> <span class="n">m</span>
+        <span class="n">output</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">output</span>
+
+<span class="c1"># 带符号的特征散列化</span>
+<span class="k">def</span> <span class="nf">hash_features</span><span class="p">(</span><span class="n">word_list</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">m</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">word_list</span><span class="p">:</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">hash_fcn</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">%</span> <span class="n">m</span>
+        <span class="n">sign_bit</span> <span class="o">=</span> <span class="n">sign_hash</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span>
+        <span class="k">if</span> <span class="n">sign_bit</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">output</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">output</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">output</span>
+
+
+<span class="n">h</span> <span class="o">=</span> <span class="n">FeatureHasher</span><span class="p">(</span><span class="n">n_features</span> <span class="o">=</span> <span class="n">m</span><span class="p">,</span> <span class="n">input_type</span> <span class="o">=</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">trasnform</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;feat&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="helmert-contrast">
+<span id="header-n96"></span><h3>1.7 Helmert Contrast<a class="headerlink" href="#helmert-contrast" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="sum-contrast">
+<span id="header-n98"></span><h3>1.8 Sum Contrast<a class="headerlink" href="#sum-contrast" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="polynomial-contrast">
+<span id="header-n100"></span><h3>1.9 Polynomial Contrast<a class="headerlink" href="#polynomial-contrast" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="backward-difference-contrast">
+<span id="header-n101"></span><h3>1.10 Backward Difference Contrast<a class="headerlink" href="#backward-difference-contrast" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="header-n102">
+<span id="id5"></span><h2>2.分箱计数<a class="headerlink" href="#header-n102" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="header-n104">
+<span id="id6"></span><h2>3.特征组合<a class="headerlink" href="#header-n104" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>为了提高复杂关系的拟合能力，在特征工程中经常把一阶离散特征凉凉组合，构成高阶组合特征</p></li>
+<li><p>并不是所有的特征组合都有意义，可以使用基于决策树的特征组合方法寻找组合特征，决策树中每一条从根节点到叶节点的路径都可以看成是一种特征组合的方式</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="image.html" class="btn btn-neutral float-right" title="Image" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="timeseries.html" class="btn btn-neutral float-left" title="Timeseries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, wangzf.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

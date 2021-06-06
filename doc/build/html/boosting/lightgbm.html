@@ -1,0 +1,1079 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>LightGBM &mdash; machine learning 1.0.0 alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="CatBoost" href="catboost.html" />
+    <link rel="prev" title="XGBoost" href="xgboost.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> machine learning
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ML</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../machine-learning-steps.html">机器学习项目清单</a></li>
+</ul>
+<p class="caption"><span class="caption-text">boosting</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="decisiontree.html">Decision Tree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adaboost.html">AdaBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gbm.html">GBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randomforest.html">Random Forest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xgboost.html">XGBoost</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">LightGBM</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">1.LightGBM 特点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">2.LightGBM 资源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">3.LightGBM 安装</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cli-command-line-interface">3.1 CLI(Command Line Interface) 安装</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#homebrew">1.Homebrew</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cmake-github">2.使用 CMake 从 GitHub 上构建</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gcc-github">3.使用 gcc 从 GitHub 上构建</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python-package">3.2 Python Package 安装</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">4.LightGBM 数据接口</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#libsvm-zero-based-lightgbm">4.1 加载 LibSVM(zero-based) 文本文件、LightGBM 二进制文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#numpy-2">4.2 加载 Numpy 2 维数组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scipy-sparse-csr-matrix">4.3 加载 scipy.sparse.csr_matrix 数组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">4.4 保存数据为 LightGBM 二进制文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">4.5 创建验证数据</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">4.6 在数据加载时标识特征名称和类别特征</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">4.6 有效利用内存空间</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">5.LightGBM 设置参数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#booster">5.1 Booster 参数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">6.LightGBM 应用</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id12">6.1 训练、保存、加载模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">6.2 交叉验证</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">6.3 提前停止</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id15">6.4 预测</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#lightgbm-api">7.LightGBM API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-structure-api">7.1 Data Structure API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#training-api">7.2 Training API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scikit-learn-api">7.3 Scikit-learn API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#callbacks">7.4 Callbacks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#plotting">7.5 Plotting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id16">8.LightGBM 示例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id17">8.1 示例 1：常用操作总结</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id18">8.2 示例 2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="catboost.html">CatBoost</a></li>
+</ul>
+<p class="caption"><span class="caption-text">models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/logistic-regression.html">Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/Navie-Bayes.html">朴素贝叶斯(Navie Bayes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/PCA.html">PCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/SVD.html">奇异值分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/svm.html">SVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/EM-algorithm.html">EM (Expectation Maximization algorithm)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/clustering.html">Cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/AB-test.html">A/B test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/Ad.html">互联网广告</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/anti-fraud-model.html">反欺诈模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/moshishibie.html">模式识别在化学化工中的应用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/PLS.html">偏最小二乘回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/user-portrait.html">用户画像</a></li>
+</ul>
+<p class="caption"><span class="caption-text">tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/python-pycaret.html">PyCaret</a></li>
+</ul>
+<p class="caption"><span class="caption-text">topic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topic/overfitting.html">降低模型过拟合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/accuracy.html">提高模型精度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/model_performance_theory.html">模型表现理论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/model_ensemble.html">模型融合</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine class</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/feature_engine.html">特征工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/numeric.html">Numeric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/timeseries.html">Timeseries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/categorical.html">Categorical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/image.html">Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/video.html">Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/audio.html">Audio</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine step</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/feature_build.html">特征构建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/feature_selection.html">特征选择</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/missing.html">缺失值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/outlier.html">异常值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/resample.html">特征采样</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries.html">timeseries</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-modeling.html">传统时间序列建模方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-decomposition.html">时间序列分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-season-analysis.html">时间序列季节性分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-baseline.html">时间序列分析-baseline示例</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-preprocessing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/lvbo.html">滤波</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/statsmodels.html">statsmodels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-aggregation.html">时间序列聚合计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-interpolate.html">时间序列插值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-ma.html">移动平均光滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-outlier-detection-papers.html">时间序列异常值检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-pandas-api.html">时间序列-pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-sample.html">时间序列采样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-smooth.html">时间序列平滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-visual.html">时间序列可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tsfresh.html">tsfresh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tslearn.html">tslearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-base-rule.html">时间序列基本规则法–周期因子法</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-forecasting:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ARIMA2.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ar.html">AR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/arima.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/arma.html">ARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/hwes.html">HWES 模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ma.html">MA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/sarima.html">SARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/sarimax.html">SARIMAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ses.html">SES</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/var.html">VAR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/varma.html">VARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/varmax.html">VARMAX</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-lr:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-lr/timeseries-lr.html">时间序列分析-线性回归</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-ml:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-ml/timeseries-ml.html">时间序列分析-机器学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-dl:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-dl/timeseries-dl.html">时间序列分析-深度学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-prophet:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-doc.html">Prophet 入门</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet.html">Prophet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-paper.html">Paper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Saturating-Forecasts.html">Staturating Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Trend-Changepoints.html">Prophet 趋势变化点</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Seasonality-Holiday-Regressors.html">Seasonality, Holiday Effects, And Regressors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Multiplicative-Seasonality.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Uncertainty-Intervals.html">Prophet 不确定区间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Outliers.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Non-Daily-Data.html">Prophet 非日数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Diagnostics.html">Prophet 模型评估</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Additional-Topics.html">Prophet 其他话题</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-reports:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/Daily-Female-Births-Dataset.html">时间序列分析示例1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/timeseries-forecasting-Python.html">Time Series Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/timeseries-forecasting-R.html">R 时间序列建模</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-tutorial:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-tutorial/Forecasting.html">时间序列分析预测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-tutorial/Get-to-know-your-data.html">时间序列分析教程</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">machine learning</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>LightGBM</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/boosting/lightgbm.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="lightgbm">
+<h1>LightGBM<a class="headerlink" href="#lightgbm" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>1.LightGBM 特点<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>LightGBM is a gradient boosting framework that uses tree based learning algorithms. It is designed to be distributed and efficient with the following advantages:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Faster training speed and higher efficiency.</p></li>
+<li><p>Lower memory usage.</p></li>
+<li><p>Better accuracy.</p></li>
+<li><p>Support of parallel and GPU learning.</p></li>
+<li><p>Capable of handling large-scale data.</p></li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="id2">
+<h2>2.LightGBM 资源<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://papers.nips.cc/paper/6907-lightgbm-a-highly-efficient-gradient-boosting-decision-tree.pdf">原始算法论文</a></p></li>
+<li><p><a class="reference external" href="https://github.com/Microsoft/LightGBM/tree/master/python-package">GitHub-Python-Package</a></p></li>
+<li><p><a class="reference external" href="https://github.com/Microsoft/LightGBM/tree/master/R-package">GitHub-R-Package</a></p></li>
+<li><p><a class="reference external" href="https://github.com/Microsoft/LightGBM">GitHub-Microsoft</a></p></li>
+<li><p><a class="reference external" href="https://lightgbm.readthedocs.io/en/latest/">Doc</a></p></li>
+<li><p><a class="reference external" href="https://github.com/microsoft/LightGBM/tree/master/examples/python-guide">Python 示例</a></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="id4">
+<h2>3.LightGBM 安装<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>CLI 版本</p>
+<ul>
+<li><p>Win</p></li>
+<li><p>Linux</p></li>
+<li><p>OSX</p></li>
+<li><p>Docker</p></li>
+<li><p>Build MPI 版本</p></li>
+<li><p>Build GPU 版本</p></li>
+</ul>
+</li>
+<li><p>Python library</p>
+<ul>
+<li><p>安装依赖库</p></li>
+<li><p>安装 <code class="docutils literal notranslate"><span class="pre">lightgbm</span></code></p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<div class="section" id="cli-command-line-interface">
+<h3>3.1 CLI(Command Line Interface) 安装<a class="headerlink" href="#cli-command-line-interface" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>MacOS 上安装 LightGBM(CLI) 有以下三种方式:</p>
+<blockquote>
+<div><ul>
+<li><p>Apple Clang</p>
+<blockquote>
+<div><ul>
+<li><p>Homebrew</p></li>
+<li><p>CMake</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Build from GitHub</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>gcc</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Build from GitHub</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<div class="section" id="homebrew">
+<h4>1.Homebrew<a class="headerlink" href="#homebrew" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>安装 LightGBM:</p>
+<blockquote>
+<div><div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ brew install lightgbm
+</pre></div>
+</div>
+</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="cmake-github">
+<h4>2.使用 CMake 从 GitHub 上构建<a class="headerlink" href="#cmake-github" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>(1)安装 CMake(3.16 or higher)</p>
+<blockquote>
+<div><div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ brew install cmake
+</pre></div>
+</div>
+</div></blockquote>
+<p>(2)安装 OpenMP</p>
+<blockquote>
+<div><div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ brew install libomp
+</pre></div>
+</div>
+</div></blockquote>
+<p>(3)构建 LightGBM</p>
+<blockquote>
+<div><div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ git clone --recursive https://github.com/microsoft/LightGBM
+$ <span class="nb">cd</span> LightGBM
+$ cmake ..
+$ make -j4
+</pre></div>
+</div>
+</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="gcc-github">
+<h4>3.使用 gcc 从 GitHub 上构建<a class="headerlink" href="#gcc-github" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>(1)安装 CMake(3.2 or higher)</p>
+<blockquote>
+<div><div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ brew install cmake
+</pre></div>
+</div>
+</div></blockquote>
+<p>(2)安装 gcc</p>
+<blockquote>
+<div><div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ brew install gcc
+</pre></div>
+</div>
+</div></blockquote>
+<p>(3)构建 LightGBM</p>
+<blockquote>
+<div><div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ git clone --recursive https://github.com/microsoft/LightGBM
+$ <span class="nb">cd</span> LightGBM
+$ <span class="nb">export</span> <span class="nv">CXX</span><span class="o">=</span>g++-7 <span class="nv">CC</span><span class="o">=</span>gcc-7  <span class="c1"># replace &quot;7&quot; with version of gcc installed on your machine</span>
+$ mkdir build
+$ <span class="nb">cd</span> build
+$ cmake ..
+$ make -j4
+</pre></div>
+</div>
+</div></blockquote>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="python-package">
+<h3>3.2 Python Package 安装<a class="headerlink" href="#python-package" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>pip 安装</p>
+<blockquote>
+<div><ul>
+<li><p>安装 <code class="docutils literal notranslate"><span class="pre">lightgbm</span></code>:</p>
+<blockquote>
+<div><div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># 默认版本</span>
+$ pip install lightgbm
+
+<span class="c1"># MPI 版本</span>
+$ pip install lightgbm --install-option<span class="o">=</span>--mpi
+
+<span class="c1"># GPU 版本</span>
+$ pip install lightgbm --install-option<span class="o">=</span>--gpu
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>约定成俗的库导入:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lightgbm</span> <span class="k">as</span> <span class="nn">lgb</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>从源码构建</p>
+<blockquote>
+<div><div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone --recursive https://github.com/microsoft/LightGBM
+<span class="nb">cd</span> LightGBM
+mkdir build
+<span class="nb">cd</span> build
+cmake ..
+
+<span class="c1"># 开启MPI 通信机制，训练更快</span>
+cmake -DUSE_MPI<span class="o">=</span>ON ..
+
+<span class="c1"># GPU 版本，训练更快</span>
+cmake -DUSE_GPU<span class="o">=</span><span class="m">1</span> ..
+make -j4
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>4.LightGBM 数据接口<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>数据接口:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>LibSVM(zero-based), TSV, CSV, TXT 文本文件</p></li>
+<li><p>Numpy 2 维数组</p></li>
+<li><p>pandas DataFrame</p></li>
+<li><p>H2O DataTable’s Frame</p></li>
+<li><p>SciPy sparse matrix</p></li>
+<li><p>LightGBM 二进制文件</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>数据保存在 <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> 对象中.</p></li>
+</ul>
+</div>
+</div></blockquote>
+<div class="section" id="libsvm-zero-based-lightgbm">
+<h3>4.1 加载 LibSVM(zero-based) 文本文件、LightGBM 二进制文件<a class="headerlink" href="#libsvm-zero-based-lightgbm" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lightgbm</span> <span class="k">as</span> <span class="nn">lgb</span>
+
+<span class="c1"># csv</span>
+<span class="n">train_csv_data</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="s1">&#39;train.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># tsv</span>
+<span class="n">train_tsv_data</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="s1">&#39;train.tsv&#39;</span><span class="p">)</span>
+
+<span class="c1"># libsvm</span>
+<span class="n">train_svm_data</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="s1">&#39;train.svm&#39;</span><span class="p">)</span>
+
+<span class="c1"># lightgbm bin</span>
+<span class="n">train_bin_data</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="s1">&#39;train.bin&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="numpy-2">
+<h3>4.2 加载 Numpy 2 维数组<a class="headerlink" href="#numpy-2" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">liggtgbm</span> <span class="k">as</span> <span class="nn">lgb</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">train_array</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">label</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="scipy-sparse-csr-matrix">
+<h3>4.3 加载 scipy.sparse.csr_matrix 数组<a class="headerlink" href="#scipy-sparse-csr-matrix" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lightgbm</span> <span class="k">as</span> <span class="nn">lgb</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+
+<span class="n">csr</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">csr_matirx</span><span class="p">((</span><span class="n">dat</span><span class="p">,</span> <span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">)))</span>
+<span class="n">train_sparse</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">csr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id6">
+<h3>4.4 保存数据为 LightGBM 二进制文件<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lightgbm</span> <span class="k">as</span> <span class="nn">lgb</span>
+
+<span class="n">train_data</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="s2">&quot;train.svm.txt&quot;</span><span class="p">)</span>
+<span class="n">train_data</span><span class="o">.</span><span class="n">save_binary</span><span class="p">(</span><span class="s1">&#39;train.bin&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>将数据保存为 LightGBM 二进制文件会使数据加载更快</p></li>
+</ul>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id7">
+<h3>4.5 创建验证数据<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lightgbm</span> <span class="k">as</span> <span class="nn">lgb</span>
+
+<span class="c1"># 训练数据</span>
+<span class="n">train_data</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="s2">&quot;train.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># 验证数据</span>
+<span class="n">validation_data</span> <span class="o">=</span> <span class="n">train_data</span><span class="o">.</span><span class="n">create_vaild</span><span class="p">(</span><span class="s1">&#39;validation.svm&#39;</span><span class="p">)</span>
+<span class="c1"># or</span>
+<span class="n">validation_data</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="s1">&#39;validation.svm&#39;</span><span class="p">,</span> <span class="n">reference</span> <span class="o">=</span> <span class="n">train_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>在 LightGBM 中, 验证数据应该与训练数据一致(格式)</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id8">
+<h3>4.6 在数据加载时标识特征名称和类别特征<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">lightgbm</span> <span class="k">as</span> <span class="nn">lgb</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">train_array</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">label</span><span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">train_data</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">data</span><span class="p">,</span>
+                        <span class="n">label</span> <span class="o">=</span> <span class="n">label</span><span class="p">,</span>
+                        <span class="n">feature_name</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;c1&#39;</span><span class="p">,</span> <span class="s1">&#39;c2&#39;</span><span class="p">,</span> <span class="s1">&#39;c3&#39;</span><span class="p">],</span>
+                        <span class="n">categorical_feature</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;c3&#39;</span><span class="p">],</span>
+                        <span class="n">weight</span> <span class="o">=</span> <span class="n">w</span><span class="p">,</span>
+                        <span class="n">free_raw_data</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="c1"># or</span>
+<span class="n">train_data</span><span class="o">.</span><span class="n">set_weight</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+
+<span class="n">train_data</span><span class="o">.</span><span class="n">set_init_score</span><span class="p">()</span>
+
+<span class="n">train_data</span><span class="o">.</span><span class="n">set_group</span><span class="p">()</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id9">
+<h3>4.6 有效利用内存空间<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>The Dataset object in LightGBM is very memory-efficient,
+it only needs to save discrete bins. However, Numpy/Array/Pandas object is memory expensive.
+If you are concerned about your memory consumption, you can save memory by:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>1.Set <code class="docutils literal notranslate"><span class="pre">free_raw_data=True</span></code> (default is <code class="docutils literal notranslate"><span class="pre">True</span></code>) when constructing the Dataset</p></li>
+<li><p>2.Explicitly set <code class="docutils literal notranslate"><span class="pre">raw_data=None</span></code> after the Dataset has been constructed</p></li>
+<li><p>Call <code class="docutils literal notranslate"><span class="pre">gc</span></code></p></li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="id10">
+<h2>5.LightGBM 设置参数<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul>
+<li><p>参数设置方式：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>命令行参数</p></li>
+<li><p>参数配置文件</p></li>
+<li><p>Python 参数字典</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>参数类型:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>核心参数</p></li>
+<li><p>学习控制参数</p></li>
+<li><p>IO参数</p></li>
+<li><p>目标参数</p></li>
+<li><p>度量参数</p></li>
+<li><p>网络参数</p></li>
+<li><p>GPU参数</p></li>
+<li><p>模型参数</p></li>
+<li><p>其他参数</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<div class="section" id="booster">
+<h3>5.1 Booster 参数<a class="headerlink" href="#booster" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">param</span> <span class="o">=</span> <span class="p">{</span>
+   <span class="s1">&#39;num_levels&#39;</span><span class="p">:</span> <span class="mi">31</span><span class="p">,</span>
+   <span class="s1">&#39;num_trees&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+   <span class="s1">&#39;objective&#39;</span><span class="p">:</span> <span class="s1">&#39;binary&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;metirc&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;auc&#39;</span><span class="p">,</span> <span class="s1">&#39;binary_logloss&#39;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="id11">
+<h2>6.LightGBM 应用<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id12">
+<h3>6.1 训练、保存、加载模型<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 训练模型</span>
+
+<span class="kn">import</span> <span class="nn">lightgbm</span> <span class="k">as</span> <span class="nn">lgb</span>
+
+<span class="c1"># 训练数据</span>
+<span class="n">train_data</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="s2">&quot;train.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># 验证数据</span>
+<span class="n">validation_data</span> <span class="o">=</span> <span class="n">train_data</span><span class="o">.</span><span class="n">create_vaild</span><span class="p">(</span><span class="s1">&#39;validation.svm&#39;</span><span class="p">)</span>
+
+<span class="c1"># 参数</span>
+<span class="n">param</span> <span class="o">=</span> <span class="p">{</span>
+   <span class="s1">&#39;num_levels&#39;</span><span class="p">:</span> <span class="mi">31</span><span class="p">,</span>
+   <span class="s1">&#39;num_trees&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+   <span class="s1">&#39;objective&#39;</span><span class="p">:</span> <span class="s1">&#39;binary&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;metirc&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;auc&#39;</span><span class="p">,</span> <span class="s1">&#39;binary_logloss&#39;</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">num_round</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="c1"># 模型训练</span>
+<span class="n">bst</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">train_data</span><span class="p">,</span> <span class="n">num_round</span><span class="p">,</span> <span class="n">vaild_sets</span> <span class="o">=</span> <span class="p">[</span><span class="n">validation_data</span><span class="p">])</span>
+
+<span class="c1"># 保存模型</span>
+<span class="n">bst</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="s1">&#39;model.txt&#39;</span><span class="p">)</span>
+<span class="n">json_model</span> <span class="o">=</span> <span class="n">bst</span><span class="o">.</span><span class="n">dump_model</span><span class="p">()</span>
+
+<span class="c1"># 加载模型</span>
+<span class="n">bst</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">Booster</span><span class="p">(</span><span class="n">model_file</span> <span class="o">=</span> <span class="s1">&#39;model.txt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id13">
+<h3>6.2 交叉验证<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">num_round</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">lgb</span><span class="o">.</span><span class="n">cv</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">train_data</span><span class="p">,</span> <span class="n">num_round</span><span class="p">,</span> <span class="n">nfold</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id14">
+<h3>6.3 提前停止<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bst</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">param</span><span class="p">,</span>
+                <span class="n">train_data</span><span class="p">,</span>
+                <span class="n">num_round</span><span class="p">,</span>
+                <span class="n">valid_sets</span> <span class="o">=</span> <span class="n">valid_sets</span><span class="p">,</span>
+                <span class="n">ealy_stopping_rounds</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id15">
+<h3>6.4 预测<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p>用已经训练好的或加载的保存的模型对数据集进行预测</p></li>
+<li><p>如果在训练过程中启用了提前停止, 可以用 <code class="docutils literal notranslate"><span class="pre">bst.best_iteration</span></code> 从最佳迭代中获得预测结果</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">testing</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">bst</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">testing</span><span class="p">,</span> <span class="n">num_iteration</span> <span class="o">=</span> <span class="n">bst</span><span class="o">.</span><span class="n">best_iteration</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="lightgbm-api">
+<h2>7.LightGBM API<a class="headerlink" href="#lightgbm-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="data-structure-api">
+<h3>7.1 Data Structure API<a class="headerlink" href="#data-structure-api" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Dataset(data,</span> <span class="pre">label,</span> <span class="pre">reference,</span> <span class="pre">weight,</span> <span class="pre">...)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Booster(params,</span> <span class="pre">train_set,</span> <span class="pre">model_file,</span> <span class="pre">...)</span></code></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="training-api">
+<h3>7.2 Training API<a class="headerlink" href="#training-api" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">train(params,</span> <span class="pre">train_set,</span> <span class="pre">num_boost_round,</span> <span class="pre">...)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cv(params,</span> <span class="pre">train_ste,</span> <span class="pre">num_boost_round,</span> <span class="pre">...)</span></code></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="scikit-learn-api">
+<h3>7.3 Scikit-learn API<a class="headerlink" href="#scikit-learn-api" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">LGBMModel(boosting\</span> <span class="pre">*type,</span> <span class="pre">num*\</span> <span class="pre">leaves,</span> <span class="pre">...)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LGBMClassifier(boosting\</span> <span class="pre">*type,</span> <span class="pre">num*\</span> <span class="pre">leaves,</span> <span class="pre">...)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LGBMRegressor(boosting\</span> <span class="pre">*type,</span> <span class="pre">num*\</span> <span class="pre">leaves,</span> <span class="pre">...)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LGBMRanker(boosting\</span> <span class="pre">*type,</span> <span class="pre">num*\</span> <span class="pre">leaves,</span> <span class="pre">...)</span></code></p></li>
+</ul>
+</div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lightgbm</span><span class="o">.</span><span class="n">LGBMClassifier</span><span class="p">(</span><span class="n">boosting_type</span> <span class="o">=</span> <span class="s2">&quot;gbdt&quot;</span><span class="p">,</span> <span class="c1"># gbdt, dart, goss, rf</span>
+                        <span class="n">num_leaves</span> <span class="o">=</span> <span class="mi">31</span><span class="p">,</span>
+                        <span class="n">max_depth</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                        <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+                        <span class="n">n_estimators</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+                        <span class="n">subsample_for_bin</span> <span class="o">=</span> <span class="mi">200000</span><span class="p">,</span>
+                        <span class="n">objective</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">class_weight</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">min_split_gain</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+                        <span class="n">min_child_weight</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">,</span>
+                        <span class="n">min_child_samples</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+                        <span class="n">subsample</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+                        <span class="n">subsample_freq</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                        <span class="n">colsample_bytree</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+                        <span class="n">reg_alpha</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+                        <span class="n">reg_lambda</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+                        <span class="n">random_state</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">n_jobs</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                        <span class="n">silent</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                        <span class="n">importance_type</span> <span class="o">=</span> <span class="s2">&quot;split&quot;</span><span class="p">,</span>
+                        <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="n">lgbc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+         <span class="n">sample</span><span class="p">,</span>
+         <span class="n">weight</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">init_score</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">eval_set</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">eval_names</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">eval_sample_weight</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">eval_class_weight</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">eval_init_score</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">eval_metric</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">early_stopping_rounds</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">verbose</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+         <span class="n">feature_name</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+         <span class="n">categorical_feature</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+         <span class="n">callbacks</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+
+<span class="n">lgbc</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">,</span>
+             <span class="n">raw_score</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+             <span class="n">num_iteration</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">pred_leaf</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+             <span class="n">pred_contrib</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+             <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="n">lgbc</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">,</span>
+                   <span class="n">raw_score</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                   <span class="n">num_iteration</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                   <span class="n">pred_leaf</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                   <span class="n">pred_contrib</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                   <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lightgbm</span><span class="o">.</span><span class="n">LGBMRegressor</span><span class="p">(</span><span class="n">boosting_type</span> <span class="o">=</span> <span class="s2">&quot;gbdt&quot;</span><span class="p">,</span>
+                       <span class="n">num_leaves</span> <span class="o">=</span> <span class="mi">31</span><span class="p">,</span>
+                       <span class="n">max_depth</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                       <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+                       <span class="n">n_estimators</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+                       <span class="n">subsample_for_bin</span> <span class="o">=</span> <span class="mi">200000</span><span class="p">,</span>
+                       <span class="n">objective</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                       <span class="n">class_weight</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                       <span class="n">min_split_gain</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+                       <span class="n">min_child_weight</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">,</span>
+                       <span class="n">min_child_samples</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+                       <span class="n">subsample</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+                       <span class="n">subsample_freq</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                       <span class="n">colsample_bytree</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+                       <span class="n">reg_alpha</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+                       <span class="n">reg_lambda</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+                       <span class="n">random_state</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                       <span class="n">n_jobs</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                       <span class="n">silent</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                       <span class="n">importance_type</span> <span class="o">=</span> <span class="s2">&quot;split&quot;</span><span class="p">,</span>
+                       <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="n">lgbr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sample_weight</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">init_score</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">eval_set</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">eval_names</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">eval_sample_weight</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">eval_init_score</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">eval_metric</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">early_stopping_rounds</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">verbose</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+         <span class="n">feature_name</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+         <span class="n">categorical_feature</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+         <span class="n">callbacks</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+
+<span class="n">lgbr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">,</span>
+             <span class="n">raw_score</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+             <span class="n">num_iteration</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">pred_leaf</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+             <span class="n">pred_contrib</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+             <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="callbacks">
+<h3>7.4 Callbacks<a class="headerlink" href="#callbacks" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">early_stopping(stopping_round,</span> <span class="pre">...)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">print_evaluation(period,</span> <span class="pre">show_stdv)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">record_evaluation(eval_result)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reset_parameter(**kwargs)</span></code></p></li>
+</ul>
+</div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">early_stopping</span><span class="p">(</span><span class="n">stopping_round</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<span class="n">print_evaluation</span><span class="p">(</span><span class="n">period</span><span class="p">,</span> <span class="n">show_stdv</span><span class="p">)</span>
+<span class="n">record_evaluation</span><span class="p">(</span><span class="n">eval_result</span><span class="p">)</span>
+<span class="n">reset_parameter</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="plotting">
+<h3>7.5 Plotting<a class="headerlink" href="#plotting" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">plot_importance(booster,</span> <span class="pre">ax,</span> <span class="pre">height,</span> <span class="pre">xlim,</span> <span class="pre">...)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot_split_value_histogram(booster,</span> <span class="pre">feature)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot_metric(booster,</span> <span class="pre">metric,</span> <span class="pre">...)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot_tree(booster,</span> <span class="pre">ax,</span> <span class="pre">tree_index,</span> <span class="pre">...)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">create_tree_digraph(booster,</span> <span class="pre">tree_index,</span> <span class="pre">...)</span></code></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_importance</span><span class="p">(</span><span class="n">booster</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">xlim</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<span class="n">plot_split_value_histogram</span><span class="p">(</span><span class="n">booster</span><span class="p">,</span> <span class="n">feature</span><span class="p">)</span>
+<span class="n">plot_metric</span><span class="p">(</span><span class="n">booster</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<span class="n">plot_tree</span><span class="p">(</span><span class="n">booster</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">tree_index</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<span class="n">create_tree_digraph</span><span class="p">(</span><span class="n">booster</span><span class="p">,</span> <span class="n">tree_index</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="id16">
+<h2>8.LightGBM 示例<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id17">
+<h3>8.1 示例 1：常用操作总结<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li><p>人工调参</p>
+<blockquote>
+<div><ul>
+<li><p>提高速度</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Use bagging by setting bagging_fraction and bagging_freq</p></li>
+<li><p>Use feature sub-sampling by setting feature_fraction</p></li>
+<li><p>Use small max_bin</p></li>
+<li><p>Use save_binary to speed up data loading in future learning</p></li>
+<li><p>Use parallel learning, refer to Parallel Learning Guide</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>提高准确率</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Use large max_bin (may be slower)</p></li>
+<li><p>Use small learning_rate with large num_iterations</p></li>
+<li><p>Use large num_leaves (may cause over-fitting)</p></li>
+<li><p>Use bigger training data</p></li>
+<li><p>Try dart</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>处理过拟合</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Use small max_bin</p></li>
+<li><p>Use small num_leaves</p></li>
+<li><p>Use min_data_in_leaf and min_sum_hessian_in_leaf</p></li>
+<li><p>Use bagging by set bagging_fraction and bagging_freq</p></li>
+<li><p>Use feature sub-sampling by set feature_fraction</p></li>
+<li><p>Use bigger training data</p></li>
+<li><p>Try lambda_l1, lambda_l2 and min_gain_to_split for regularization</p></li>
+<li><p>Try max_depth to avoid growing deep tree</p></li>
+<li><p>Try extra_trees</p></li>
+<li><p>Try increasing path_smooth</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id18">
+<h3>8.2 示例 2<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="catboost.html" class="btn btn-neutral float-right" title="CatBoost" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="xgboost.html" class="btn btn-neutral float-left" title="XGBoost" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, wangzf.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

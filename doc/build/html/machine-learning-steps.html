@@ -1,0 +1,677 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>机器学习项目清单 &mdash; machine learning 1.0.0 alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Decision Tree" href="boosting/decisiontree.html" />
+    <link rel="prev" title="Welcome to machinelearning’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> machine learning
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ML</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">机器学习项目清单</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">1.架构问题,关注蓝图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">2.获取数据</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">3.研究数据</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">4.准备数据</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">5.列出期望的模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">6.微调模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">7.展示解决方案</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">8.启动、监视、维护系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">9.模型优化</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">boosting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="boosting/decisiontree.html">Decision Tree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boosting/adaboost.html">AdaBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boosting/gbm.html">GBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boosting/randomforest.html">Random Forest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boosting/xgboost.html">XGBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boosting/lightgbm.html">LightGBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boosting/catboost.html">CatBoost</a></li>
+</ul>
+<p class="caption"><span class="caption-text">models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="models/logistic-regression.html">Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/Navie-Bayes.html">朴素贝叶斯(Navie Bayes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/PCA.html">PCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/SVD.html">奇异值分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/svm.html">SVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/EM-algorithm.html">EM (Expectation Maximization algorithm)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/clustering.html">Cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/AB-test.html">A/B test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/Ad.html">互联网广告</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/anti-fraud-model.html">反欺诈模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/moshishibie.html">模式识别在化学化工中的应用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/PLS.html">偏最小二乘回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/user-portrait.html">用户画像</a></li>
+</ul>
+<p class="caption"><span class="caption-text">tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tools/python-pycaret.html">PyCaret</a></li>
+</ul>
+<p class="caption"><span class="caption-text">topic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="topic/overfitting.html">降低模型过拟合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topic/accuracy.html">提高模型精度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topic/model_performance_theory.html">模型表现理论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topic/model_ensemble.html">模型融合</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine class</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/feature_engine.html">特征工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/numeric.html">Numeric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/timeseries.html">Timeseries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/categorical.html">Categorical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/image.html">Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/video.html">Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/audio.html">Audio</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine step</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_step/feature_build.html">特征构建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_step/feature_selection.html">特征选择</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_step/missing.html">缺失值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_step/outlier.html">异常值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_step/resample.html">特征采样</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries/timeseries.html">timeseries</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries/timeseries-modeling.html">传统时间序列建模方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries/timeseries-decomposition.html">时间序列分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries/timeseries-season-analysis.html">时间序列季节性分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries/timeseries-baseline.html">时间序列分析-baseline示例</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-preprocessing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/lvbo.html">滤波</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/statsmodels.html">statsmodels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-aggregation.html">时间序列聚合计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-interpolate.html">时间序列插值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-ma.html">移动平均光滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-outlier-detection-papers.html">时间序列异常值检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-pandas-api.html">时间序列-pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-sample.html">时间序列采样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-smooth.html">时间序列平滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-visual.html">时间序列可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/tsfresh.html">tsfresh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/tslearn.html">tslearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-base-rule.html">时间序列基本规则法–周期因子法</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-forecasting:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/ARIMA2.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/ar.html">AR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/arima.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/arma.html">ARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/hwes.html">HWES 模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/ma.html">MA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/sarima.html">SARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/sarimax.html">SARIMAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/ses.html">SES</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/var.html">VAR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/varma.html">VARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/varmax.html">VARMAX</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-lr:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-lr/timeseries-lr.html">时间序列分析-线性回归</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-ml:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-ml/timeseries-ml.html">时间序列分析-机器学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-dl:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-dl/timeseries-dl.html">时间序列分析-深度学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-prophet:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-doc.html">Prophet 入门</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet.html">Prophet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-paper.html">Paper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Saturating-Forecasts.html">Staturating Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Trend-Changepoints.html">Prophet 趋势变化点</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Seasonality-Holiday-Regressors.html">Seasonality, Holiday Effects, And Regressors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Multiplicative-Seasonality.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Uncertainty-Intervals.html">Prophet 不确定区间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Outliers.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Non-Daily-Data.html">Prophet 非日数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Diagnostics.html">Prophet 模型评估</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Additional-Topics.html">Prophet 其他话题</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-reports:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-reports/Daily-Female-Births-Dataset.html">时间序列分析示例1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-reports/timeseries-forecasting-Python.html">Time Series Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-reports/timeseries-forecasting-R.html">R 时间序列建模</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-tutorial:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-tutorial/Forecasting.html">时间序列分析预测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-tutorial/Get-to-know-your-data.html">时间序列分析教程</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">machine learning</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>机器学习项目清单</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/machine-learning-steps.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>机器学习项目清单<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id2">
+<h2>1.架构问题,关注蓝图<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>用商业术语定义目标;</p></li>
+<li><p>方案如何使用？</p></li>
+<li><p>目前的解决方案/办法是什么？</p></li>
+<li><p>应该如何架构问题(有监督/无监督,在线/离线…)？</p></li>
+<li><p>如何测量性能？</p></li>
+<li><p>性能指标是否与业务目标一致？</p></li>
+<li><p>每个业务目标需要的最低性能是什么？</p></li>
+<li><p>有没有一些相似的问题？能重用一些经验和工具吗？</p></li>
+<li><p>有没有相关有经验的人(专家)？</p></li>
+<li><p>如何手动解决此问题？</p></li>
+<li><p>列出目前为止你(或其他人)的假设;</p></li>
+<li><p>如果可能的话,验证假设;</p></li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="id3">
+<h2>2.获取数据<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>列出需要的数据及其体量;</p></li>
+<li><p>查找并记录获得数据的途径;</p></li>
+<li><p>检查需要的空间;</p></li>
+<li><p>检查法律义务,必要时获得授权;</p></li>
+<li><p>获取访问权限;</p></li>
+<li><p>创建工作空间,确保具有足够的存储空间;</p></li>
+<li><p>获取数据;</p></li>
+<li><p>将数据转换为可操作的格式,不改变数据本身;</p></li>
+<li><p>确保删除或保护敏感信息;</p></li>
+<li><p>检查数据的类型和大小;</p></li>
+<li><p>采样一个测试数据集,放在一边,永远不要使用它;</p></li>
+</ol>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>注意</p>
+<ul class="simple">
+<li><p>尽可能地自动化,以便获取最新数据</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>3.研究数据<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ol class="arabic">
+<li><p>创建数据的副本用于研究;</p>
+<ul class="simple">
+<li><p>如果需要,可以将其抽样为可管理的大小;</p></li>
+</ul>
+</li>
+<li><p>创建一个Jupyter笔记本来记录数据研究;</p></li>
+<li><p>研究每个属性及其特征:</p>
+<ul>
+<li><p>特征名称</p></li>
+<li><p>特征类型</p>
+<blockquote>
+<div><ul>
+<li><p>类别型</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>有序</p></li>
+<li><p>无序</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>数值型</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>整型</p></li>
+<li><p>浮点型</p></li>
+<li><p>有界</p></li>
+<li><p>无界</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>文本</p></li>
+<li><p>结构</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>缺失值的百分比</p></li>
+<li><p>噪音和噪音类型</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>随机</p></li>
+<li><p>异常</p></li>
+<li><p>舍入误差</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>可能有用的任务</p></li>
+<li><p>分布类型</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>高斯分布</p></li>
+<li><p>均匀分布</p></li>
+<li><p>对数分布</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</li>
+<li><p>对于有监督学习任务,确认目标属性;</p></li>
+<li><p>可视化数据;</p></li>
+<li><p>研究特征之间的相关性;</p></li>
+<li><p>研究如何手动解决问题;</p></li>
+<li><p>确认希望使用转换;</p></li>
+<li><p>确认可能有用的额外数据;</p></li>
+<li><p>记录学习到的东西;</p></li>
+</ol>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>注意</p>
+<ul class="simple">
+<li><p>试着从这些步骤的领域专家那里获取灵感</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>4.准备数据<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ol class="arabic">
+<li><p>清理数据:</p>
+<ul class="simple">
+<li><p>修复或删除异常值;</p></li>
+<li><p>填充缺失值;</p></li>
+</ul>
+</li>
+<li><p>特征选择:</p>
+<ul>
+<li><p>删除不能为任务提供任何有用信息的特征;</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>0 方差或者近似 0 方差特征</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</li>
+<li><p>处理特征(在适当的情况下):</p>
+<ul>
+<li><p>离散化连续特征;</p></li>
+<li><p>分解特征:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>分类</p></li>
+<li><p>日期/时间</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>添加期望的特征转换</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(log(x)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\sqrt{(x)}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(x^{2}\)</span></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</li>
+</ol>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>注意</p>
+<ul>
+<li><p>在数据的副本上工作(保持原始数据集不变);</p></li>
+<li><p>编写适用于所有数据转换的函数:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>可以很容易准备下一次得到新数据时的数据;</p></li>
+<li><p>可以在未来的项目中使用这些转换;</p></li>
+<li><p>清理和准备测试数据集(testing);</p></li>
+<li><p>一旦解决方案失败,用来清理和准备新数据集;</p></li>
+<li><p>可以轻松地将准备作为超参数;</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>5.列出期望的模型<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>使用标准参数,从不同类别的模型中训练需求快速地不成熟的模型;</p>
+<ul class="simple">
+<li><p>线性</p></li>
+<li><p>朴素贝叶斯</p></li>
+<li><p>SVM</p></li>
+<li><p>随机森林</p></li>
+<li><p>神经网络</p></li>
+</ul>
+</li>
+<li><p>评估并比较这些模型的性能;</p>
+<ul class="simple">
+<li><p>对于每个模型使用交叉验证计算性能的测试的均值和标准差;</p></li>
+</ul>
+</li>
+<li><p>分析每个算法最终要的变量;</p></li>
+<li><p>分析模型产生的错误类型;</p>
+<ul class="simple">
+<li><p>人类用什么样的数据避免这些错误;</p></li>
+</ul>
+</li>
+<li><p>快速进行特征选择和处理;</p></li>
+<li><p>对前面5步进行一到两次快速迭代;</p></li>
+<li><p>列出前3到5个最优希望的模型,倾向于选择有不同错误类型的模型;</p></li>
+</ol>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>注意</p>
+<ul class="simple">
+<li><p>如果数据很大,可能需要采样为较小的训练集,以便于在合理的时间内训练不同的模型;</p></li>
+<li><p>尽可能地自动化这些步骤;</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>6.微调模型<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ol class="arabic">
+<li><p>使用交叉验证微调超参数;</p>
+<ul>
+<li><p>把数据转换当做超参数,尤其是不确定时</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>缺失值的填充</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>需要研究的超参数值很少: Grid Search</p></li>
+<li><p>需要研究的超参数值很多: Random Grid Search</p></li>
+</ul>
+</li>
+<li><p>尝试组合方法,组合多个好魔性往往比单独运行效果好;</p></li>
+<li><p>一旦对最终模型有信息,在测试集上测量性能以估计泛化误差;</p></li>
+</ol>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>注意</p>
+<ul class="simple">
+<li><p>使用尽可能多的数据,特别是在微调结束时;</p></li>
+<li><p>自动化</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>7.展示解决方案<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>文档化所做的工作</p></li>
+<li><p>创建完美的演示;</p>
+<ul class="simple">
+<li><p>确保突出蓝图;</p></li>
+</ul>
+</li>
+<li><p>解释为什么解决方案达到了业务目标;</p></li>
+<li><p>展示发现的一些有趣的内容;</p>
+<ul class="simple">
+<li><p>描述什么可以工作,什么不行;</p></li>
+<li><p>列出假设和系统的局限性</p></li>
+</ul>
+</li>
+<li><p>确保关键发现被完美展示或易于记忆的称述;</p></li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="id9">
+<h2>8.启动、监视、维护系统<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>准备好生产环境的解决方案;</p>
+<ul class="simple">
+<li><p>插入生产数据输入</p></li>
+<li><p>写单元测试</p></li>
+</ul>
+</li>
+<li><p>编写监控代码,定期检查系统的性能,出问题时及时报警;</p>
+<ul class="simple">
+<li><p>需要考虑缓慢退化: 随着数据的增加,模型往往会不合适;</p></li>
+<li><p>测量性能可能需要人工流水线;</p></li>
+<li><p>监控输入质量</p></li>
+</ul>
+</li>
+<li><p>定期对新数据重新建模(自动化);</p></li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="id10">
+<h2>9.模型优化<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>研究模型学习曲线</p></li>
+<li><p>判断模型是否过拟合或者欠拟合，并作出相应的调整</p></li>
+<li><p>对模型权重参数进行分析</p></li>
+<li><p>对于权重绝对值高或低的特征，可以进行更细化的工作，也可以进行特征组合</p></li>
+<li><p>进行 Bad-Case 分析，针对错误的例子确定是否还有地方可以修改挖掘</p></li>
+<li><p>进行模型融合</p></li>
+</ol>
+</div></blockquote>
+<p><strong>参考:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Hands-On Machine Learning with Scikit-Learn &amp; TensorFlow, Aurelien Geron</p></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="boosting/decisiontree.html" class="btn btn-neutral float-right" title="Decision Tree" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to machinelearning’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, wangzf.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

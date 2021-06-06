@@ -1,0 +1,811 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Decision Tree &mdash; machine learning 1.0.0 alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="AdaBoost" href="adaboost.html" />
+    <link rel="prev" title="机器学习项目清单" href="../machine-learning-steps.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> machine learning
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ML</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../machine-learning-steps.html">机器学习项目清单</a></li>
+</ul>
+<p class="caption"><span class="caption-text">boosting</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Decision Tree</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">1.决策树模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">2.决策树学习基本算法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">3.决策树节点分裂算法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">3.1 信息熵</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">3.2 信息增益</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">3.3 信息增益率</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cart">3.4 CART</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#cart-classification-and-regression-tree">3.4.1 CART(Classification And Regression Tree)模型介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cart-gini">3.4.2 CART节点分裂准则-Gini指数</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">4.决策树剪枝</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">5.决策树模型优缺点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sklearn">6.决策树在<code class="docutils literal notranslate"><span class="pre">sklearn</span></code>中的实现简单用法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id9">6.1 分类</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">6.2 回归</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="adaboost.html">AdaBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gbm.html">GBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randomforest.html">Random Forest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xgboost.html">XGBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lightgbm.html">LightGBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catboost.html">CatBoost</a></li>
+</ul>
+<p class="caption"><span class="caption-text">models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/logistic-regression.html">Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/Navie-Bayes.html">朴素贝叶斯(Navie Bayes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/PCA.html">PCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/SVD.html">奇异值分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/svm.html">SVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/EM-algorithm.html">EM (Expectation Maximization algorithm)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/clustering.html">Cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/AB-test.html">A/B test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/Ad.html">互联网广告</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/anti-fraud-model.html">反欺诈模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/moshishibie.html">模式识别在化学化工中的应用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/PLS.html">偏最小二乘回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/user-portrait.html">用户画像</a></li>
+</ul>
+<p class="caption"><span class="caption-text">tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/python-pycaret.html">PyCaret</a></li>
+</ul>
+<p class="caption"><span class="caption-text">topic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topic/overfitting.html">降低模型过拟合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/accuracy.html">提高模型精度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/model_performance_theory.html">模型表现理论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/model_ensemble.html">模型融合</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine class</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/feature_engine.html">特征工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/numeric.html">Numeric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/timeseries.html">Timeseries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/categorical.html">Categorical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/image.html">Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/video.html">Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/audio.html">Audio</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine step</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/feature_build.html">特征构建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/feature_selection.html">特征选择</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/missing.html">缺失值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/outlier.html">异常值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/resample.html">特征采样</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries.html">timeseries</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-modeling.html">传统时间序列建模方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-decomposition.html">时间序列分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-season-analysis.html">时间序列季节性分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-baseline.html">时间序列分析-baseline示例</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-preprocessing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/lvbo.html">滤波</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/statsmodels.html">statsmodels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-aggregation.html">时间序列聚合计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-interpolate.html">时间序列插值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-ma.html">移动平均光滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-outlier-detection-papers.html">时间序列异常值检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-pandas-api.html">时间序列-pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-sample.html">时间序列采样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-smooth.html">时间序列平滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-visual.html">时间序列可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tsfresh.html">tsfresh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tslearn.html">tslearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-base-rule.html">时间序列基本规则法–周期因子法</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-forecasting:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ARIMA2.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ar.html">AR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/arima.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/arma.html">ARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/hwes.html">HWES 模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ma.html">MA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/sarima.html">SARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/sarimax.html">SARIMAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ses.html">SES</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/var.html">VAR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/varma.html">VARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/varmax.html">VARMAX</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-lr:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-lr/timeseries-lr.html">时间序列分析-线性回归</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-ml:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-ml/timeseries-ml.html">时间序列分析-机器学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-dl:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-dl/timeseries-dl.html">时间序列分析-深度学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-prophet:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-doc.html">Prophet 入门</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet.html">Prophet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-paper.html">Paper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Saturating-Forecasts.html">Staturating Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Trend-Changepoints.html">Prophet 趋势变化点</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Seasonality-Holiday-Regressors.html">Seasonality, Holiday Effects, And Regressors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Multiplicative-Seasonality.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Uncertainty-Intervals.html">Prophet 不确定区间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Outliers.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Non-Daily-Data.html">Prophet 非日数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Diagnostics.html">Prophet 模型评估</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Additional-Topics.html">Prophet 其他话题</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-reports:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/Daily-Female-Births-Dataset.html">时间序列分析示例1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/timeseries-forecasting-Python.html">Time Series Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/timeseries-forecasting-R.html">R 时间序列建模</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-tutorial:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-tutorial/Forecasting.html">时间序列分析预测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-tutorial/Get-to-know-your-data.html">时间序列分析教程</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">machine learning</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Decision Tree</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/boosting/decisiontree.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="decision-tree">
+<h1>Decision Tree<a class="headerlink" href="#decision-tree" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>1.决策树模型<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p><strong>决策树是一种典型的基本分类器，从本质上讲，决策树的分类思想是产生一系列规则，然后通过这些规则进行数据分析的数据挖掘过程。该分类器的生成和决策过程分为三个部分：</strong></p>
+<ol class="arabic simple">
+<li><p>首先，通过对训练集进行递归分析，生成一棵形状如倒立的树状结构；</p></li>
+<li><p>然后，分析这棵树从根节点到叶节点的路径，产生一系列规则；</p></li>
+<li><p>最后，根据这些规则对新数据进行分类预测。</p></li>
+</ol>
+<p><strong>决策树为一个树状模型，树中包含三种节点：根节点、(中间)内部节点、叶节点：</strong></p>
+<ul class="simple">
+<li><p>根节点包含样本全集；</p></li>
+<li><p>树的每个节点表示样本对象的属性；</p></li>
+<li><p>从每个节点出发的分叉路径代表某个可能的属性值；</p></li>
+<li><p>从根节点出发，经过若干中间节点后，到达叶节点的路径表示某个规则，整个树表示由训练样本决定的规则集合；</p></li>
+<li><p>每个叶节点对应从根节点到该叶节点所经历的路径所表示的对象的值。即叶节点对应于决策结果，其他每个节点则对应于一个属性测试(分割变量选择、分割节点选择)；</p></li>
+<li><p>每个节点包含的样本集合根据属性测试的结果被划分到子节点中；</p></li>
+</ul>
+<p><strong>决策树模型构建的问题基本可以归结为两点：</strong></p>
+<ul class="simple">
+<li><p>生成树(split)</p>
+<ul>
+<li><p>选择变量作为分割变量(分割节点)；</p>
+<ul>
+<li><p>决策树的生成过程就是
+使用满足划分准则的特征不断的将数据集划分为纯度更高，不确定性更小的子集的过程。
+对于当前数据集的每一次的划分，都希望根据某特征划分之后的各个子集的纯度更高，不确定性更小；</p></li>
+<li><p>特征选择准则：</p>
+<ul>
+<li><p>使用某特征对数据集划分之后，各数据子集的纯度要比划分前的数据集D的纯度高(不确定性要比划分前数据集D的不确定性低)；</p></li>
+<li><p>划分后的纯度为各数据子集的纯度的加和(子集占比*子集的经验熵)；</p></li>
+<li><p>度量划分前后的纯度变化用子集的纯度之和与划分前的数据集D的纯度进行对比；</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>如何度量划分数据集前后的数据集的纯度以及不确定性呢：</p>
+<ul>
+<li><p>回归树</p>
+<ul>
+<li><p>树节点分裂准则</p>
+<ul>
+<li><p>预测误差，计算分裂前后集合的误差得分，取误差得分最小的进行分裂</p>
+<ul>
+<li><p>均方误差</p></li>
+<li><p>对数误差</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>树叶节点预测值</p>
+<ul>
+<li><p>节点内样本目标变量均值</p></li>
+<li><p>通过最优化算法计算得到(XGBoost)</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>分类树</p>
+<ul>
+<li><p>树节点分裂准则</p>
+<ul>
+<li><p>信息增益：ID3模型</p></li>
+<li><p>信息增益率：C4.5模型</p></li>
+<li><p>GINI指数：CART模型</p></li>
+</ul>
+</li>
+<li><p>树叶节点预测值</p>
+<ul>
+<li><p>通过投票法产生的类别值(少数服从多数)</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>树的剪枝(prune)</p>
+<ul>
+<li><p>预剪枝</p></li>
+<li><p>后剪枝</p></li>
+<li><p>正则化方法(XGBoost)</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>2.决策树学习基本算法<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>输入：</p>
+<ul class="simple">
+<li><p>训练集：<span class="math notranslate nohighlight">\(D=\{(x_{1}, y_{1}),(x_{2}, y_{2}),\ldots,(x_{n}, y_{n})\};\)</span></p></li>
+<li><p>变量集：<span class="math notranslate nohighlight">\(A=\{a_{1}, a_{2},\ldots,a_{p}\}\)</span></p></li>
+</ul>
+</li>
+<li><p>过程：</p>
+<ul class="simple">
+<li><p>函数：<span class="math notranslate nohighlight">\(TreeGenerate(D, A)\)</span></p></li>
+</ul>
+<ol class="arabic simple">
+<li><p>生成根节点node；</p></li>
+<li><p><strong>if</strong>【<span class="math notranslate nohighlight">\(D\)</span> 中样本全属于同一类别 <span class="math notranslate nohighlight">\(C\)</span>】：
+<strong>then</strong></p>
+<ul class="simple">
+<li><p>将根节点node标记为<span class="math notranslate nohighlight">\(C\)</span>类叶节点，<strong>return</strong></p></li>
+</ul>
+</li>
+<li><p><strong>end if</strong>；</p></li>
+<li><p><strong>if</strong>【 <span class="math notranslate nohighlight">\(A=\emptyset\)</span> <strong>or</strong> <span class="math notranslate nohighlight">\(D\)</span> 中样本在 <span class="math notranslate nohighlight">\(A\)</span>
+上取值相同】： <strong>then</strong></p>
+<ul class="simple">
+<li><p>将根节点node标记为叶节点，其类别标记为 <span class="math notranslate nohighlight">\(D\)</span>
+中样本数最多的类，<strong>return</strong></p></li>
+</ul>
+</li>
+<li><p><strong>end if</strong>；</p></li>
+<li><p><strong>else</strong></p>
+<ul class="simple">
+<li><p>从 <span class="math notranslate nohighlight">\(A\)</span> 中选择最优划分变量 <span class="math notranslate nohighlight">\(a_{*}\)</span>；</p></li>
+<li><p><strong>for</strong>【<span class="math notranslate nohighlight">\(a_{*}\)</span> 的每一个值 <span class="math notranslate nohighlight">\(a_{*}^{v}\)</span>】
+<strong>do</strong>：</p>
+<ul>
+<li><p>为node生成一个分支；令 <span class="math notranslate nohighlight">\(D_{v}\)</span> 表示 <span class="math notranslate nohighlight">\(D\)</span> 中在
+<span class="math notranslate nohighlight">\(a_{*}\)</span> 上取值为 <span class="math notranslate nohighlight">\(a_{*}^{v}\)</span> 的样本子集；</p>
+<ul>
+<li><p><strong>if</strong>【<span class="math notranslate nohighlight">\(D_{v}=\emptyset\)</span>】 <strong>then</strong></p>
+<ul>
+<li><p>将根节点node标记为叶节点，其类别标记为 <span class="math notranslate nohighlight">\(D\)</span>
+中样本数最多的类；</p></li>
+</ul>
+</li>
+<li><p><strong>else</strong></p>
+<ul>
+<li><p>以 <span class="math notranslate nohighlight">\(TreeGenerate(D, A \&amp; \{a_{*}\})\)</span> 为分支节点</p></li>
+</ul>
+</li>
+<li><p><strong>end if</strong>；</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>end for</strong>；</p></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>输出：</p>
+<ul class="simple">
+<li><p>以node为根节点的一棵决策树</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>3.决策树节点分裂算法<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h3>3.1 信息熵<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>信息熵(information entropy)</strong></p>
+<ul>
+<li><p>度量样本集合(随机变量)纯度(不确定性)最常用的指标；</p></li>
+<li><p>信息熵的值越小，则样本集合的纯度越高，信息熵的值越大，则样本集合的不确定性就越大；</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p>假设样本集合 <span class="math notranslate nohighlight">\(D\)</span> 中第 <span class="math notranslate nohighlight">\(k\)</span> 类样本所占的比例为
+<span class="math notranslate nohighlight">\(p_{k}, (k=1, 2, \ldots, |\mathcal{Y}|)\)</span>，则样本集合 <span class="math notranslate nohighlight">\(D\)</span>
+的信息熵为：</p>
+<p><span class="math notranslate nohighlight">\(Entropy(D) = -\sum^{|\mathcal{Y}|}_{k=1}p_{k}log_{2}p_{k}\)</span></p>
+<p>特别地，对于二分类的情况，<span class="math notranslate nohighlight">\(D\)</span> (根节点)
+中只有两个类别，假设每个类别在样本集中的比例为: 正例的比例
+<span class="math notranslate nohighlight">\(p_{+}\)</span>，以及负例的比例 <span class="math notranslate nohighlight">\(p_{-}\)</span>，则样本集合 <span class="math notranslate nohighlight">\(D\)</span>
+(根节点)的信息熵为：</p>
+<p><span class="math notranslate nohighlight">\(Entropy(D) = -p_{+}\log_2 p_{+} - p_{-}\log_{2} p_{-}\)</span></p>
+</div>
+<div class="section" id="id5">
+<h3>3.2 信息增益<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>信息增益(information gain)</strong></p>
+<ul>
+<li><p>信息增益主要作为 <strong>ID3决策树</strong>[Quinlan,1986]
+的变量选择分裂准则，这里对节点的划分不是二叉划分，是多叉划分；</p></li>
+<li><p>信息增益越大，则使用相应变量来进行划分所获得的“纯度提升”越大；</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p>假设离散变量 <span class="math notranslate nohighlight">\(a\)</span> 有 <span class="math notranslate nohighlight">\(V\)</span> 个可能的取值
+<span class="math notranslate nohighlight">\(\{a^{1}, a^{2}, \ldots, a^{V}\}\)</span>，若使用变量 <span class="math notranslate nohighlight">\(a\)</span>
+对样本集合 <span class="math notranslate nohighlight">\(D\)</span> 进行划分，则会产生 <span class="math notranslate nohighlight">\(V\)</span> 个分支节点，其中第
+<span class="math notranslate nohighlight">\(v\)</span> 个分支节点包含了 <span class="math notranslate nohighlight">\(D\)</span> 中所有在变量 <span class="math notranslate nohighlight">\(a\)</span> 上取值为
+<span class="math notranslate nohighlight">\(a^{v}\)</span> 的样本，记为 <span class="math notranslate nohighlight">\(D^{v}\)</span>， 易知分裂后的各个样本集合
+<span class="math notranslate nohighlight">\(D^{1},D^{2},\ldots D^{v}, D^{V}\)</span> 的信息熵为：</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\sum^{V}_{v=1}Entropy(D^{v})\)</span></p>
+</div></blockquote>
+<p>再考虑到不同的分支节点所包含的样本数不同，所以给分支节点赋权重
+<span class="math notranslate nohighlight">\(\frac{|D^{v}|}{|D|}\)</span>，即样本数越多的分支节点影响越大，于是可计算出用变量
+<span class="math notranslate nohighlight">\(a\)</span> 进行划分所获得的“信息增益”为：</p>
+<p><span class="math notranslate nohighlight">\(Gain(D, a)=Entropy(D)-\sum^{V}_{v=1}\frac{|D^{v}|}{|D|}Entropy(D^{v})\)</span></p>
+<p>最终选择获得信息增益最大的变量为：</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(a_{*}=\underset{a\in A}{argmax} Gain(D, a)\)</span></p>
+</div></blockquote>
+</div>
+<div class="section" id="id6">
+<h3>3.3 信息增益率<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p>信息增益准则对可取值数目多的变量有所偏好，为减少这种偏好可能带来的不利影响，<strong>C4.5决策树算法</strong>[Quinlan,1993]不直接使用信息增益，使用**信息增益率(gain
+ratio)**来选择最优的划分变量；</p></li>
+<li><p>信息增益率准则对变量取值数目较少的属性有所偏好，因此C4.5并不是直接选择信息增益率最大的变量，而是使用了一个启发式的：先从变量集合中找出信息增益率高于平均水平的变量，再从中选择信息增益率最高的；</p></li>
+<li><p>C4.5仍然是多分叉树，下面给出信息增益率的表达形式，它是在信息增益的基础上进行改进得到的；</p></li>
+</ul>
+</div></blockquote>
+<p><span class="math notranslate nohighlight">\(Gain\_ratio(D, a)=\frac{Gain(D, a)}{IV(a)}\)</span></p>
+<p>其中：</p>
+<p><span class="math notranslate nohighlight">\(IV(a)\)</span> 称为变量 <span class="math notranslate nohighlight">\(a\)</span> 的“固有值(intrinsic value)”，变量
+<span class="math notranslate nohighlight">\(a\)</span> 可能取值的数目越多(即 <span class="math notranslate nohighlight">\(V\)</span> 越大)，则 <span class="math notranslate nohighlight">\(IV(a)\)</span>
+的值通常会越大：</p>
+<p><span class="math notranslate nohighlight">\(IV(a)=-\sum^{V}_{v=1}\frac{|D^{v}|}{|D|}log_{2}\frac{|D^{v}|}{|D|}\)</span></p>
+</div>
+<div class="section" id="cart">
+<h3>3.4 CART<a class="headerlink" href="#cart" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="cart-classification-and-regression-tree">
+<h4>3.4.1 CART(Classification And Regression Tree)模型介绍<a class="headerlink" href="#cart-classification-and-regression-tree" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>CART(Classification And Regression Tree 分类与回归树)：</strong></p>
+<ul>
+<li><p>CART是树模型算法的一种，它先从自变量集合中寻找最佳分割变量和最佳分割点(基尼指数)，将数据划分为<strong>两组</strong>。针对分组后的数据将上述步骤重复下去，直到满足某种停止条件。这样反复分隔数据后使分组后的数据变得一致，纯度较高。同时可自动探测出复杂数据的潜在结构、重要模式和关系，探测出的知识又可用来构造精确和可靠地预测模型。关于分类与回归树的深入理论,可以参考Breiman等人的著作(CART)。</p></li>
+<li><p>CART模型的构建可以看作是一个对变量进行递归分割选择的过程。递归分割，顾名思义也就是对变量进行逐层分隔，直到分割结果满足某种条件才停下来，这里“分割的结果”可能是得到一些分类值(分类树)，也可能是一些描述统计量或预测值(回归树)。建立的CART模型可分为<strong>分类树(classification
+tree)</strong>和<strong>回归树(regression tree)</strong>两种：</p>
+<ul>
+<li><p>分类树用于因变量为分类数据的情况，树的末端为因变量的分类值；</p></li>
+<li><p>回归树则可以用于因变量为连续变量的情况，树的末端可以给出相应类别中的因变量描述或预测；</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>CART模型构建具体步骤：</strong></p>
+<ul>
+<li><p><strong>1.对所有自变量和所有分割点进行评估，选择最优分割变量，生成一棵规模较大的CART树</strong></p>
+<ul>
+<li><p>最佳的选择是使得分割后组内的数据纯度更高，即组内数据的目标变量变异更小。这种纯度可通过Gini指数或熵Entropy来度量；</p></li>
+</ul>
+</li>
+<li><p><strong>2.对树进行剪枝(prune)</strong></p>
+<ul>
+<li><p>要兼顾树的规模和误差的大小，因此通常会使用CP参数(complexity
+parameter)来对树的复杂度进行控制，使预测误差和树的规模都尽可能小。通常的做法是，先建立一个划分较细较为复杂的树模型，再根据交叉验证方法来估计不同剪枝条件下各模型的误差，选择误差最小的树模型；</p></li>
+</ul>
+</li>
+<li><p><strong>3.输出最终结果，进行预测和解释</strong></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="cart-gini">
+<h4>3.4.2 CART节点分裂准则-Gini指数<a class="headerlink" href="#cart-gini" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>基尼值(Gini value)</strong></p>
+<ul>
+<li><p>数据集的纯度可用基尼值来度量；</p></li>
+<li><p>基尼值越小，则数据集的纯度越高；</p></li>
+</ul>
+</li>
+<li><p><strong>基尼指数(Gini index)</strong></p>
+<ul>
+<li><p>CART决策树[Breiamn et al.,1984]使用<strong>基尼指数(Gini
+index)</strong>来选择划分变量，CART是二分叉树；</p></li>
+<li><p>基尼指数越小，则使用相应变量来进行划分所获得的“纯度提升”越大；</p></li>
+</ul>
+</li>
+</ul>
+<p>对于上面的样本集合 <span class="math notranslate nohighlight">\(D\)</span> 的纯度可用基尼值来度量：</p>
+<p><span class="math notranslate nohighlight">\(Gini(D)=\sum^{|\mathcal{Y}|}_{k=1}\sum_{k' \neq k}p_{k}p_{k'}=1-\sum^{|\mathcal{Y}|}_{k=1}p_{k}^{2}\)</span></p>
+<p>假设变量 <span class="math notranslate nohighlight">\(a\)</span> 有 <span class="math notranslate nohighlight">\(V\)</span> 个可能的取值
+<span class="math notranslate nohighlight">\(\{a^{1}, a^{2}, \ldots, a^{V}\}\)</span>。若使用变量 <span class="math notranslate nohighlight">\(a\)</span>
+对样本集合 <span class="math notranslate nohighlight">\(D\)</span> 进行划分，</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(a\)</span> 为离散变量</p>
+<ul>
+<li><p>对于每一个变量 <span class="math notranslate nohighlight">\(a\)</span> 的取值
+<span class="math notranslate nohighlight">\(a^{i}, (i=1, 2,\ldots,V)\)</span>，会产生两个个分支节点。其中第一个分支节点(左分支)包含了
+<span class="math notranslate nohighlight">\(D\)</span> 中所有在变量 <span class="math notranslate nohighlight">\(a\)</span> 上取值为 <span class="math notranslate nohighlight">\(a^{i}\)</span>
+的样本，记为 <span class="math notranslate nohighlight">\(D^{l}\)</span>；第二个分支节点(右分支)包含了
+<span class="math notranslate nohighlight">\(D\)</span> 中所有在变量 <span class="math notranslate nohighlight">\(a\)</span> 上取值不为 <span class="math notranslate nohighlight">\(a^{i}\)</span>
+的样本，记为 <span class="math notranslate nohighlight">\(D^{r}\)</span>。</p></li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(a\)</span> 为连续变量</p>
+<ul>
+<li><p>对于每一个变量 <span class="math notranslate nohighlight">\(a\)</span> 的取值 <span class="math notranslate nohighlight">\(a^{i}, (i=1, 2,\ldots,n)\)</span>
+(已经从小到大进行了排列：<span class="math notranslate nohighlight">\(a^{1} \leqslant a^{2} \leqslant \ldots \leqslant a^{n}\)</span>)，基于分割点
+<span class="math notranslate nohighlight">\(t\)</span> 可将样本集合 <span class="math notranslate nohighlight">\(D\)</span>
+划分为两个子集，即会产生两个分支节点。其中第一个分支节点(左分支)包含了
+<span class="math notranslate nohighlight">\(D\)</span> 中所有在变量 <span class="math notranslate nohighlight">\(a\)</span> 上取值为 <span class="math notranslate nohighlight">\(a \leqslant t\)</span>
+的样本，记为 <span class="math notranslate nohighlight">\(D^{l}_{t}\)</span>；第二个分支节点(右分支)包含了
+<span class="math notranslate nohighlight">\(D\)</span> 中所有在变量 <span class="math notranslate nohighlight">\(a\)</span> 上取值为 <span class="math notranslate nohighlight">\(a &gt; t\)</span>
+的样本，记为 <span class="math notranslate nohighlight">\(D^{r}_{t}\)</span>。 显然对于相邻的两个取值
+<span class="math notranslate nohighlight">\(a^{i}\)</span> 与 <span class="math notranslate nohighlight">\(a^{i+1}\)</span>来说，<span class="math notranslate nohighlight">\(t\)</span> 在区间
+<span class="math notranslate nohighlight">\([a^{i},a^{i+1})\)</span>
+中取任意值所产生的划分结果都相同。因此，对连续变量，可考察包含
+<span class="math notranslate nohighlight">\(n-1\)</span> 个元素的候选分割点集合：
+<span class="math notranslate nohighlight">\(T_{a}=\bigg\{\frac{a^{i}+a^{i+1}}{2}|1 \leqslant i \leqslant n-1 \bigg\}\)</span>
+即把区间 <span class="math notranslate nohighlight">\([a^{i},a^{i+1})\)</span>
+的中位点作为候选分割点，然后就可以像离散变量一样来考察这些分割点，选取最优的分割点进行样本集合的划分。</p></li>
+</ul>
+</li>
+</ul>
+<p>易知集合 <span class="math notranslate nohighlight">\(D^{l}\)</span> 的基尼值为 <span class="math notranslate nohighlight">\(Gini(D^{l})\)</span> ，集合
+<span class="math notranslate nohighlight">\(D^{r}\)</span> 的基尼值为
+<span class="math notranslate nohighlight">\(Gini(D^{r})\)</span>。再考虑到两个不同的分支节点所包含的样本数不同，所以给左右两个分支节点分别赋权重
+<span class="math notranslate nohighlight">\(\frac{|D^{l}|}{|D|}\)</span>，<span class="math notranslate nohighlight">\(\frac{|D^{r}|}{|D|}\)</span>，即样本数越多的分支节点影响越大，于是可计算出用变量
+<span class="math notranslate nohighlight">\(a\)</span> 进行划分的基尼指数为：</p>
+<p><span class="math notranslate nohighlight">\(Gini\_index(D,a)=\frac{|D^{l}|}{|D|}Gini(D^{l})+\frac{|D^{r}|}{|D|}Gini(D^{r})\)</span></p>
+<p>选择使得划分后基尼指最数小的变量作为最优划分变量：</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(a_{*}=\underset{a \in A}{argmin}Gini\_index(D, a)\)</span></p>
+</div></blockquote>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>4.决策树剪枝<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>剪枝(Purning)是决策树减轻“过拟合”的主要手段。在决策树学习中，为了尽可能地正确分类训练样本，节点划分不断重复，有时会造成决策树分支过多，这时可能因为训练样本学得太好了，以至于把训练样本自身的一些特点当做所有数据都具有的一般性质而导致过拟合。因此可通过去掉一些分支来降低过拟合的风险。</p>
+<p><strong>决策树兼职的基本策略：</strong></p>
+<ul class="simple">
+<li><p>预剪枝(prepruning)</p>
+<ul>
+<li><p>在决策树生成过程中，对每个节点在分割前先进行估计。若当前的分割不能带来决策树泛化性能的提升，则停止分割并将当前节点标记为叶节点</p></li>
+<li><p>在预剪枝过程中，决策树的很多分支都没有展开，这不仅降低了过拟合的风险，还显著减少了决策树的训练时间和预测时间；但有些分支的当前分割虽不能提升泛化性能、甚至能导致泛化性能下降，但在其基础上的后续分割却有可能导致泛化性能的显著提高，容易导致欠拟合</p></li>
+</ul>
+</li>
+<li><p>后剪枝(postpurning)</p>
+<ul>
+<li><p>先从训练样本集生成一棵最大规模的完整的决策树，然后自底向上地对非叶结点进行考察。若将该提升决策树的泛化性能，则将该子树替换为叶节点节点对应的子树替换为叶节点能</p></li>
+<li><p>后剪枝决策树比预剪枝决策树保留了更多的分支。后剪枝过程的欠拟合风险很小，泛化性能往往优于预剪枝决策树，但后剪枝过程是在生成完全决策树之后进行的，并且要自底向上地对树中所有的非叶节点进行逐一考察，因此训练时间开销比未剪枝决策树和预剪枝决策树都要大的多</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h2>5.决策树模型优缺点<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p><strong>决策树模型是一种简单易用的非参数分类器，算法的优缺点：</strong></p>
+<ul class="simple">
+<li><p><strong>决策树模型的优点是：</strong></p>
+<ul>
+<li><p>不需要对数据有任何的先验设计</p></li>
+<li><p>对噪声数据和缺失数据不敏感</p></li>
+<li><p>计算速度较快</p></li>
+<li><p>结果容易解释</p></li>
+<li><p>稳健性强</p></li>
+</ul>
+</li>
+<li><p><strong>决策树模型的缺点是：</strong></p>
+<ul>
+<li><p>1.精确度不高。因为它是矩形的判别边界，使得精确度不高，对回归问题不太适合。(在处理回归问题时建议使用模型树(model
+tree)方法，即先将数据切分，再对各组数据进行线性回归。<code class="docutils literal notranslate"><span class="pre">party</span></code>包<code class="docutils literal notranslate"><span class="pre">mod</span></code>,
+<code class="docutils literal notranslate"><span class="pre">RWeka</span></code>包<code class="docutils literal notranslate"><span class="pre">M5P</span></code>可以实现)</p></li>
+<li><p>2.单个决策树不太稳定。数据微小的变化会造成模型结构变化。</p></li>
+<li><p>3.有变量选择偏向，即会选择那些有取值较多的变量。(一种改善的方法是使用条件推断树，即<code class="docutils literal notranslate"><span class="pre">party</span></code>包中的<code class="docutils literal notranslate"><span class="pre">ctree</span></code>函数，还可以采用集成学习方法)</p></li>
+<li><p>4.分类规则复杂。决策树算法在产生规则的时候采用了拒局部贪婪方法，每次只选取一个属性进行分析构造决策树，所以他产生的规则很复杂，针对此问题一般采用剪枝的方法实现。</p></li>
+<li><p>5.收敛到非全局的局部最优解(ID3)。</p></li>
+<li><p>6.容易过度拟合。</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="sklearn">
+<h2>6.决策树在<code class="docutils literal notranslate"><span class="pre">sklearn</span></code>中的实现简单用法<a class="headerlink" href="#sklearn" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id9">
+<h3>6.1 分类<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">tree</span>
+
+<span class="c1"># data</span>
+<span class="n">X</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+     <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># train model</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">DecisionTreeClassifier</span><span class="p">()</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+
+<span class="c1"># predict</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]])</span>
+
+<span class="n">clf</span><span class="o">.</span><span class="n">preidct_proba</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">tree</span>
+
+<span class="c1"># data</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+
+<span class="c1"># train model</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">DecisionTreeClassifier</span><span class="p">()</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+
+
+<span class="c1"># export tree in Graphviz format</span>
+<span class="kn">import</span> <span class="nn">graphviz</span>
+<span class="n">dot_data</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">export_graphviz</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">out_file</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="n">graphviz</span><span class="o">.</span><span class="n">Source</span><span class="p">(</span><span class="n">dot_data</span><span class="p">)</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;iris&quot;</span><span class="p">)</span>
+
+
+
+<span class="n">dot_data</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">export_graphviz</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span>
+                                <span class="n">out_file</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                <span class="n">feature_names</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">,</span>
+                                <span class="n">class_names</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target_names</span><span class="p">,</span>
+                                <span class="n">filled</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                                <span class="n">rounded</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                                <span class="n">special_characters</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="n">graphviz</span><span class="o">.</span><span class="n">Source</span><span class="p">(</span><span class="n">dot_data</span><span class="p">)</span>
+<span class="n">graph</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id10">
+<h3>6.2 回归<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">tree</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">]</span>
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">DecisionTreeRegressor</span><span class="p">()</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">preidct</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="adaboost.html" class="btn btn-neutral float-right" title="AdaBoost" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../machine-learning-steps.html" class="btn btn-neutral float-left" title="机器学习项目清单" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, wangzf.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

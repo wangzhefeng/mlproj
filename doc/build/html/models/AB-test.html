@@ -1,0 +1,526 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>A/B test &mdash; machine learning 1.0.0 alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="互联网广告" href="Ad.html" />
+    <link rel="prev" title="Cluster" href="clustering.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> machine learning
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ML</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../machine-learning-steps.html">机器学习项目清单</a></li>
+</ul>
+<p class="caption"><span class="caption-text">boosting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/decisiontree.html">Decision Tree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/adaboost.html">AdaBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/gbm.html">GBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/randomforest.html">Random Forest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/xgboost.html">XGBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/lightgbm.html">LightGBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/catboost.html">CatBoost</a></li>
+</ul>
+<p class="caption"><span class="caption-text">models</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="logistic-regression.html">Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Navie-Bayes.html">朴素贝叶斯(Navie Bayes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCA.html">PCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SVD.html">奇异值分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="svm.html">SVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="EM-algorithm.html">EM (Expectation Maximization algorithm)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clustering.html">Cluster</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">A/B test</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#header-n4">什么是A/B test？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n12">为什么需要A/B test？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n31">如何做A/B test？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n91">为什么需要对A/B test的结果做分析？</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#z">Z检验计算胜出概率</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#header-n96">例子：</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n141">区间估计计算范围</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n143">A/B test相关的统计学理论有哪些？</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#header-n144">正太分布</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n145">中心极限定理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n146">区间估计</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n148">统计检验</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n150">Z检验</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#p-value">P value</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n154">标准正态分布表Z值查询方法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Ad.html">互联网广告</a></li>
+<li class="toctree-l1"><a class="reference internal" href="anti-fraud-model.html">反欺诈模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moshishibie.html">模式识别在化学化工中的应用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PLS.html">偏最小二乘回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user-portrait.html">用户画像</a></li>
+</ul>
+<p class="caption"><span class="caption-text">tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/python-pycaret.html">PyCaret</a></li>
+</ul>
+<p class="caption"><span class="caption-text">topic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topic/overfitting.html">降低模型过拟合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/accuracy.html">提高模型精度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/model_performance_theory.html">模型表现理论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/model_ensemble.html">模型融合</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine class</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/feature_engine.html">特征工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/numeric.html">Numeric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/timeseries.html">Timeseries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/categorical.html">Categorical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/image.html">Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/video.html">Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/audio.html">Audio</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine step</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/feature_build.html">特征构建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/feature_selection.html">特征选择</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/missing.html">缺失值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/outlier.html">异常值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/resample.html">特征采样</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries.html">timeseries</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-modeling.html">传统时间序列建模方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-decomposition.html">时间序列分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-season-analysis.html">时间序列季节性分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-baseline.html">时间序列分析-baseline示例</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-preprocessing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/lvbo.html">滤波</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/statsmodels.html">statsmodels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-aggregation.html">时间序列聚合计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-interpolate.html">时间序列插值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-ma.html">移动平均光滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-outlier-detection-papers.html">时间序列异常值检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-pandas-api.html">时间序列-pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-sample.html">时间序列采样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-smooth.html">时间序列平滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-visual.html">时间序列可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tsfresh.html">tsfresh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tslearn.html">tslearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-base-rule.html">时间序列基本规则法–周期因子法</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-forecasting:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ARIMA2.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ar.html">AR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/arima.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/arma.html">ARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/hwes.html">HWES 模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ma.html">MA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/sarima.html">SARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/sarimax.html">SARIMAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ses.html">SES</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/var.html">VAR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/varma.html">VARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/varmax.html">VARMAX</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-lr:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-lr/timeseries-lr.html">时间序列分析-线性回归</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-ml:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-ml/timeseries-ml.html">时间序列分析-机器学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-dl:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-dl/timeseries-dl.html">时间序列分析-深度学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-prophet:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-doc.html">Prophet 入门</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet.html">Prophet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-paper.html">Paper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Saturating-Forecasts.html">Staturating Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Trend-Changepoints.html">Prophet 趋势变化点</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Seasonality-Holiday-Regressors.html">Seasonality, Holiday Effects, And Regressors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Multiplicative-Seasonality.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Uncertainty-Intervals.html">Prophet 不确定区间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Outliers.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Non-Daily-Data.html">Prophet 非日数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Diagnostics.html">Prophet 模型评估</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Additional-Topics.html">Prophet 其他话题</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-reports:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/Daily-Female-Births-Dataset.html">时间序列分析示例1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/timeseries-forecasting-Python.html">Time Series Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/timeseries-forecasting-R.html">R 时间序列建模</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-tutorial:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-tutorial/Forecasting.html">时间序列分析预测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-tutorial/Get-to-know-your-data.html">时间序列分析教程</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">machine learning</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>A/B test</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/models/AB-test.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="a-b-test">
+<span id="header-n0"></span><h1>A/B test<a class="headerlink" href="#a-b-test" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="header-n4">
+<span id="id1"></span><h2>什么是A/B test？<a class="headerlink" href="#header-n4" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>A/B test
+是一种为了提高转换率和反向率的测试方法，常用于网页优化及时常营销</p></li>
+<li><p>A/B test
+核心在于：对同一个<code class="docutils literal notranslate"><span class="pre">要素</span></code>有两个版本(A/B)，并且有度量哪个更成功的指标的情况下，将A/B两个版本同时做实验，然后根据度量结果决定哪个版本更好，从而决定在生产中真正使用哪个版本。</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="header-n12">
+<span id="id2"></span><h2>为什么需要A/B test？<a class="headerlink" href="#header-n12" title="Permalink to this headline">¶</a></h2>
+<p>产品的改变并不总是意味着进步和提高，有时候是无法人为评判多种设计方案中哪一种更优秀，这时利用A/B
+test可以回答两个问题：</p>
+<ol class="arabic simple">
+<li><p>哪个方案好？</p></li>
+<li><p>比较结果的可信度是多少？</p></li>
+</ol>
+<p>A/B test
+结果是基于用户得到的结果，用数据说话，而不是凭空想象去为用户代言，并且通过一定的数学分析给出结果的可信度。</p>
+<p>A/B test 需要几个前提：</p>
+<ol class="arabic simple">
+<li><p>多个方案并行测试；</p></li>
+<li><p>每个方案只有一个变量不同；</p></li>
+<li><p>能够以某种规则优胜劣汰；</p></li>
+</ol>
+<p>其中：第2点暗示了A/B测试的应用范围：A/B测试必须是单变量，但有的时候，我们并不追求知道某个细节对方案的影响，而只想知道方案的整体效果如何，那么可以适当增加变量，当然测试方案有非常大的差异时一般不太适合做A/B测试，因为它们的
+变量太多了，变量之间会有很多的干扰，所以很难通过A/B测试的方法找出各个变量对结果的影响程度。</p>
+<p>在满足上述前提时，便可以做A/B test了。</p>
+</div>
+<div class="section" id="header-n31">
+<span id="id3"></span><h2>如何做A/B test？<a class="headerlink" href="#header-n31" title="Permalink to this headline">¶</a></h2>
+<p>一个完整的A/B test主要包括以下几部分：</p>
+<ol class="arabic simple">
+<li><p>确定测试目标。即建立实验方案好坏的评估标准；</p></li>
+<li><p>设计分流方案；</p></li>
+<li><p>实验方案的部署；</p></li>
+<li><p>数据收集及统计</p></li>
+<li><p>结果分析，得出结论；</p></li>
+</ol>
+<p>需要做/可以做的事：</p>
+<ol class="arabic simple">
+<li><p>你需要需要知道在放弃之前需要进行多长时间的测试。过早或过晚放弃都是不对的；</p></li>
+<li><p>注意给相同访客呈现出相同版本，特别是一些价格什么敏感信息。（可以用cookie之类的追踪用户）；</p></li>
+<li><p>在整个网站中保持A/B测试的一致性，不要在X页面显示A中测试元素，而在Y页面显示B种测试元素。</p></li>
+<li><p>做很多的A/B测试（为了达到既定的目标）；</p></li>
+</ol>
+<p>不需要做/不可以做的事:</p>
+<ol class="arabic simple">
+<li><p>只有在测试了你能控制A/B两种版本之后，才开始你的测试；不要一段时间测试A版本，一段时间测试B版本，而是应该同时进行，将流量分散为A/B两类；</p></li>
+<li><p>不要过早地下结论，需要事先预估一个A/B测试的周期；</p></li>
+<li><p>不要令常来的访客惊讶（或困惑），如果是测试一个核心功能，最好只对新用户进行测试；</p></li>
+<li><p>不要让个人的喜好影响测试的结果，因为不一定是看起来更合理（或更漂亮）的版本会获得A/B测试的胜利，结果是什么就是什么，数据说话，保持客观；</p></li>
+</ol>
+<p>测试工具：</p>
+<ul class="simple">
+<li><p>Web</p>
+<ul>
+<li><p>Google Website Optimilzer</p></li>
+<li><p>Visual Website Optimilzer</p></li>
+<li><p>Vertster</p></li>
+<li><p>Preess9 A/B Testing Joomla Plugin</p></li>
+<li><p>Amazon Mechanical Turk</p></li>
+<li><p>Split Test Calculator</p></li>
+<li><p>ABtests.com</p></li>
+</ul>
+</li>
+<li><p>Mobile App</p>
+<ul>
+<li><p>clutch.io</p></li>
+<li><p>pathmapp</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="header-n91">
+<span id="id4"></span><h2>为什么需要对A/B test的结果做分析？<a class="headerlink" href="#header-n91" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="z">
+<span id="header-n93"></span><h3>Z检验计算胜出概率<a class="headerlink" href="#z" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>并不是所有的实验都能做到样本足够大、区分度足够高，所以需要使用统计假设检验来验证实验的结果；</p>
+</div></blockquote>
+<div class="section" id="header-n96">
+<span id="id5"></span><h4>例子：<a class="headerlink" href="#header-n96" title="Permalink to this headline">¶</a></h4>
+<p>以<code class="docutils literal notranslate"><span class="pre">转化率</span></code>为例，运行A/B test一周，分别对1000个样本进行了测试。</p>
+<ul class="simple">
+<li><p>A版本的转化率为<span class="math notranslate nohighlight">\(7.5\%\)</span></p></li>
+<li><p>B版本的转化率为<span class="math notranslate nohighlight">\(9\%\)</span></p></li>
+</ul>
+<p>对于这个实验结果，有两个疑问：</p>
+<ul class="simple">
+<li><p>能否肯定B版本比A版本好？</p></li>
+<li><p>有多大的可能是因为一些随机的因素导致了这样的差别？</p></li>
+</ul>
+<p>假设检验能够有效地回答这个问题。首先设定<code class="docutils literal notranslate"><span class="pre">零假设</span></code>：</p>
+<p><span class="math notranslate nohighlight">\(H0: B版本在转化率效果不会比A版本好\)</span></p>
+<p>然后，通过证据(实验观察到的样本)来推翻这个假设。如果样本足以推翻上面的零假设，那么可以认为实验完成了，可以的到的结论为：B版本在转化率效果比A版本好；否则，需要继续实验来得到更多的实验观测数据样本来进行推断，或者，干脆就接受这个假设并舍弃B版本，即认为B版本在转化率方面没有A版本效果好。</p>
+<p>将上面的假设检验抽象为统计学理论：</p>
+<ul class="simple">
+<li><p>假设随机变量<span class="math notranslate nohighlight">\(X = P(B)-P(A)\)</span>是两个版本实际转化率的差异度，其中，<span class="math notranslate nohighlight">\(P(B)\)</span>是B的转化率，<span class="math notranslate nohighlight">\(P(A)\)</span>是A的转化率。</p></li>
+<li><p>定义假设：<span class="math notranslate nohighlight">\(B版本不比A版本效果好\)</span></p>
+<ul>
+<li><p>原假设：<span class="math notranslate nohighlight">\(H0: P(B)-P(A)\leq0\)</span></p></li>
+<li><p>备择假设：<span class="math notranslate nohighlight">\(H1: P(B)-P(A)&gt;0\)</span></p></li>
+</ul>
+</li>
+<li><p>一个用户，要么注册，要么不注册，所以A和B均满足二项分布，即</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(A \sim b(N, P(A))\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(B \sim b(N, P(B))\)</span>, <span class="math notranslate nohighlight">\(N\)</span>是样本数量；</p></li>
+</ul>
+</li>
+<li><p>根据中心极限定理，A和B可以近似为正态分布，那么，随机变量<span class="math notranslate nohighlight">\(X = P(B)-P(A)\)</span>也服从正太分布:</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(X \sim N(0, \frac{P(B)(1-P(B))}{N} + \frac{P(A)(1-P(A))}{N})\)</span>,
+其中分布的期望为<span class="math notranslate nohighlight">\(0\)</span>，因为原假设的期望是B版本和A版本没有显著的差异，即<span class="math notranslate nohighlight">\(E(X)=0\)</span></p></li>
+</ul>
+</li>
+<li><p>对<span class="math notranslate nohighlight">\(X\)</span>的分布进行标准化，然后选择<span class="math notranslate nohighlight">\(5\%\)</span>的区间作为拒绝域，即如果<span class="math notranslate nohighlight">\(X\)</span>标准化后的值落在了标准正态分布的最右端<span class="math notranslate nohighlight">\(5\%\)</span>的面积里，那么可以具有很强的信心(<span class="math notranslate nohighlight">\(1-5\%=95\%\)</span>)拒绝原假设<span class="math notranslate nohighlight">\(H0\)</span>，即得到结论B版本比A版本效果好。</p></li>
+<li><p>假设<span class="math notranslate nohighlight">\(X标准化后的随机变量为\)</span>Z$，</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="header-n141">
+<span id="id6"></span><h3>区间估计计算范围<a class="headerlink" href="#header-n141" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="header-n143">
+<span id="id7"></span><h2>A/B test相关的统计学理论有哪些？<a class="headerlink" href="#header-n143" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="header-n144">
+<span id="id8"></span><h3>正太分布<a class="headerlink" href="#header-n144" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="header-n145">
+<span id="id9"></span><h3>中心极限定理<a class="headerlink" href="#header-n145" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="header-n146">
+<span id="id10"></span><h3>区间估计<a class="headerlink" href="#header-n146" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="header-n148">
+<span id="id11"></span><h3>统计检验<a class="headerlink" href="#header-n148" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="header-n150">
+<span id="id12"></span><h3>Z检验<a class="headerlink" href="#header-n150" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="p-value">
+<span id="header-n152"></span><h3>P value<a class="headerlink" href="#p-value" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="header-n154">
+<span id="id13"></span><h3>标准正态分布表Z值查询方法<a class="headerlink" href="#header-n154" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="Ad.html" class="btn btn-neutral float-right" title="互联网广告" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="clustering.html" class="btn btn-neutral float-left" title="Cluster" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, wangzf.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

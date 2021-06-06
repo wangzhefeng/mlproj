@@ -1,0 +1,693 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>GBM &mdash; machine learning 1.0.0 alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Random Forest" href="randomforest.html" />
+    <link rel="prev" title="AdaBoost" href="adaboost.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> machine learning
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ML</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../machine-learning-steps.html">机器学习项目清单</a></li>
+</ul>
+<p class="caption"><span class="caption-text">boosting</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="decisiontree.html">Decision Tree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adaboost.html">AdaBoost</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">GBM</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#header-n0">1.GBM模型原理</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#header-n14">1.1 函数估计问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n37">1.2 梯度提升模型(GBM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n101">1.3 梯度提升模型算法的应用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#gbm-python">2.GBM模型调参(Python)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#header-n118">2.1 参数类型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n202">2.2 调参策略</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="randomforest.html">Random Forest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xgboost.html">XGBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lightgbm.html">LightGBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catboost.html">CatBoost</a></li>
+</ul>
+<p class="caption"><span class="caption-text">models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/logistic-regression.html">Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/Navie-Bayes.html">朴素贝叶斯(Navie Bayes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/PCA.html">PCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/SVD.html">奇异值分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/svm.html">SVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/EM-algorithm.html">EM (Expectation Maximization algorithm)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/clustering.html">Cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/AB-test.html">A/B test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/Ad.html">互联网广告</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/anti-fraud-model.html">反欺诈模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/moshishibie.html">模式识别在化学化工中的应用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/PLS.html">偏最小二乘回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/user-portrait.html">用户画像</a></li>
+</ul>
+<p class="caption"><span class="caption-text">tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/python-pycaret.html">PyCaret</a></li>
+</ul>
+<p class="caption"><span class="caption-text">topic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topic/overfitting.html">降低模型过拟合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/accuracy.html">提高模型精度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/model_performance_theory.html">模型表现理论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/model_ensemble.html">模型融合</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine class</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/feature_engine.html">特征工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/numeric.html">Numeric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/timeseries.html">Timeseries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/categorical.html">Categorical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/image.html">Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/video.html">Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/audio.html">Audio</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine step</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/feature_build.html">特征构建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/feature_selection.html">特征选择</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/missing.html">缺失值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/outlier.html">异常值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/resample.html">特征采样</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries.html">timeseries</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-modeling.html">传统时间序列建模方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-decomposition.html">时间序列分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-season-analysis.html">时间序列季节性分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-baseline.html">时间序列分析-baseline示例</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-preprocessing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/lvbo.html">滤波</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/statsmodels.html">statsmodels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-aggregation.html">时间序列聚合计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-interpolate.html">时间序列插值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-ma.html">移动平均光滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-outlier-detection-papers.html">时间序列异常值检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-pandas-api.html">时间序列-pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-sample.html">时间序列采样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-smooth.html">时间序列平滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-visual.html">时间序列可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tsfresh.html">tsfresh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tslearn.html">tslearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-base-rule.html">时间序列基本规则法–周期因子法</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-forecasting:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ARIMA2.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ar.html">AR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/arima.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/arma.html">ARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/hwes.html">HWES 模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ma.html">MA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/sarima.html">SARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/sarimax.html">SARIMAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ses.html">SES</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/var.html">VAR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/varma.html">VARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/varmax.html">VARMAX</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-lr:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-lr/timeseries-lr.html">时间序列分析-线性回归</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-ml:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-ml/timeseries-ml.html">时间序列分析-机器学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-dl:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-dl/timeseries-dl.html">时间序列分析-深度学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-prophet:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-doc.html">Prophet 入门</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet.html">Prophet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-paper.html">Paper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Saturating-Forecasts.html">Staturating Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Trend-Changepoints.html">Prophet 趋势变化点</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Seasonality-Holiday-Regressors.html">Seasonality, Holiday Effects, And Regressors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Multiplicative-Seasonality.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Uncertainty-Intervals.html">Prophet 不确定区间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Outliers.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Non-Daily-Data.html">Prophet 非日数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Diagnostics.html">Prophet 模型评估</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Additional-Topics.html">Prophet 其他话题</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-reports:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/Daily-Female-Births-Dataset.html">时间序列分析示例1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/timeseries-forecasting-Python.html">Time Series Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/timeseries-forecasting-R.html">R 时间序列建模</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-tutorial:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-tutorial/Forecasting.html">时间序列分析预测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-tutorial/Get-to-know-your-data.html">时间序列分析教程</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">machine learning</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>GBM</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/boosting/gbm.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="gbm">
+<h1>GBM<a class="headerlink" href="#gbm" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="header-n0">
+<span id="id1"></span><h2>1.GBM模型原理<a class="headerlink" href="#header-n0" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>随着 Breiman 对 AdaBoost 算法的突破性理解和解释的提出, Friedman,
+Hastie 和 Tibshirani 将提升算法解释为在统计学框架下的拟合累加模型
+(Additive Model) 的函数估计问题. 并且, Friedman
+将提升算法扩展为一种利用类似最速下降法优化方法,
+在具体的损失函数梯度方向上逐步拟合基本学习器的梯度提升器算法
+(Gradient Boosting Machine), 也称为 梯度提升模型算法(Gradient
+Boosting Modeling). 从而将提升算法扩展到许多应用上,
+同时也产生了一系列具体的梯度提升算法, 例如:</p></li>
+<li><p>对于回归问题, 利用损失函数为平方误差损失函数
+<span class="math notranslate nohighlight">\(L(y, f) = (y-f)^{2}\)</span> 时产生的 <span class="math notranslate nohighlight">\(L_{2}\)</span>Boost 算法</p></li>
+<li><p>对于分类问题, 应用对数似然损失函数
+<span class="math notranslate nohighlight">\(L(y, f) = log(1+e^{-yf})\)</span> 得到了 LogitBoost 算法</p></li>
+<li><p>选择指数损失函数 <span class="math notranslate nohighlight">\(L(y, f)=exp(-yf)\)</span>, 将会得到 AdaBoost 算法</p></li>
+</ul>
+</div></blockquote>
+<div class="section" id="header-n14">
+<span id="id2"></span><h3>1.1 函数估计问题<a class="headerlink" href="#header-n14" title="Permalink to this headline">¶</a></h3>
+<p>假设在一个函数估计问题中, 存在:</p>
+<ul class="simple">
+<li><p>一个随机响应变量 <span class="math notranslate nohighlight">\(y\)</span></p></li>
+<li><p>一组随机解释变量 <span class="math notranslate nohighlight">\(\mathbf{x}=\\{x_{1}, \ldots, x_{d}\\}\)</span>, 其中
+<span class="math notranslate nohighlight">\(d\)</span> 是解释变量的个数.</p></li>
+<li><p>给定训练数据集
+<span class="math notranslate nohighlight">\(\{\(\mathbf{x}\_{i}, y_{i}\), i=1, 2, \ldots, N\}\)</span>, 为变量
+<span class="math notranslate nohighlight">\((\mathbf{x}, y)\)</span> 的观测值.</p></li>
+</ul>
+<p>函数估计问题的目标就是利用解释变量 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> 和响应变量
+<span class="math notranslate nohighlight">\(y\)</span> 观测值的联合分布, 通过最小化一个特殊的损失函数
+<span class="math notranslate nohighlight">\(L(y, f(\mathbf{x}))\)</span> 的期望值得到一个估计或近似函数
+<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>, 函数 <span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span> 的作用就是将解释变量
+<span class="math notranslate nohighlight">\(\mathbf{x}\)</span> 映射到响应变量 <span class="math notranslate nohighlight">\(y\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(f^{*}=\arg\underset{f}{\min}E_{y, \mathbf{x}}[L(y, f(\mathbf{x}))]\)</span></p>
+<p>其中:</p>
+<ul class="simple">
+<li><p>损失函数 <span class="math notranslate nohighlight">\(L(y, f(\mathbf{x}))\)</span>
+是为了评估响应变量与其函数估计值的接近程度.</p></li>
+<li><p>实际应用中存在很多常用的损失函数:</p>
+<ul>
+<li><p>用来解决回归问题的平方误差损失函数 <span class="math notranslate nohighlight">\(L(y, f)=(y-f)^{2}\)</span>
+和绝对误差损失函数 <span class="math notranslate nohighlight">\(L(y, f)=|y-f|\)</span>, 其中
+<span class="math notranslate nohighlight">\(y \in \mathbf{R}\)</span>;</p></li>
+<li><p>用来解决二分类问题的负二项对数似然损失
+<span class="math notranslate nohighlight">\(L(y, f)=log(1+e^{-2yf})\)</span>, 其中 <span class="math notranslate nohighlight">\(y \in \{-1, 1\}\)</span>.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="header-n37">
+<span id="id3"></span><h3>1.2 梯度提升模型(GBM)<a class="headerlink" href="#header-n37" title="Permalink to this headline">¶</a></h3>
+<p>梯度提升模型 (GBM) 是一种对”累加”(“additive”) 扩展模型的拟合方法,
+在这里, “累加”(additive) 扩展模型是指由一簇”基本函数”(base function)
+扩展成的函数空间中的函数组合. 而这里的”基本函数”相当于在基分类器
+<span class="math notranslate nohighlight">\(G_{m}(\mathbf{x}) \in \{-1, 1\}\)</span>. 因此方程中关于响应变量
+<span class="math notranslate nohighlight">\(y\)</span> 的估计函数 <span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>
+可以表示为一种参数化的”累加”扩展形式:</p>
+<p><span class="math notranslate nohighlight">\(f(\mathbf{x}; \{\beta_{m},\gamma_{m}\}\_{1}^{M}) = \sum_{m=1}^{M}\beta_{m}b(\mathbf{x};\gamma_{m}).\)</span></p>
+<p>其中:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\{\beta_{m}, \gamma_{m}\}\_{1}^{M}\)</span>
+是估计函数<span class="math notranslate nohighlight">\(f(\cdot)\)</span> 的参数集合. 并且, 函数
+<span class="math notranslate nohighlight">\(b(\mathbf{x};\gamma_{m}), m=1, 2, \ldots, M\)</span>
+通常是关于解释变量 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> 的简单学习器函数, 例如
+<span class="math notranslate nohighlight">\(b(\mathbf{x}; \gamma_{m})\)</span> 可以是一个简单的回归树函数,
+其中参数 <span class="math notranslate nohighlight">\(\gamma_{m}\)</span> 是回归树中的分裂变量及分裂位置值.</p></li>
+</ul>
+<p>给定训练数据 <span class="math notranslate nohighlight">\(\{(\mathbf{x}\_{i}, y_{i}), i=1,2,\ldots, N\}\)</span>,
+将上面的累加模型代入函数估计问题中有</p>
+<p><span class="math notranslate nohighlight">\(\underset{\{\beta_{m}, \gamma_{m}\}^{M}\_{m=1}}{\min}E_{y,\mathbf{x}}(L(y_{i}, \sum_{m=1}^{M}\beta_{m}b(\mathbf{x}\_{i};\gamma_{m}))),\)</span></p>
+<p>即</p>
+<p><span class="math notranslate nohighlight">\(\underset{\{\beta_{m}, \gamma_{m}\}\_{m=1}^{M}}
+\{\min\}\sum_{i=1}^{N}
+L\(y_{i}, \sum_{m=1}^{M} \beta_{m} b\(\mathbf{x}\_{i}; \gamma_{m}\)\),\)</span></p>
+<p>因此, 方程中的函数估计问题就变成了一个参数估计问题.</p>
+<p>在梯度提升模型(GBM) 中,
+对于上面的估计问题作者希望利用前向分步累加模型(Forward Stagewise
+Additive Modeling) 算法进行求解, 前项分步累加模型算法如下</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>初始化 <span class="math notranslate nohighlight">\(f_{0}(\mathbf{x})=0\)</span>.</p></li>
+<li><p>进行迭代, <span class="math notranslate nohighlight">\(m=1, 2, \ldots, M\)</span></p>
+<ul class="simple">
+<li><p>计算
+<span class="math notranslate nohighlight">\((\beta_{m}, \gamma_{m})=\underset{\beta, \gamma}{\arg\min}\sum\_{i=1}^{N}L(y_{i}, f_{m-1}(\mathbf{x}_{i})+\beta b(\mathbf{x}\_{i}; \gamma)).\)</span></p></li>
+</ul>
+</li>
+<li><p>更新估计函数
+<span class="math notranslate nohighlight">\(f_{m}(\mathbf{x})=f_{m-1}(\mathbf{x})+\beta_{m}b(\mathbf{x};\gamma_{m}).\)</span></p></li>
+</ol>
+</div></blockquote>
+<p>在机器学习中, 上面的方程被称为提升(boosting), 函数
+<span class="math notranslate nohighlight">\(b(\mathbf{x};\gamma)\)</span> 被称为弱分类器(weak learner)
+或者基本学习器(base learner), 并且一般是一个分类树.</p>
+<p>然而, 对于具体的损失函数 <span class="math notranslate nohighlight">\(L(y, f(\mathbf{x}))\)</span> 和 基本学习器函数
+<span class="math notranslate nohighlight">\(b(\mathbf{x}; \gamma)\)</span>, 前向分步累加模型很难得到最优解.
+作者在这里采用了一种类似最速下降法来解决前向分步累加模型算法中的估计问题.
+因为在前向分步累加模型的方程中, 如果给定估计函数
+<span class="math notranslate nohighlight">\(f_{m-1}(\mathbf{x})\)</span>, 则
+<span class="math notranslate nohighlight">\(\beta_{m}b(\mathbf{x};\gamma_{m})\)</span>
+可以看成是最速下降算法中求解最优解 <span class="math notranslate nohighlight">\(f_{M}^{*}\(\mathbf{x}\)\)</span>
+的最优的贪婪迭代项. 因此, 应用最速下降法, 将估计函数
+<span class="math notranslate nohighlight">\(f\(\mathbf{x}\)\)</span> 的数值最解 <span class="math notranslate nohighlight">\(f_{M}^{*} \(\mathbf{x}\)\)</span>
+表示为下面的形式</p>
+<p><span class="math notranslate nohighlight">\(f_{M}^{*}(\mathbf{x})=\sum_{m=0}^{M}h_{m}(\mathbf{x}),\)</span></p>
+<p>其中:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(f_{0}(\mathbf{x})=h_{0}(\mathbf{x})\)</span> 是一个初始化的猜测值,
+<span class="math notranslate nohighlight">\(h_{m}(\mathbf{x}), m=1, 2, \ldots, M\)</span>
+是最速下降算法中定义的连续增量函数. 最速下降法定义上面的增量函数
+<span class="math notranslate nohighlight">\(h_{m}(\mathbf{x}), m=1, 2, \ldots, M\)</span> 如下所示</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(h_{m}(\mathbf{x})=-\eta _{m}g_{m}(\mathbf{x}),\)</span></p>
+<p>其中:</p>
+<p><span class="math notranslate nohighlight">\(g_m (\mathbf{x}) = \Bigg[\frac{\partial E_{y, \mathbf{x}}[L(y, f(\mathbf{x}))]}{\partial f(\mathbf{x})}\Bigg]_{f(\mathbf{x})=f_{m-1}(\mathbf{x})} \\
+= E_{y, \mathbf{x}}\Bigg[\frac{\partial L(y, f(\mathbf{x}))}{\partial f(\mathbf{x})}\Bigg]_{f(\mathbf{x})=f_{m-1}(\mathbf{x})},\)</span></p>
+<p>其中:</p>
+<p><span class="math notranslate nohighlight">\(g_{m} \(\mathbf{x} \) \in R^{N}\)</span> 为损失函数
+<span class="math notranslate nohighlight">\(L(y, f(\mathbf{x}))\)</span> 在 <span class="math notranslate nohighlight">\(f(\mathbf{x})=f_{m-1}(\mathbf{x})\)</span>
+处的梯度向量. 并且</p>
+<p><span class="math notranslate nohighlight">\(f_{m-1}(\mathbf{x})=\sum^{m-1}_{i=0}f_{i}(\mathbf{x}),\)</span></p>
+<p>步长: <span class="math notranslate nohighlight">\(\eta_{m}, m=1,2,\ldots, M\)</span> 可以通过线性搜索算法得到</p>
+<p><span class="math notranslate nohighlight">\(\eta_{m}=\arg\underset{\eta}{\min}E_{y,\mathbf{x}}L(y_{i}, f_{m-1}(\mathbf{x})-\eta g_{m}(\mathbf{x})).\)</span></p>
+<p>上面的过程重复迭代, 直到满足算法设定的停止条件.
+此时最速下降算法的函数更新形式为</p>
+<p><span class="math notranslate nohighlight">\(f_{m}(\mathbf{x}) = f_{m-1}(\mathbf{x})-\eta g_{m}(\mathbf{x}).\)</span></p>
+<p>可以看出, 最速下降法是一种十分贪婪的数值优化策略,
+因为算法中负梯度<span class="math notranslate nohighlight">\(g_{m}\)</span> 是函数空间<span class="math notranslate nohighlight">\(R^{N}\)</span> 中,
+损失函数<span class="math notranslate nohighlight">\(L(y, f)\)</span> ~<span class="math notranslate nohighlight">\(f=f_{m-1}\)</span> 处下降最快的局部方向.</p>
+<p>如果在训练数据上最小化损失函数<span class="math notranslate nohighlight">\(L(y,f(\mathbf{x}))\)</span> 是最终的目标,
+那么最速下降法会是一种很好的解决方法. 因为<span class="math notranslate nohighlight">\(g_{m}(\mathbf{x})\)</span>
+对于任何可导的损失函数<span class="math notranslate nohighlight">\(L(y, f(\mathbf{x}))\)</span> 都是比较容易求得的.
+然而, 最速下降法中计算得到的<span class="math notranslate nohighlight">\(g_{m}(\mathbf{x})\)</span>
+只是在训练数据上定义的,
+而梯度提升算法的目的却是将最终的模型泛化到除了训练数据之外的未知数据上.
+这样训练出的梯度提升算法才具有泛化能力.</p>
+<p>因此,
+梯度提升模型算法通过利用一个基本的学习器模型算法将负梯度向量进行拟合,
+得到了负梯度向量值<span class="math notranslate nohighlight">\(-g_{m}(\mathbf{x}_{i}), i=1,2,\ldots, N\)</span>
+的近似估计向量, 即和产生了一个在前项分步模型算法中的基本学习器.
+然后将这个近似估计向量应用在最速下降算法中代替负梯度向量,
+从而使得提升算法拥有泛化能力.
+下面是利用平方误差损失拟合负梯度向量估计值的表达式</p>
+<p><span class="math notranslate nohighlight">\(a_{m}=\arg\underset{a}{\min}\sum_{i=1}^{N}[-g_{m}(\mathbf{x}_{i})-b(\mathbf{x}_{i}; a)]^{2},\)</span></p>
+<p>当然实际应用中也可以使用其他的一些基本学习器模型来进行拟合.
+比较常用的有决策树模型拟合一棵树模型.
+而基学习器的权重系数仍然使用最速下降算法中的线性搜索算法得到</p>
+<p><span class="math notranslate nohighlight">\(\eta_{m}=\arg\underset{\eta}{\min}\sum_{i=1}^{N}L(y_{i}, f_{m-1}(\mathbf{x}_{i})+\eta b(\mathbf{x}_{i}; a_{m}))\)</span></p>
+<p>然后, 将估计近似函数进行更新</p>
+<p><span class="math notranslate nohighlight">\(f_{m}(\mathbf{x})=f_{m-1}(\mathbf{x})+\eta_{m}b(\mathbf{x}, a_{m})\)</span></p>
+<p>一般的梯度提升算法的伪代码如下:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>初始化~<span class="math notranslate nohighlight">\(\hat{f}^{[0]}(\cdot)\)</span> 为一个常数值. 通常的选择为:
+<span class="math notranslate nohighlight">\(\hat{f}^{[0]}(\cdot) \equiv \arg \underset{c}{\min}\frac{1}{N}\sum_{i=1}^{n}L(y_{i}, c),\)</span>
+或者为 <span class="math notranslate nohighlight">\(\hat{f}^{[0]} \equiv 0\)</span>, 令 <span class="math notranslate nohighlight">\(m=0\)</span>;</p></li>
+<li><p>增加 <span class="math notranslate nohighlight">\(m=1\)</span>. 计算负梯度 <span class="math notranslate nohighlight">\(-\frac{\partial}{\partial f}\)</span>
+并且计算负梯度在 <span class="math notranslate nohighlight">\(\hat{f}^{[m-1]}(\mathbf{x}_{i})\)</span> 处的值:
+<span class="math notranslate nohighlight">\(U_{i}=-\frac{\partial}{\partial f}L(y_{i}, f)\Bigg|_{f=\hat{f}^{[m-1]}(\mathbf{x}_{i})}, i=1, \ldots, N;\)</span></p></li>
+<li><p>将负梯度向量~<span class="math notranslate nohighlight">\(U_{1}, \ldots, U_{N}\)</span>
+通过一个基本的学习模型(例如: 回归) 拟合到预测变量的观测值向量
+<span class="math notranslate nohighlight">\(\mathbf{x}_{1}, \ldots, \mathbf{x}_{N}\)</span>:
+<span class="math notranslate nohighlight">\((\mathbf{x}_{i}, U_{i})^{N}_{i=1} \rightarrow \hat{b}^{[m]}(\cdot);\)</span></p></li>
+<li><p>更新估计函数:
+<span class="math notranslate nohighlight">\(\hat{f}^{[m]}(\cdot)=\hat{f}^{[m-1]}(\cdot)+\eta_{m} \cdot \hat{b}^{[m]}(\cdot),\)</span>
+其中<span class="math notranslate nohighlight">\(0 \leqslant \eta_{m} \leqslant 1\)</span> 是一个步长因子;</p></li>
+<li><p>重复第二步到第四步直到 <span class="math notranslate nohighlight">\(m=M\)</span>;</p></li>
+<li><p>输出训练得到的学习器 <span class="math notranslate nohighlight">\(f^{[M]}(\cdot)\)</span></p></li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="header-n101">
+<span id="id4"></span><h3>1.3 梯度提升模型算法的应用<a class="headerlink" href="#header-n101" title="Permalink to this headline">¶</a></h3>
+<p>在上一节, 我们已经给出了梯度提升模型算法的详细推导及其一般性算法伪代码.
+可以看出, 在梯度提升算法中, 算法在第2 步中对一个具体的损失函数
+<span class="math notranslate nohighlight">\(L(y, f(\mathbf{x}))\)</span> 求负梯度向量 <span class="math notranslate nohighlight">\(U_{i}, i=1,2,\ldots, N\)</span>,
+而在第 3 步则利用一个具体的基本学习器模型算法,
+对数据预测变量观测值和负梯度向量 <span class="math notranslate nohighlight">\(U_{i}, i=1,2,\ldots, N\)</span>
+进行拟合产生负梯度向量 <span class="math notranslate nohighlight">\(U_{i}, i=1,2,\ldots, N\)</span> 的近似估计. 因此,
+在梯度提升模型算法中, 应用不同的损失函数 <span class="math notranslate nohighlight">\(L(y,f(\mathbf{x}))\)</span>
+和不同的基本学习器模型算法可以得到不同的提升算法模型.</p>
+<p>对于损失函数的选择, 只要损失函数 <span class="math notranslate nohighlight">\(L(\cdot, \cdot)\)</span>
+满足对于它的第二个参数变量是光滑且凸的, 就可以应用到梯度提升算法的第2
+步中. 这一小节, 具体讨论梯度提升算法的一些特殊应用算法.
+包括应用平方误差损失函数的 <span class="math notranslate nohighlight">\(L_{2}\)</span>Boost 算法,
+应用负二项对数似然损失的 LogitBoost 算法
+以及基于分位数回归模型的分位数提升分类(QBC) 算法.</p>
+<p>下面是这些损失函数的形式</p>
+<ul class="simple">
+<li><p>用在<span class="math notranslate nohighlight">\(L_{2}\)</span>Boost 算法中的平方误差损失函数
+<span class="math notranslate nohighlight">\(L(y, f) = (y - f)^{2}/2,\)</span></p></li>
+<li><p>用在 LogitBoost 算法中的对数似然损失函数
+<span class="math notranslate nohighlight">\(L(y, f) = log_{2}(1+exp(-2yf)),\)</span></p></li>
+<li><p>用在分位数提升分类~(QBC) 算法中基于分位数回归模型产生的损失函数
+<span class="math notranslate nohighlight">\(L(y, f) = [y-(1-\tau)]K(f/h)\)</span></p>
+<ul>
+<li><p>其中: <span class="math notranslate nohighlight">\(K(\cdot)\)</span> 是一个标准正态分布的累积分布函数,
+h是一个给定的大于零的常数.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="gbm-python">
+<span id="header-n117"></span><h2>2.GBM模型调参(Python)<a class="headerlink" href="#gbm-python" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="header-n118">
+<span id="id5"></span><h3>2.1 参数类型<a class="headerlink" href="#header-n118" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>决策树参数</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_samples_split</span></code></p>
+<ul>
+<li><p>要分裂的树节点需要的最小样本数量，若低于某个阈值，则在此节点不分裂；</p></li>
+<li><p>用于控制过拟合，过高会阻止模型学习，并导致欠拟合；</p></li>
+<li><p>需要使用CV进行调参；</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code></p>
+<ul>
+<li><p>叶子节点中所需的最小样本数，若低于某个阈值，则此节点的父节点将不分裂，此节点的父节点作为叶子结点；</p></li>
+<li><p>用于控制过拟合，同<code class="docutils literal notranslate"><span class="pre">min_samples_split</span></code>；</p></li>
+<li><p>一般选择一个较小的值用来解决不平衡类型样本问题；</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_weight_fraction_leaf</span></code></p>
+<ul>
+<li><p>类似于<code class="docutils literal notranslate"><span class="pre">min_sample_leaf</span></code>；</p></li>
+<li><p>一般不进行设置，上面的两个参数设置就可以了；</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_depth</span></code></p>
+<ul>
+<li><p>一棵树的最大深度；</p></li>
+<li><p>用于控制过拟合，过大会导致模型比较复杂，容易出现过拟合；</p></li>
+<li><p>需要使用CV进行调参；</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code></p>
+<ul>
+<li><p>一棵树的最大叶子节点数量；</p></li>
+<li><p>一般不进行设置，设置<code class="docutils literal notranslate"><span class="pre">max_depth</span></code>就可以了；</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_features</span></code></p>
+<ul>
+<li><p>在树的某个节点进行分裂时的考虑的最大的特征个数，一般进行随机选择，较高的值越容易出现过拟合，但也取决于具体的情况；</p></li>
+<li><p>一般取特征个数的平方根(跟随机森林的选择一样)；</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Boosting参数</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">learning_rate</span></code></p>
+<ul>
+<li><p>每棵树对</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_estimators</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">subsample</span></code></p>
+<ul>
+<li><p>构建每棵数时选择的样本数；</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>其他参数</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">loss</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">init</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">random_state</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">verbose</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">warm_start</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">presort</span></code></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="header-n202">
+<span id="id6"></span><h3>2.2 调参策略<a class="headerlink" href="#header-n202" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>一般参数调节策略：</p>
+<ul>
+<li><p>选择一个相对来说较高的learning rate，先选择默认值0.1(0.05-0.2)</p></li>
+<li><p>选择一个对于这个learning rate最优的树的数量(合适的数量为：40-70)</p>
+<ul>
+<li><p>若选出的树的数量较小，可以减小learning rate 重新跑GridSearchCV</p></li>
+<li><p>若选出的树的数量较大，可以增加初始learning rate
+重新跑GridSearchCV</p></li>
+</ul>
+</li>
+<li><p>调节基于树的参数</p></li>
+<li><p>降低learning rate，增加学习期的个数得到更稳健的模型</p></li>
+</ul>
+</li>
+<li><p>对于learning rate的调节，对其他树参数设置一些默认的值</p>
+<ul>
+<li><p>min<em>samples</em>split = 500</p>
+<ul>
+<li><p>0.5-1% of total samples</p></li>
+<li><p>不平衡数据选择一个较小值</p></li>
+</ul>
+</li>
+<li><p>min<em>samples</em>leaf = 50</p>
+<ul>
+<li><p>凭感觉选择，考虑不平衡数据，选择一个较小值</p></li>
+</ul>
+</li>
+<li><p>max_depth = 8</p>
+<ul>
+<li><p>基于数据的行数和列数选择，5-8</p></li>
+</ul>
+</li>
+<li><p>mat_features = ‘sqrt’</p></li>
+<li><p>subsample = 0.8</p></li>
+</ul>
+</li>
+<li><p>调节树参数</p>
+<ul>
+<li><p>调节<code class="docutils literal notranslate"><span class="pre">max_depth</span></code>，<code class="docutils literal notranslate"><span class="pre">min_samples_split</span></code></p></li>
+<li><p>调节<code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code></p></li>
+<li><p>调节<code class="docutils literal notranslate"><span class="pre">max_features</span></code></p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="randomforest.html" class="btn btn-neutral float-right" title="Random Forest" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="adaboost.html" class="btn btn-neutral float-left" title="AdaBoost" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, wangzf.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

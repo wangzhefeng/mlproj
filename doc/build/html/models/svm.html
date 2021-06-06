@@ -1,0 +1,492 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>SVM &mdash; machine learning 1.0.0 alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="EM (Expectation Maximization algorithm)" href="EM-algorithm.html" />
+    <link rel="prev" title="奇异值分解" href="SVD.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> machine learning
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ML</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../machine-learning-steps.html">机器学习项目清单</a></li>
+</ul>
+<p class="caption"><span class="caption-text">boosting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/decisiontree.html">Decision Tree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/adaboost.html">AdaBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/gbm.html">GBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/randomforest.html">Random Forest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/xgboost.html">XGBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/lightgbm.html">LightGBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/catboost.html">CatBoost</a></li>
+</ul>
+<p class="caption"><span class="caption-text">models</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="logistic-regression.html">Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Navie-Bayes.html">朴素贝叶斯(Navie Bayes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCA.html">PCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SVD.html">奇异值分解</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SVM</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#header-n9">什么是支持向量机？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n21">线性分类器</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#header-n22">数据集的线性可分性</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n40">感知机</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#header-n41">感知机模型：</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n55">支持向量机(形式)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#function-margin-geometric-margin">函数间隔(Function Margin)与几何间隔(Geometric Margin)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#function-margin">函数间隔(Function Margin)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#geometric-margin">几何间隔(Geometric Margin)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="EM-algorithm.html">EM (Expectation Maximization algorithm)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clustering.html">Cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AB-test.html">A/B test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Ad.html">互联网广告</a></li>
+<li class="toctree-l1"><a class="reference internal" href="anti-fraud-model.html">反欺诈模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moshishibie.html">模式识别在化学化工中的应用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PLS.html">偏最小二乘回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user-portrait.html">用户画像</a></li>
+</ul>
+<p class="caption"><span class="caption-text">tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/python-pycaret.html">PyCaret</a></li>
+</ul>
+<p class="caption"><span class="caption-text">topic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topic/overfitting.html">降低模型过拟合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/accuracy.html">提高模型精度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/model_performance_theory.html">模型表现理论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/model_ensemble.html">模型融合</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine class</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/feature_engine.html">特征工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/numeric.html">Numeric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/timeseries.html">Timeseries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/categorical.html">Categorical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/image.html">Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/video.html">Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/audio.html">Audio</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine step</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/feature_build.html">特征构建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/feature_selection.html">特征选择</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/missing.html">缺失值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/outlier.html">异常值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/resample.html">特征采样</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries.html">timeseries</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-modeling.html">传统时间序列建模方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-decomposition.html">时间序列分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-season-analysis.html">时间序列季节性分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-baseline.html">时间序列分析-baseline示例</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-preprocessing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/lvbo.html">滤波</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/statsmodels.html">statsmodels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-aggregation.html">时间序列聚合计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-interpolate.html">时间序列插值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-ma.html">移动平均光滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-outlier-detection-papers.html">时间序列异常值检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-pandas-api.html">时间序列-pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-sample.html">时间序列采样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-smooth.html">时间序列平滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-visual.html">时间序列可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tsfresh.html">tsfresh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tslearn.html">tslearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-base-rule.html">时间序列基本规则法–周期因子法</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-forecasting:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ARIMA2.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ar.html">AR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/arima.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/arma.html">ARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/hwes.html">HWES 模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ma.html">MA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/sarima.html">SARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/sarimax.html">SARIMAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ses.html">SES</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/var.html">VAR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/varma.html">VARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/varmax.html">VARMAX</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-lr:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-lr/timeseries-lr.html">时间序列分析-线性回归</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-ml:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-ml/timeseries-ml.html">时间序列分析-机器学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-dl:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-dl/timeseries-dl.html">时间序列分析-深度学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-prophet:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-doc.html">Prophet 入门</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet.html">Prophet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-paper.html">Paper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Saturating-Forecasts.html">Staturating Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Trend-Changepoints.html">Prophet 趋势变化点</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Seasonality-Holiday-Regressors.html">Seasonality, Holiday Effects, And Regressors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Multiplicative-Seasonality.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Uncertainty-Intervals.html">Prophet 不确定区间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Outliers.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Non-Daily-Data.html">Prophet 非日数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Diagnostics.html">Prophet 模型评估</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Additional-Topics.html">Prophet 其他话题</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-reports:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/Daily-Female-Births-Dataset.html">时间序列分析示例1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/timeseries-forecasting-Python.html">Time Series Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/timeseries-forecasting-R.html">R 时间序列建模</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-tutorial:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-tutorial/Forecasting.html">时间序列分析预测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-tutorial/Get-to-know-your-data.html">时间序列分析教程</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">machine learning</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>SVM</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/models/svm.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="svm">
+<span id="header-n0"></span><h1>SVM<a class="headerlink" href="#svm" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>适用于高维数据；</p></li>
+<li><p>不同的核函数</p></li>
+</ul>
+<div class="section" id="header-n9">
+<span id="id1"></span><h2>什么是支持向量机？<a class="headerlink" href="#header-n9" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>支持向量机是90年代中期发展起来的基于统计学习理论的一种<code class="docutils literal notranslate"><span class="pre">有监督机器学习方法</span></code>，通过寻求<code class="docutils literal notranslate"><span class="pre">结构化风险最小</span></code>来提高学习器的泛化能力，实现<code class="docutils literal notranslate"><span class="pre">经验风险</span></code>和<code class="docutils literal notranslate"><span class="pre">置信范围</span></code>的最小化，从而达到在统计样本量较少的情况下，也能获得良好的统计规律性。</p></li>
+</ul>
+</div></blockquote>
+<p>所谓支持向量机，顾名思义，分为两个部分了解：</p>
+<ul class="simple">
+<li><p>什么是支持向量：支持或支撑平面上把两类类别划分开来的超平面的向量点；</p></li>
+<li><p>机(machine, 机器)： 一个算法；</p></li>
+</ul>
+</div>
+<div class="section" id="header-n21">
+<span id="id2"></span><h2>线性分类器<a class="headerlink" href="#header-n21" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="header-n22">
+<span id="id3"></span><h3>数据集的线性可分性<a class="headerlink" href="#header-n22" title="Permalink to this headline">¶</a></h3>
+<p>给定一个数据集</p>
+<p><span class="math notranslate nohighlight">\(T = \{(x_1,y_1),(x_2, y_2),...,(x_n, y_n)\}\)</span></p>
+<p>其中：</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x_i\in R^{n}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(y_i \in \{0, 1\}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(i=1,2, ..., n\)</span></p></li>
+</ul>
+<p>如果存在某个超平面<span class="math notranslate nohighlight">\(S\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(\omega^{T}x+b=0\)</span></p>
+<p>能够将数据集的正实例(<span class="math notranslate nohighlight">\(y=1\)</span>)和负实例(<span class="math notranslate nohighlight">\(y=0\)</span>)完全正确地分到超平面的两侧，即对所有的<span class="math notranslate nohighlight">\(y_i=1\)</span>的实例<span class="math notranslate nohighlight">\(i\)</span>，有<span class="math notranslate nohighlight">\(\omega^{T}x+b&gt;0\)</span>；对所有的<span class="math notranslate nohighlight">\(y_i=0\)</span>的实例<span class="math notranslate nohighlight">\(i\)</span>，有<span class="math notranslate nohighlight">\(\omega^{T}x+b&lt;0\)</span>，则称数据集<span class="math notranslate nohighlight">\(T\)</span>为线性可分数据集，否则称为线性不可分。</p>
+<p>一个二分类线性分类器就是要在<span class="math notranslate nohighlight">\(R^n\)</span>特征空间中找到一个超平面<span class="math notranslate nohighlight">\(S\)</span>，其方程可以表示为：</p>
+<p><span class="math notranslate nohighlight">\(\omega^{T}x+b = 0\)</span></p>
+<p>这个超平面将特征空间划分为两个部分，位于两部分的点分别被分为两类。</p>
+</div>
+<div class="section" id="header-n40">
+<span id="id4"></span><h3>感知机<a class="headerlink" href="#header-n40" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="header-n41">
+<span id="id5"></span><h4>感知机模型：<a class="headerlink" href="#header-n41" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>感知机就是一个二分类线性分类器，其目的是从特征学习出一个分类模型
+<span class="math notranslate nohighlight">\(f(\cdot)\)</span>： <span class="math notranslate nohighlight">\(y=f(z), y \in \{0, 1\}\)</span></p>
+</div></blockquote>
+<p>感知机模型是将特征变量的线性组合作为自变量：</p>
+<p><span class="math notranslate nohighlight">\(z=\omega^{T}x + b\)</span></p>
+<p>由于自变量<span class="math notranslate nohighlight">\(x\)</span>取值的范围是
+<span class="math notranslate nohighlight">\([-\infty, +\infty]\)</span>，因此，需要使用<code class="docutils literal notranslate"><span class="pre">阶跃函数(Step函数)</span></code>将自变量
+<span class="math notranslate nohighlight">\(z=\omega^{T}x + b\)</span> 映射到范围 <span class="math notranslate nohighlight">\(\{0, 1\}\)</span> 上。</p>
+<p>这里 <span class="math notranslate nohighlight">\(f(z)\)</span> 是一个阶跃函數(step function)：</p>
+<p>$$f(z) = \left{ \begin{array}{ll} 1 &amp; &amp; z \geq 0 \ 0 &amp; &amp; z &lt; 0
+\end{array} \right.</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}&gt; 感知机模型的目标就是从数据中学习得到$\omega, b$，使得正例$y=1$的特征$\omega^{T}x+b$远大于$0$，负例$y=0$的特征$\omega^{T}x + b$远小于$0$。\\#### 感知机模型学习：\\&gt; 感知机的学习就是寻找一个超平面能够将特征空间中的两个类别的数据分开，即确定感知机模型参数$\omega, b$，所以需要定义学习的损失函数并将损失函数最小化；\\
+**1.定义学习损失函数：**\\\begin{split}$$L(\omega, b)=-\frac{1}{||\omega||}\sum_{x_i \in M}y_i(\omega^{T} x_i + b) \\
+=-\sum_{x_i \in M}y_i(\omega^{T} x_i + b)$$\end{split}\\其中：\\* 集合$M$是超平面$S$的误分类点集合\\
+损失函数的意义是：误分类点到超平面的$S$的距离总和；\\
+**2.感知机学习算法：**\\&gt; 随机梯度下降算法(Stochastic gradient descent)\\最优化问题：\\$$\omega, b= argmin L(\omega, b)=-\sum_{x_i \in M}y_i(\omega^{T} x_i + b)$$\\
+算法：\\* 选取初始值：$\omega_0, b_0$
+* 在训练数据中选取数据点$(x_i, y_i)$
+* 如果$y_i(\omega\cdot x_i + b)&lt;0$
+     - $\omega \gets \omega + \eta y_i x_i$
+     - $b \gets b + \eta y_i$
+* 重新选取数据点，直到训练集中没有误分类点；\\
+### Logistic 回归\\&gt; Logistic Regression的目的是从特征学习出一个0/1分类模型 $f(\cdot)$：
+&gt; $$y = f(z), y \in \{0, 1\}$$\\
+Logistic Regression模型是将特征变量的线性组合作为自变量：\\$$z=\omega^{T}x + b$$\\由于自变量$x$取值的范围是 $[-\infty, +\infty]$，因此，需要使用`Logistic函数(Sigmoid函数)`将自变量 $z=\omega^{T}x + b$ 映射到范围 $[0, 1]$ 上，映射后的值被认为是 $y=1$ 的概率。假设：\\$$h_{\omega,b}(x)=\sigma(\omega^{T}x + b)$$\\其中$\sigma(z)$是Sigmoid函数：\\$$\sigma(z)=\frac{1}{1+e^{-z}}$$\\
+因此Logistic Regression模型的形式为：\end{aligned}\end{align} \]</div>
+<p>\left{ \begin{array}{ll} P(y=1|x, \omega) = h<em>{omega,b}(x) =
+\sigma(omega^{T}x+b)\ P(y=0|x, \omega) = 1 - h</em>{omega,b}(x) =1-
+\sigma(omega^{T}x+b) \end{array} \right.</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}当要判别一个新来的数据点$x_{test}$属于哪个类别时，只需要求解$h_{\omega, b}(x_{test}) = \sigma(\omega^{T}x_{test} + b)$：\\\begin{split}$$ y_{test}=\left\{
+\begin{array}{rcl}
+1    &amp;      &amp; h_{\omega,b}(x_{test}) \geq 0.5 &amp; \Leftrightarrow &amp; \omega^{T}x_{test}+b \geq 0\\
+0    &amp;      &amp; h_{\omega,b}(x_{test}) &lt; 0.5 &amp; \Leftrightarrow &amp; \omega^{T}x_{test}+b &lt; 0\\
+\end{array} \right.\end{split}\\Logistic
+Regression的目标就是从数据中学习得到\ :math:`\omega, b`\ ，使得正例\ :math:`y=1`\ 的特征\ :math:`\omega^{T}x+b`\ 远大于\ :math:`0`\ ，负例\ :math:`y=0`\ 的特征\ :math:`\omega^{T}x + b`\ 远小于\ :math:`0`\ 。\end{aligned}\end{align} \]</div>
+</div>
+</div>
+<div class="section" id="header-n55">
+<span id="id6"></span><h3>支持向量机(形式)<a class="headerlink" href="#header-n55" title="Permalink to this headline">¶</a></h3>
+<p>在支持向量机中，将符号进行变换：</p>
+<p>假设：</p>
+<p><span class="math notranslate nohighlight">\(h_{\omega,b}(x)=\sigma(\omega^{T}x + b)\)</span></p>
+<p>这里，只需考虑<span class="math notranslate nohighlight">\(\omega^{T}x + b\)</span>的正负问题，而不关心
+<span class="math notranslate nohighlight">\(\sigma(\cdot)\)</span> 的形式。因此将 <span class="math notranslate nohighlight">\(\sigma(\cdot)\)</span>
+进行简化，将其简单地映射到-1, 1上：</p>
+<p>:math:` sigma(z)=left{
+begin{array}{rcl}
+1     &amp;      &amp; z geq 0\
+-1    &amp;      &amp; z &lt; 0\
+end{array} right.
+`</p>
+</div>
+</div>
+<div class="section" id="function-margin-geometric-margin">
+<span id="header-n62"></span><h2>函数间隔(Function Margin)与几何间隔(Geometric Margin)<a class="headerlink" href="#function-margin-geometric-margin" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>一般而言，一个数据点距离超平面(<span class="math notranslate nohighlight">\(\omega^{T}x+b\)</span>=0)的远近可以表示为分类预测的确信或准确程度。</p></li>
+<li><p>在超平面<span class="math notranslate nohighlight">\(\omega^{T}x+b\)</span>确定的情况下，<span class="math notranslate nohighlight">\(|\omega^{T}x+b|\)</span>能够相对表示点<span class="math notranslate nohighlight">\(x\)</span>距离超平面的远近；而
+<span class="math notranslate nohighlight">\(\omega^{T}x+b\)</span>的符号与类别标记<span class="math notranslate nohighlight">\(y\)</span>的符号是否一致表示分类是否正确，可以用指标量<span class="math notranslate nohighlight">\(y\cdot (\omega^{T}x+b)\)</span>的正负性来判定或表示分类的正确性和确信度；</p></li>
+</ul>
+</div></blockquote>
+<div class="section" id="function-margin">
+<span id="header-n69"></span><h3>函数间隔(Function Margin)<a class="headerlink" href="#function-margin" title="Permalink to this headline">¶</a></h3>
+<p>函数间隔：</p>
+<p><span class="math notranslate nohighlight">\(\hat{\gamma}=y\cdot (\omega^{T}x+b)=yf(x)\)</span></p>
+<p>超平面<span class="math notranslate nohighlight">\(\omega^{T}x+b\)</span>关于训练数据<span class="math notranslate nohighlight">\(T\)</span>的函数间隔为超平面<span class="math notranslate nohighlight">\(\omega^{T}x+b\)</span>关于<span class="math notranslate nohighlight">\(T\)</span>中所有样本点<span class="math notranslate nohighlight">\((x_i, y_i)\)</span>的函数间隔的最小值：</p>
+<p><span class="math notranslate nohighlight">\(\hat{\gamma}=\min\hat{\gamma}_{i}, i = 1, 2,..., n\)</span></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>上面定义的函数间隔虽然可以表示分类预测的正确性和确信度，但在选择分类超平面时，只有函数间隔是不够的；</p></li>
+<li><p>如果成比例的改变<span class="math notranslate nohighlight">\(\omega\)</span>和<span class="math notranslate nohighlight">\(b\)</span>，比如将他们改变为<span class="math notranslate nohighlight">\(2\omega\)</span>和<span class="math notranslate nohighlight">\(2b\)</span>，虽然此时超平面没有改变，但是函数间隔的值<span class="math notranslate nohighlight">\(yf(x)\)</span>却变成了原来的4倍。</p></li>
+<li><p>解决问题:
+可以对法向量<span class="math notranslate nohighlight">\(\omega\)</span>加一些约束条件，使其表面上看起来规范化；</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="geometric-margin">
+<span id="header-n84"></span><h3>几何间隔(Geometric Margin)<a class="headerlink" href="#geometric-margin" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="EM-algorithm.html" class="btn btn-neutral float-right" title="EM (Expectation Maximization algorithm)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="SVD.html" class="btn btn-neutral float-left" title="奇异值分解" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, wangzf.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,716 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Numeric &mdash; machine learning 1.0.0 alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Text" href="text.html" />
+    <link rel="prev" title="特征工程" href="feature_engine.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> machine learning
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ML</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../machine-learning-steps.html">机器学习项目清单</a></li>
+</ul>
+<p class="caption"><span class="caption-text">boosting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/decisiontree.html">Decision Tree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/adaboost.html">AdaBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/gbm.html">GBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/randomforest.html">Random Forest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/xgboost.html">XGBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/lightgbm.html">LightGBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../boosting/catboost.html">CatBoost</a></li>
+</ul>
+<p class="caption"><span class="caption-text">models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/logistic-regression.html">Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/Navie-Bayes.html">朴素贝叶斯(Navie Bayes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/PCA.html">PCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/SVD.html">奇异值分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/svm.html">SVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/EM-algorithm.html">EM (Expectation Maximization algorithm)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/clustering.html">Cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/AB-test.html">A/B test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/Ad.html">互联网广告</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/anti-fraud-model.html">反欺诈模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/moshishibie.html">模式识别在化学化工中的应用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/PLS.html">偏最小二乘回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/user-portrait.html">用户画像</a></li>
+</ul>
+<p class="caption"><span class="caption-text">tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/python-pycaret.html">PyCaret</a></li>
+</ul>
+<p class="caption"><span class="caption-text">topic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topic/overfitting.html">降低模型过拟合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/accuracy.html">提高模型精度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/model_performance_theory.html">模型表现理论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/model_ensemble.html">模型融合</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine class</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="feature_engine.html">特征工程</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Numeric</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#standardization">1.特征缩放/特征归一化(standardization)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#standard-scaling">1.2 标准化(Standard Scaling)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#min-max-scaling">1.2 Min-Max Scaling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#max-abs-scaling">1.3 Max-Abs Scaling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#l1-l2">1.3 L1/L2 归一化:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n67">1.4 稳健缩放:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n73">2.特征离散化</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#header-n74">2.1 计数特征二值化【尺度】</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n81">2.2 计数特征分箱【分布】</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n131">3.特征转换【分布】</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#header-n132">3.1 均匀分布</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n137">3.2 对数变换【分布】</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#box-cox">3.3 指数变换(Box-Cox):</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#yeo-johnson-box-cox">3.3 Yeo-Johnson 和 Box-Cox</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#normalization">4. 样本正规化(Normalization)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries.html">Timeseries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="categorical.html">Categorical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image.html">Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="video.html">Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Audio</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine step</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/feature_build.html">特征构建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/feature_selection.html">特征选择</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/missing.html">缺失值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/outlier.html">异常值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/resample.html">特征采样</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries.html">timeseries</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-modeling.html">传统时间序列建模方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-decomposition.html">时间序列分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-season-analysis.html">时间序列季节性分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-baseline.html">时间序列分析-baseline示例</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-preprocessing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/lvbo.html">滤波</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/statsmodels.html">statsmodels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-aggregation.html">时间序列聚合计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-interpolate.html">时间序列插值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-ma.html">移动平均光滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-outlier-detection-papers.html">时间序列异常值检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-pandas-api.html">时间序列-pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-sample.html">时间序列采样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-smooth.html">时间序列平滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-visual.html">时间序列可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tsfresh.html">tsfresh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tslearn.html">tslearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-base-rule.html">时间序列基本规则法–周期因子法</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-forecasting:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ARIMA2.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ar.html">AR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/arima.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/arma.html">ARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/hwes.html">HWES 模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ma.html">MA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/sarima.html">SARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/sarimax.html">SARIMAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ses.html">SES</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/var.html">VAR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/varma.html">VARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/varmax.html">VARMAX</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-lr:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-lr/timeseries-lr.html">时间序列分析-线性回归</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-ml:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-ml/timeseries-ml.html">时间序列分析-机器学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-dl:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-dl/timeseries-dl.html">时间序列分析-深度学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-prophet:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-doc.html">Prophet 入门</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet.html">Prophet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-paper.html">Paper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Saturating-Forecasts.html">Staturating Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Trend-Changepoints.html">Prophet 趋势变化点</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Seasonality-Holiday-Regressors.html">Seasonality, Holiday Effects, And Regressors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Multiplicative-Seasonality.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Uncertainty-Intervals.html">Prophet 不确定区间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Outliers.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Non-Daily-Data.html">Prophet 非日数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Diagnostics.html">Prophet 模型评估</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Additional-Topics.html">Prophet 其他话题</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-reports:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/Daily-Female-Births-Dataset.html">时间序列分析示例1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/timeseries-forecasting-Python.html">Time Series Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/timeseries-forecasting-R.html">R 时间序列建模</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-tutorial:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-tutorial/Forecasting.html">时间序列分析预测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-tutorial/Get-to-know-your-data.html">时间序列分析教程</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">machine learning</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Numeric</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/feature_engine_class/numeric.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="numeric">
+<span id="header-n0"></span><h1>Numeric<a class="headerlink" href="#numeric" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>异常值 偏态分布</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>特征尺度</p></li>
+<li><p>特征分布</p></li>
+</ul>
+<div class="section" id="standardization">
+<span id="header-n11"></span><h2>1.特征缩放/特征归一化(standardization)<a class="headerlink" href="#standardization" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>当一组输入特征的尺度相差很大，并且模型对于特征的尺度很敏感，就需要进行特征缩放(特征正规化)，从而消除数据特征之间量纲的影响，使得不同的特征之间具有可比性.</p></li>
+<li><p>特征缩放总是将特征除以一个常数(正规化常数)，因此不会改变单特征的分布，只有数据尺度发生了变化。对数值型特征的特征做归一化可以将所有特征都统一到一个大致相同的数值区间内.</p></li>
+<li><p>什么样的特征需要正规化:</p>
+<ul>
+<li><p>如果模型是输入特征的平滑函数，那么模型对输入的的尺度是非常敏感的</p></li>
+<li><p>通过梯度下降法求解的模型通常需要进行特征正规化</p>
+<ul>
+<li><p>线性回归</p></li>
+<li><p>逻辑回归</p></li>
+<li><p>支持向量机</p></li>
+<li><p>应用正则化方法的模型</p></li>
+<li><p>神经网络</p></li>
+</ul>
+</li>
+<li><p>使用欧式距离的方法，比如：k均值聚类、最近邻方法、径向基核函数，通常需要对特征进行标准化，以便将输出控制在期望的范围内</p></li>
+</ul>
+</li>
+</ul>
+<div class="section" id="standard-scaling">
+<span id="header-n38"></span><h3>1.2 标准化(Standard Scaling)<a class="headerlink" href="#standard-scaling" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>标准化也称为：方差缩放、零均值归一化、Z-Score Normalization</p></li>
+<li><p>标准化后的特征均值为0，方差为1</p></li>
+<li><p>如果初始特征服从正态分布，标准化后的特征也服从正态分布(标准正态分布)</p></li>
+<li><p>不要中心化稀疏数据</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(x_{transformed} = \frac{x - mean(x)}{std(x)}\)</span></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="n">ss</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">(</span><span class="n">with_mean</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">with_std</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">featureScaled</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">()(</span><span class="n">feature</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="min-max-scaling">
+<span id="header-n50"></span><h3>1.2 Min-Max Scaling<a class="headerlink" href="#min-max-scaling" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Min-Max Scaling 对原始特征进行线性变换，将特征值压缩(或扩展)到
+<span class="math notranslate nohighlight">\([0, 1]\)</span>
+区间中，实现对原始特征的等比缩放。特征中所有观测值的和为1</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(x_{transformed} = \frac{x - min(x)}{max(x) - min(x)}\)</span></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
+
+<span class="n">mms</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+<span class="n">featureScaled</span> <span class="o">=</span> <span class="n">mms</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="max-abs-scaling">
+<span id="header-n56"></span><h3>1.3 Max-Abs Scaling<a class="headerlink" href="#max-abs-scaling" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Max-Abs Scaling 对原始特征进行线性变换，将特征值压缩(或扩展)到
+<span class="math notranslate nohighlight">\([-1, 1]\)</span> 区间中，实现对原始特征的等比缩放</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(x_{transformed} = \frac{x}{max(x)}\)</span></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MaxAbsScaler</span>
+
+<span class="n">mas</span> <span class="o">=</span> <span class="n">MaxAbsScaler</span><span class="p">()</span>
+<span class="n">featureScaled</span> <span class="o">=</span> <span class="n">mas</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="l1-l2">
+<span id="header-n62"></span><h3>1.3 L1/L2 归一化:<a class="headerlink" href="#l1-l2" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>将特征除以一个归一化常数，比如：<span class="math notranslate nohighlight">\(l2\)</span>, <span class="math notranslate nohighlight">\(l1\)</span>
+范数，使得特征的范数为为常数</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">Normalize</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="header-n67">
+<span id="id1"></span><h3>1.4 稳健缩放:<a class="headerlink" href="#header-n67" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>对于包含异常值的特征，标准化的效果不好，可以使用稳健的特征缩放技术对特征进行缩放</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">RobustScaler</span>
+
+<span class="n">rs</span> <span class="o">=</span> <span class="n">RobustScaler</span><span class="p">(</span><span class="n">with_centering</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                  <span class="n">with_scaling</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                  <span class="n">quantile_range</span> <span class="o">=</span> <span class="p">(</span><span class="mf">25.0</span><span class="p">,</span> <span class="mf">75.0</span><span class="p">),</span>
+                  <span class="n">copy</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">transform_data</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="header-n73">
+<span id="id2"></span><h2>2.特征离散化<a class="headerlink" href="#header-n73" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="header-n74">
+<span id="id3"></span><h3>2.1 计数特征二值化【尺度】<a class="headerlink" href="#header-n74" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>当数据被大量且快速地生成时很有可能包含一些极端值，这时就应该检查数据的尺度，确定是应该保留数据的原始数值形式，还是应该将他们转换为二值数据，或者进行粗粒度的分箱操作；</p></li>
+<li><p>二值目标变量是一个既简单又稳健的衡量指标；</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">Binarizer</span>
+<span class="n">bined</span> <span class="o">=</span> <span class="n">Binarizer</span><span class="p">(</span><span class="n">threshod</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">copy</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">transformed_data</span> <span class="o">=</span> <span class="n">bined</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="header-n81">
+<span id="id4"></span><h3>2.2 计数特征分箱【分布】<a class="headerlink" href="#header-n81" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p>在线性模型中，同一线性系数应该对所有可能的计数值起作用;</p></li>
+<li><p>过大的计数值对无监督学习方法也会造成破坏，比如:k-均值聚类等基于欧式距离的方法，它们使用欧式距离作为相似度函数来测量数据点之间的相似度，数据向量某个元素中过大的计数值对相似度的影响会远超其他元素，从而破坏整体的相似度测量;</p></li>
+<li><p>区间量化可以将连续型数值映射为离散型数值，可以将这种离散型数值看作一种有序的分箱序列，它表示的是对密度的测量；</p></li>
+<li><p>为了对数据进行区间量化，必须确定每个分箱的宽度：</p>
+<ul>
+<li><p>固定宽度分箱</p></li>
+<li><p>自适应分箱</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">KBinsDiscretizer</span>
+<span class="n">kbins1</span> <span class="o">=</span> <span class="n">KBinsDiscretizer</span><span class="p">(</span><span class="n">n_bins</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">encode</span> <span class="o">=</span> <span class="s2">&quot;onehot&quot;</span><span class="p">,</span> <span class="n">strategy</span> <span class="o">=</span> <span class="s2">&quot;quantile&quot;</span><span class="p">)</span>
+<span class="n">kbins2</span> <span class="o">=</span> <span class="n">KBinsDiscretizer</span><span class="p">(</span><span class="n">n_bins</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">encode</span> <span class="o">=</span> <span class="s2">&quot;onehot-dense&quot;</span><span class="p">,</span> <span class="n">strategy</span> <span class="o">=</span> <span class="s2">&quot;uniform&quot;</span><span class="p">)</span>
+<span class="n">kbins3</span> <span class="o">=</span> <span class="n">KBinsDiscretizer</span><span class="p">(</span><span class="n">n_bins</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">encode</span> <span class="o">=</span> <span class="s2">&quot;ordinal&quot;</span><span class="p">,</span> <span class="n">strategy</span> <span class="o">=</span> <span class="s2">&quot;kmeans&quot;</span><span class="p">)</span>
+<span class="n">transformed_data</span> <span class="o">=</span> <span class="n">kbins1</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>固定宽度分箱:</strong></p>
+<ul class="simple">
+<li><p>通过固定宽度，每个分箱中会包含一个具体范围内的数值。这些范围可以人工定制，也可以通过自动分段来生成，它们可以是线性的，也可以是指数性的</p>
+<ul>
+<li><p>线性</p>
+<ul>
+<li><p>要将计数值映射到分箱，只需要计数值除以分箱的宽度，然后取整数部分</p></li>
+</ul>
+</li>
+<li><p>指数</p>
+<ul>
+<li><p>当数值横跨多个数量级时，最好按照10的幂(或任何常数的幂)来进行分组.要将计数值映射到分箱，需要取计数值的对数。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>APIs:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">floor_divide</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Examples:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># 固定宽度</span>
+<span class="n">small_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">new_small_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor_divide</span><span class="p">(</span><span class="n">small_counts</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">new_small_counts</span><span class="p">)</span>
+
+
+<span class="c1"># 指数宽度</span>
+<span class="n">large_counts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">296</span><span class="p">,</span> <span class="mi">8286</span><span class="p">,</span> <span class="mi">64011</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">725</span><span class="p">,</span> <span class="mi">867</span><span class="p">,</span> <span class="mi">2215</span><span class="p">,</span> <span class="mi">7689</span><span class="p">,</span>
+                <span class="mi">11495</span><span class="p">,</span> <span class="mi">91897</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">7917</span><span class="p">,</span> <span class="mi">926</span><span class="p">,</span> <span class="mi">122</span><span class="p">,</span> <span class="mi">22222</span><span class="p">]</span>
+<span class="n">new_large_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">large_counts</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">new_large_counts</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>分位数分箱:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>如果计数数值中有比较大的缺口，就会产生很多没有任何数据的空箱子；</p></li>
+<li><p>可以根据数据的分布特点，利用分布的分位数进行自适应的箱体定位</p>
+<ul>
+<li><p>分位数是可以将数据划分为相等的若干份的数的值</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p>APIs:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">qcut</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Examples:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">large_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">296</span><span class="p">,</span> <span class="mi">8286</span><span class="p">,</span> <span class="mi">64011</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">725</span><span class="p">,</span> <span class="mi">867</span><span class="p">,</span> <span class="mi">2215</span><span class="p">,</span> <span class="mi">7689</span><span class="p">,</span>
+                          <span class="mi">11495</span><span class="p">,</span> <span class="mi">91897</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">7917</span><span class="p">,</span> <span class="mi">926</span><span class="p">,</span> <span class="mi">122</span><span class="p">,</span> <span class="mi">22222</span><span class="p">])</span>
+<span class="n">new_large_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">qcut</span><span class="p">(</span><span class="n">large_counts</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="header-n131">
+<span id="id5"></span><h2>3.特征转换【分布】<a class="headerlink" href="#header-n131" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="header-n132">
+<span id="id6"></span><h3>3.1 均匀分布<a class="headerlink" href="#header-n132" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>将特征转换为 <span class="math notranslate nohighlight">\([0, 1]\)</span> 区间的均匀分布</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">QuantileTransformer</span>
+
+<span class="n">qt</span> <span class="o">=</span> <span class="n">QuantileTransformer</span><span class="p">(</span><span class="n">random_state</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">featureScaled</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="header-n137">
+<span id="id7"></span><h3>3.2 对数变换【分布】<a class="headerlink" href="#header-n137" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p>对数函数可以对大数值的范围进行压缩，对小数值的范围进行扩展</p></li>
+<li><p>对于具有重尾分布的正数值的处理，对数变换是一个非常强大的工具</p>
+<ul>
+<li><p>与正态分布相比，重尾分布的概率质量更多地位于尾部</p></li>
+<li><p>对数变换压缩了分布高端的尾部，使之成为较短的尾部，并将低端扩展为更长的头部，即：经过对数变换后，直方图在重尾的集中趋势被减弱了，在
+<span class="math notranslate nohighlight">\(x\)</span> 轴上的分布更均匀了一些</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(log_{a}x\)</span>:</p>
+<ul>
+<li><p>将 <span class="math notranslate nohighlight">\((0, 1)\)</span> 这个小区间中的数映射到包含全部负数的区间:
+<span class="math notranslate nohighlight">\((-\infty, 0)\)</span></p></li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(log_{10}x\)</span>:</p>
+<ul>
+<li><p>将 <span class="math notranslate nohighlight">\([0, 10]\)</span> 这个区间中的数映射到 <span class="math notranslate nohighlight">\([0, 1]\)</span></p></li>
+<li><p>将 <span class="math notranslate nohighlight">\([10, 100]\)</span> 这个区间中的数映射到 <span class="math notranslate nohighlight">\([1, 2]\)</span></p></li>
+<li><p>…</p></li>
+</ul>
+</li>
+</ul>
+<p>对数变换:</p>
+<p>APIs:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">log1p</span><span class="p">()</span>
+<span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="box-cox">
+<span id="header-n167"></span><h3>3.3 指数变换(Box-Cox):<a class="headerlink" href="#box-cox" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>指数变换是个变换族，对数变换只是指数变换的一个特例，它们都是方差稳定变换</p></li>
+<li><p>指数变换可以改变变量的分布，使得方差不再依赖于均值</p></li>
+<li><p>平方根变换和对数变换都可以简单地推广为 Box-Cox 变换</p></li>
+<li><p>常用的指数变换：</p>
+<ul>
+<li><p>Box-Cox 变换</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(x_transformed = \frac{x^{\lambda} - 1}{\lambda}, \lambda \neq 0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(x_transformed = log1p(x), \lambda = 0\)</span></p></li>
+</ul>
+</li>
+<li><p>平方根(<span class="math notranslate nohighlight">\(\sqrt{x}\)</span>)变换</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\lambda = 0.5\)</span></p></li>
+</ul>
+</li>
+<li><p>对数变换(np.log1p(x), np.log10(x + 1))</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\lambda = 0\)</span></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">boxcox</span>
+<span class="c1"># 对数变换</span>
+<span class="n">rc_log</span> <span class="o">=</span> <span class="n">boxcox</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;feature&quot;</span><span class="p">],</span> <span class="n">lmbda</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Box-Cox:默认情况下，Scipy 在实现 Box-Cox 变换时会找出使得输出最接近于正态分布的 lambda 参数</span>
+<span class="n">rc_boxcox</span> <span class="o">=</span> <span class="n">boxcox</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;feature&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>对比特征的分布与正态分布</p>
+<ul>
+<li><p>概率图(probplot):用于比较特征的实际分布与理论分布，它本质上是一种表示实测分位数和理论分位数的关系的散点图</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">probplot</span>
+<span class="n">probplot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;feature&quot;</span><span class="p">],</span> <span class="n">dist</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norn</span><span class="p">,</span> <span class="n">plot</span> <span class="o">=</span> <span class="n">ax</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="yeo-johnson-box-cox">
+<span id="header-n203"></span><h3>3.3 Yeo-Johnson 和 Box-Cox<a class="headerlink" href="#yeo-johnson-box-cox" title="Permalink to this headline">¶</a></h3>
+<p>Yeo-Johnson 转换</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{split}
+x_i^{(\lambda)} =
+\begin{cases}
+ [(x_i + 1)^\lambda - 1] / \lambda &amp; \text{if } \lambda \neq 0, x_i \geq 0, \\\\
+\ln{(x_i) + 1} &amp; \text{if } \lambda = 0, x_i \geq 0 \\\\
+-[(-x_i + 1)^{2 - \lambda} - 1] / (2 - \lambda) &amp; \text{if } \lambda \neq 2, x_i &lt; 0, \\\\
+ - \ln (- x_i + 1) &amp; \text{if } \lambda = 2, x_i &lt; 0
+\end{cases}\end{split}\end{split}\]</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PowerTransformer</span>
+
+<span class="n">pt</span> <span class="o">=</span> <span class="n">PowerTransformer</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;yeo-johnson&quot;</span><span class="p">,</span> <span class="n">standardize</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">featureTrans</span> <span class="o">=</span> <span class="n">pt</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Box-Cox 转换</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{split}x_i^{(\lambda)} =
+\begin{cases}
+\dfrac{x_i^\lambda - 1}{\lambda} &amp; \text{if } \lambda \neq 0, \\\\
+\ln{(x_i)} &amp; \text{if } \lambda = 0,
+\end{cases}\end{split}\end{split}\]</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PowerTransformer</span>
+
+<span class="n">pt</span> <span class="o">=</span> <span class="n">PowerTransformer</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;box-cox&quot;</span><span class="p">,</span> <span class="n">standardize</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">featureTrans</span> <span class="o">=</span> <span class="n">pt</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="normalization">
+<span id="header-n210"></span><h2>4. 样本正规化(Normalization)<a class="headerlink" href="#normalization" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Normalization is the process of scaling individual samples to have
+unit norm.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">Normalizer</span>
+
+<span class="n">norm</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
+<span class="n">df_norm</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="text.html" class="btn btn-neutral float-right" title="Text" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="feature_engine.html" class="btn btn-neutral float-left" title="特征工程" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, wangzf.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,964 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Welcome to machinelearning’s documentation! &mdash; machine learning 1.0.0 alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="机器学习项目清单" href="machine-learning-steps.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> machine learning
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ML</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="machine-learning-steps.html">机器学习项目清单</a></li>
+</ul>
+<p class="caption"><span class="caption-text">boosting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="boosting/decisiontree.html">Decision Tree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boosting/adaboost.html">AdaBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boosting/gbm.html">GBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boosting/randomforest.html">Random Forest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boosting/xgboost.html">XGBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boosting/lightgbm.html">LightGBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boosting/catboost.html">CatBoost</a></li>
+</ul>
+<p class="caption"><span class="caption-text">models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="models/logistic-regression.html">Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/Navie-Bayes.html">朴素贝叶斯(Navie Bayes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/PCA.html">PCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/SVD.html">奇异值分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/svm.html">SVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/EM-algorithm.html">EM (Expectation Maximization algorithm)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/clustering.html">Cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/AB-test.html">A/B test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/Ad.html">互联网广告</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/anti-fraud-model.html">反欺诈模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/moshishibie.html">模式识别在化学化工中的应用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/PLS.html">偏最小二乘回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/user-portrait.html">用户画像</a></li>
+</ul>
+<p class="caption"><span class="caption-text">tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tools/python-pycaret.html">PyCaret</a></li>
+</ul>
+<p class="caption"><span class="caption-text">topic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="topic/overfitting.html">降低模型过拟合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topic/accuracy.html">提高模型精度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topic/model_performance_theory.html">模型表现理论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topic/model_ensemble.html">模型融合</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine class</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/feature_engine.html">特征工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/numeric.html">Numeric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/timeseries.html">Timeseries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/categorical.html">Categorical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/image.html">Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/video.html">Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/audio.html">Audio</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine step</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_step/feature_build.html">特征构建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_step/feature_selection.html">特征选择</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_step/missing.html">缺失值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_step/outlier.html">异常值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_step/resample.html">特征采样</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries/timeseries.html">timeseries</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries/timeseries-modeling.html">传统时间序列建模方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries/timeseries-decomposition.html">时间序列分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries/timeseries-season-analysis.html">时间序列季节性分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries/timeseries-baseline.html">时间序列分析-baseline示例</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-preprocessing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/lvbo.html">滤波</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/statsmodels.html">statsmodels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-aggregation.html">时间序列聚合计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-interpolate.html">时间序列插值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-ma.html">移动平均光滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-outlier-detection-papers.html">时间序列异常值检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-pandas-api.html">时间序列-pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-sample.html">时间序列采样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-smooth.html">时间序列平滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-visual.html">时间序列可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/tsfresh.html">tsfresh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/tslearn.html">tslearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-base-rule.html">时间序列基本规则法–周期因子法</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-forecasting:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/ARIMA2.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/ar.html">AR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/arima.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/arma.html">ARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/hwes.html">HWES 模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/ma.html">MA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/sarima.html">SARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/sarimax.html">SARIMAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/ses.html">SES</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/var.html">VAR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/varma.html">VARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/varmax.html">VARMAX</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-lr:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-lr/timeseries-lr.html">时间序列分析-线性回归</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-ml:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-ml/timeseries-ml.html">时间序列分析-机器学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-dl:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-dl/timeseries-dl.html">时间序列分析-深度学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-prophet:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-doc.html">Prophet 入门</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet.html">Prophet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-paper.html">Paper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Saturating-Forecasts.html">Staturating Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Trend-Changepoints.html">Prophet 趋势变化点</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Seasonality-Holiday-Regressors.html">Seasonality, Holiday Effects, And Regressors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Multiplicative-Seasonality.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Uncertainty-Intervals.html">Prophet 不确定区间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Outliers.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Non-Daily-Data.html">Prophet 非日数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Diagnostics.html">Prophet 模型评估</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Additional-Topics.html">Prophet 其他话题</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-reports:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-reports/Daily-Female-Births-Dataset.html">时间序列分析示例1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-reports/timeseries-forecasting-Python.html">Time Series Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-reports/timeseries-forecasting-R.html">R 时间序列建模</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-tutorial:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-tutorial/Forecasting.html">时间序列分析预测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-tutorial/Get-to-know-your-data.html">时间序列分析教程</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">machine learning</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Welcome to machinelearning’s documentation!</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="welcome-to-machinelearning-s-documentation">
+<h1>Welcome to machinelearning’s documentation!<a class="headerlink" href="#welcome-to-machinelearning-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">ML</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="machine-learning-steps.html">机器学习项目清单</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="machine-learning-steps.html#id2">1.架构问题,关注蓝图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="machine-learning-steps.html#id3">2.获取数据</a></li>
+<li class="toctree-l2"><a class="reference internal" href="machine-learning-steps.html#id4">3.研究数据</a></li>
+<li class="toctree-l2"><a class="reference internal" href="machine-learning-steps.html#id5">4.准备数据</a></li>
+<li class="toctree-l2"><a class="reference internal" href="machine-learning-steps.html#id6">5.列出期望的模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="machine-learning-steps.html#id7">6.微调模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="machine-learning-steps.html#id8">7.展示解决方案</a></li>
+<li class="toctree-l2"><a class="reference internal" href="machine-learning-steps.html#id9">8.启动、监视、维护系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="machine-learning-steps.html#id10">9.模型优化</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">boosting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="boosting/decisiontree.html">Decision Tree</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="boosting/decisiontree.html#id1">1.决策树模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/decisiontree.html#id2">2.决策树学习基本算法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/decisiontree.html#id3">3.决策树节点分裂算法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/decisiontree.html#id7">4.决策树剪枝</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/decisiontree.html#id8">5.决策树模型优缺点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/decisiontree.html#sklearn">6.决策树在<code class="docutils literal notranslate"><span class="pre">sklearn</span></code>中的实现简单用法</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="boosting/adaboost.html">AdaBoost</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="boosting/adaboost.html#ensemble-learning">1.集成学习(ensemble learning)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/adaboost.html#header-n12">2.AdaBoost 模型理论</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/adaboost.html#header-n50">3.AdaBoost 使用</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="boosting/gbm.html">GBM</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="boosting/gbm.html#header-n0">1.GBM模型原理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/gbm.html#gbm-python">2.GBM模型调参(Python)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="boosting/randomforest.html">Random Forest</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="boosting/randomforest.html#base-learner">1.随机森林的基学习器(base learner)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/randomforest.html#header-n31">2.随机森林的随机性</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/randomforest.html#header-n39">3.随机森林的构建过程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/randomforest.html#header-n125">4.随机森林的优缺点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/randomforest.html#header-n173">5. 随机森林的特征选择功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/randomforest.html#header-n204">6.随机森林的性质、性能、参数</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="boosting/xgboost.html">XGBoost</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="boosting/xgboost.html#header-n0">1.XGBoost 模型特点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/xgboost.html#header-n65">2.XGBoost 模型理论</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/xgboost.html#header-n169">3.XGBoost 使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/xgboost.html#xgboost-api">4.XGBoost API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/xgboost.html#header-n245">5.XGBoost调参</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="boosting/lightgbm.html">LightGBM</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="boosting/lightgbm.html#id1">1.LightGBM 特点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/lightgbm.html#id2">2.LightGBM 资源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/lightgbm.html#id4">3.LightGBM 安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/lightgbm.html#id5">4.LightGBM 数据接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/lightgbm.html#id10">5.LightGBM 设置参数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/lightgbm.html#id11">6.LightGBM 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/lightgbm.html#lightgbm-api">7.LightGBM API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/lightgbm.html#id16">8.LightGBM 示例</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="boosting/catboost.html">CatBoost</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="boosting/catboost.html#header-n0">1.CatBoost 模型特点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/catboost.html#header-n31">2.CatBoost 模型理论</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/catboost.html#header-n33">3.CatBoost 使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosting/catboost.html#catboost-api">4.CatBoost API</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="models/logistic-regression.html">Logistic Regression</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models/logistic-regression.html#header-n3">角度1 从线性模型出发</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/logistic-regression.html#loss-function">Loss Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/logistic-regression.html#header-n44">Loss Function优化方法：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/logistic-regression.html#header-n52">Logistic Regression 实现</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models/Navie-Bayes.html">朴素贝叶斯(Navie Bayes)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models/Navie-Bayes.html#header-n16">模型推导</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/Navie-Bayes.html#header-n36">模型学习方法</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models/PCA.html">PCA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models/PCA.html#header-n3">数据降维</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/PCA.html#header-n6">降维的目的：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/PCA.html#header-n18">常见降维模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/PCA.html#header-n27">主成分分析</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models/SVD.html">奇异值分解</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models/SVD.html#test">test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/SVD.html#header-n4">test</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models/svm.html">SVM</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models/svm.html#header-n9">什么是支持向量机？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/svm.html#header-n21">线性分类器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/svm.html#function-margin-geometric-margin">函数间隔(Function Margin)与几何间隔(Geometric Margin)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models/EM-algorithm.html">EM (Expectation Maximization algorithm)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models/EM-algorithm.html#em">EM算法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/EM-algorithm.html#header-n6">EM算法收敛性</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/EM-algorithm.html#header-n8">高斯混合模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/EM-algorithm.html#header-n10">EM算法的推广</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models/clustering.html">Cluster</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models/clustering.html#k-means">K-Means</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/clustering.html#header-n7">层次聚类</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models/AB-test.html">A/B test</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models/AB-test.html#header-n4">什么是A/B test？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/AB-test.html#header-n12">为什么需要A/B test？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/AB-test.html#header-n31">如何做A/B test？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/AB-test.html#header-n91">为什么需要对A/B test的结果做分析？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/AB-test.html#header-n143">A/B test相关的统计学理论有哪些？</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models/Ad.html">互联网广告</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models/Ad.html#header-n3">互联网广告简史</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/Ad.html#header-n102">互联网广告类型</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models/anti-fraud-model.html">反欺诈模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models/anti-fraud-model.html#test">test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/anti-fraud-model.html#header-n4">test</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models/moshishibie.html">模式识别在化学化工中的应用</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models/moshishibie.html#test">test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/moshishibie.html#header-n5">test</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models/PLS.html">偏最小二乘回归</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models/PLS.html#test1">test1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/PLS.html#test">test</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models/user-portrait.html">用户画像</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models/user-portrait.html#header-n4">用户画像的作用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/user-portrait.html#header-n17">用户流量的三大终极问题：认知用户</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/user-portrait.html#header-n58">效果广告、精准推送、用户变现、用户召回</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/user-portrait.html#header-n60">搜索、推荐</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/user-portrait.html#header-n62">风控</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/user-portrait.html#header-n64">大数据分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/user-portrait.html#header-n66">小结</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tools/python-pycaret.html">PyCaret</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tools/python-pycaret.html#test">1.test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools/python-pycaret.html#id1">2.test</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">topic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="topic/overfitting.html">降低模型过拟合</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="topic/overfitting.html#id2">如何处理模型的过拟合问题？</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="topic/accuracy.html">提高模型精度</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="topic/accuracy.html#test">1.test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topic/accuracy.html#id2">2.test</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="topic/model_performance_theory.html">模型表现理论</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="topic/model_performance_theory.html#id2">模型的泛化误差分解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topic/model_performance_theory.html#id3">方差-偏差</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="topic/model_ensemble.html">模型融合</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="topic/model_ensemble.html#voting">1.Voting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topic/model_ensemble.html#averaging">2.Averaging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topic/model_ensemble.html#bagging">3.Bagging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topic/model_ensemble.html#stacking">4.Stacking</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">feature engine class</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/feature_engine.html">特征工程</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/feature_engine.html#header-n4">语录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/feature_engine.html#header-n15">特征工程</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/numeric.html">Numeric</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/numeric.html#standardization">1.特征缩放/特征归一化(standardization)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/numeric.html#header-n73">2.特征离散化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/numeric.html#header-n131">3.特征转换【分布】</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/numeric.html#normalization">4. 样本正规化(Normalization)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/text.html">Text</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/text.html#header-n3">1.文本数据特征提取及处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/text.html#test">2.test</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/timeseries.html">Timeseries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/timeseries.html#id1">大纲</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/timeseries.html#id2">1.时间特征</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/timeseries.html#id5">2.时间序列历史特征</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/timeseries.html#id8">3.时间序列交叉特征</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/categorical.html">Categorical</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/categorical.html#header-n3">1.类别特征编码</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/categorical.html#header-n102">2.分箱计数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/categorical.html#header-n104">3.特征组合</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/image.html">Image</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/image.html#header-n3">图像数据不足时的处理方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/image.html#header-n42">1.图像处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/image.html#header-n47">2. 图像特征提取</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/image.html#header-n49">3. 生成对抗网络</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/image.html#header-n50">4. 迁移学习</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/video.html">Video</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/video.html#test-1">test 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/video.html#test-2">test 2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_class/audio.html">Audio</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/audio.html#id1">1.音频数据了解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_class/audio.html#id6">2.音频数据读写</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">feature engine step</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_step/feature_build.html">特征构建</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_step/feature_build.html#header-n3">1. 交互特征</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_step/feature_build.html#header-n10">2. 多项式特征</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_step/feature_build.html#header-n16">3. 自动特征工程</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_step/feature_selection.html">特征选择</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_step/feature_selection.html#header-n5">1. 过滤</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_step/feature_selection.html#header-n15">2. 打包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_step/feature_selection.html#header-n20">3. 嵌入式</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_step/missing.html">缺失值处理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_step/missing.html#header-n3">1.缺失值处理理论</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_step/missing.html#header-n32">2.缺失值处理实战</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_step/outlier.html">异常值处理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_step/outlier.html#header-n7">1.异常值出现的原因</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_step/outlier.html#header-n20">2.异常值检测方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_step/outlier.html#header-n43">3.特征异常值处理方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_step/outlier.html#header-n67">4.极值分析</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engine_step/resample.html">特征采样</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_step/resample.html#header-n4">1.过采样</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_step/resample.html#header-n7">2.欠采样</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_step/resample.html#smote">3.SMOTE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engine_step/resample.html#api">4.API</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries/timeseries.html">timeseries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries/timeseries.html#id1">目标</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries/timeseries.html#python">时间序列分析 Python 工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries/timeseries.html#id2">时间序列数据预处理方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries/timeseries.html#id3">时间序列预测方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries/timeseries.html#id4">时间序列的分解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries/timeseries.html#reference">reference</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">timeseries-models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries/timeseries-modeling.html">传统时间序列建模方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries/timeseries-modeling.html#header-n3">1.时间序列介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries/timeseries-modeling.html#header-n51">2.时间序列的预处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries/timeseries-modeling.html#header-n56">3.时间序列建模</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries/timeseries-decomposition.html">时间序列分解</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries/timeseries-decomposition.html#id2">1.时间序列分解模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries/timeseries-decomposition.html#id6">2.时间序列的分解方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries/timeseries-decomposition.html#id7">3.时间序列的长期趋势分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries/timeseries-decomposition.html#id11">4.时间序列季节变动分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries/timeseries-decomposition.html#id14">5.时间序列周期性分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries/timeseries-decomposition.html#id17">6.时间序列不规则变动分析</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries/timeseries-season-analysis.html">时间序列季节性分析</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries/timeseries-season-analysis.html#test-1">test 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries/timeseries-season-analysis.html#test-2">test 2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries/timeseries-baseline.html">时间序列分析-baseline示例</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries/timeseries-baseline.html#header-n3">baseline 特点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries/timeseries-baseline.html#header-n11">1.数据</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries/timeseries-baseline.html#header-n16">2. baseline 模型</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">timeseries-preprocessing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/lvbo.html">滤波</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/lvbo.html#header-n3">1.滤波算法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/lvbo.html#python">2.滤波算法 Python 实现</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/statsmodels.html">statsmodels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/statsmodels.html#time-series-analysis-tsa">1. Time Series analysis <code class="docutils literal notranslate"><span class="pre">tsa</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/statsmodels.html#time-series-analysis-by-state-space-methods-statespace">2.Time Series Analysis by State Space Methods <code class="docutils literal notranslate"><span class="pre">statespace</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/statsmodels.html#vector-autoregressions-tsa-vector-ar">3.Vector Autoregressions <code class="docutils literal notranslate"><span class="pre">tsa.vector_ar</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-aggregation.html">时间序列聚合计算</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/timeseries-aggregation.html#test-1">test 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/timeseries-aggregation.html#test-2">test 2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-interpolate.html">时间序列插值</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/timeseries-interpolate.html#pandas">1.Pandas 插值算法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/timeseries-interpolate.html#scipy">2. Scipy 插值算法</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-ma.html">移动平均光滑</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/timeseries-ma.html#header-n10">简单移动平均</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/timeseries-ma.html#header-n12">加权移动平均</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/timeseries-ma.html#header-n14">指数加权移动平均</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-outlier-detection-papers.html">时间序列异常值检测</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/timeseries-outlier-detection-papers.html#header-n3">1.基于滑动窗口预测的水文时间序列异常检测</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/timeseries-outlier-detection-papers.html#time-series-clustering-a-decade-review">2. Time-series clustering - A decade review</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-pandas-api.html">时间序列-pandas</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/timeseries-pandas-api.html#pandas-to-datetime">pandas.to_datetime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/timeseries-pandas-api.html#pandas-shift">pandas.shift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/timeseries-pandas-api.html#pandas-resample">pandas.resample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/timeseries-pandas-api.html#pandas-concat">pandas.concat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/timeseries-pandas-api.html#pandas-merge">pandas.merge</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-sample.html">时间序列采样</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/timeseries-sample.html#header-n3">1. 时间序列降采样</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/timeseries-sample.html#pandas">2. Pandas 降采样</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-smooth.html">时间序列平滑</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/timeseries-smooth.html#header-n17">1.差分运算、变化率</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/timeseries-smooth.html#header-n52">2.移动索引</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/timeseries-smooth.html#header-n54">3.移动平均、指数平滑</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-visual.html">时间序列可视化</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/timeseries-visual.html#header-n3">1.时间序列可视化</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/tsfresh.html">tsfresh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/tsfresh.html#header-n3">tsfresh 安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/tsfresh.html#example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/tsfresh.html#header-n9">安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/tsfresh.html#header-n14">tsfresh 数据格式</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/tslearn.html">tslearn</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/tslearn.html#header-n3">tslearn 文档</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-preprocessing/timeseries-base-rule.html">时间序列基本规则法–周期因子法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-preprocessing/timeseries-base-rule.html#header-n10">1.时间序列基本规则法快速入门</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">timeseries-forecasting:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/ARIMA2.html">ARIMA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-forecasting/ARIMA2.html#test-1">test 1</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/ar.html">AR</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-forecasting/ar.html#ar-p">AR(<span class="math notranslate nohighlight">\(p\)</span>) 模型</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/arima.html">ARIMA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-forecasting/arima.html#arima-p-d-q">ARIMA(<span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(d\)</span>, <span class="math notranslate nohighlight">\(q\)</span>) 模型</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/arma.html">ARMA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-forecasting/arma.html#arma-p-q">ARMA(<span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(q\)</span>) 模型</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/hwes.html">HWES 模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-forecasting/hwes.html#test-1">test 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-forecasting/hwes.html#test-2">test 2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/ma.html">MA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-forecasting/ma.html#ma-q">MA(<span class="math notranslate nohighlight">\(q\)</span>) 模型</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/sarima.html">SARIMA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-forecasting/sarima.html#header-n3">SARIMA() 模型</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/sarimax.html">SARIMAX</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-forecasting/sarimax.html#test-1">test 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-forecasting/sarimax.html#test-2">test 2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/ses.html">SES</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-forecasting/ses.html#test-1">test 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-forecasting/ses.html#test-2">test 2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/var.html">VAR</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-forecasting/var.html#test-1">test 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-forecasting/var.html#test-2">test 2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/varma.html">VARMA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-forecasting/varma.html#test-1">test 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-forecasting/varma.html#test-2">test 2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-forecasting/varmax.html">VARMAX</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-forecasting/varmax.html#test-1">test 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-forecasting/varmax.html#test-2">test 2</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">timeseries-lr:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-lr/timeseries-lr.html">时间序列分析-线性回归</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-lr/timeseries-lr.html#id2">1.时间序列特征处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-lr/timeseries-lr.html#header-n18">2.时间序列线性回归模型</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">timeseries-ml:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-ml/timeseries-ml.html">时间序列分析-机器学习</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-ml/timeseries-ml.html#vs">1.时间序列数据 vs 监督机器学习数据</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-ml/timeseries-ml.html#header-n182">2.时间序列数据特征工程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-ml/timeseries-ml.html#header-n245">3. 时间序列特征正规化和标准化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-ml/timeseries-ml.html#resample-interpolate">4. 时间序列重采样(resample)、插值(interpolate)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-ml/timeseries-ml.html#reference">Reference</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">timeseries-dl:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-dl/timeseries-dl.html">时间序列分析-深度学习</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-dl/timeseries-dl.html#test-1">test 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-dl/timeseries-dl.html#reference">Reference</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">timeseries-prophet:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-doc.html">Prophet 入门</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-doc.html#header-n3">1.Prophet 介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-doc.html#header-n22">2.Prophet 安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-doc.html#prophet-python">3.Prophet 使用(Python)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-doc.html#python-apis">4. Python APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet.html">Prophet</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet.html#id1">1.Prophet 简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet.html#id2">2.Prophet 的算法原理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet.html#id10">3 Prophet 的实际使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-paper.html">Paper</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-paper.html#forecast-at-scale">Forecast at Scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-paper.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Saturating-Forecasts.html">Staturating Forecast</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Saturating-Forecasts.html#header-n3">饱和预测(Staturating Forecast)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Trend-Changepoints.html">Prophet 趋势变化点</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Trend-Changepoints.html#trend-changepoints">趋势变化点(Trend Changepoints)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Trend-Changepoints.html#test-2">test 2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Seasonality-Holiday-Regressors.html">Seasonality, Holiday Effects, And Regressors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Seasonality-Holiday-Regressors.html#id1">1.假期和特殊事件建模</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Seasonality-Holiday-Regressors.html#fourier-order-for-seasonalities">2.季节性的傅里叶变换(Fourier Order for Seasonalities)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Multiplicative-Seasonality.html">Prophet 异常</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Multiplicative-Seasonality.html#test-1">test 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Multiplicative-Seasonality.html#test-2">test 2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Uncertainty-Intervals.html">Prophet 不确定区间</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Uncertainty-Intervals.html#test-1">test 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Uncertainty-Intervals.html#test-2">test 2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Outliers.html">Prophet 异常</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Outliers.html#test-1">test 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Outliers.html#test-2">test 2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Non-Daily-Data.html">Prophet 非日数据</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Non-Daily-Data.html#test-1">test 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Non-Daily-Data.html#test-2">test 2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Diagnostics.html">Prophet 模型评估</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Diagnostics.html#test-1">test 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Diagnostics.html#test-2">test 2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Additional-Topics.html">Prophet 其他话题</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Additional-Topics.html#test-1">test 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-models/timeseries-prophet/prophet-Additional-Topics.html#test-2">test 2</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">timeseries-reports:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-reports/Daily-Female-Births-Dataset.html">时间序列分析示例1</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-reports/Daily-Female-Births-Dataset.html#daily-female-births-dataset">1. Daily Female Births Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-reports/Daily-Female-Births-Dataset.html#header-n5">2. 读取数据</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-reports/Daily-Female-Births-Dataset.html#header-n12">3. 探索数据</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-reports/timeseries-forecasting-Python.html">Time Series Forecast</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-reports/timeseries-forecasting-Python.html#header-n3">内容</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-reports/timeseries-forecasting-Python.html#header-n11">1.时间序列的特别之处</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-reports/timeseries-forecasting-Python.html#pandas">2.在 Pandas 中加载和处理时间序列</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-reports/timeseries-forecasting-Python.html#stationarity">3.如何检验时间序列的平稳性(Stationarity)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-reports/timeseries-forecasting-Python.html#header-n83">4.如何使得时间序列平稳</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-reports/timeseries-forecasting-Python.html#time-series-forecasting">5.Time Series Forecasting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-reports/timeseries-forecasting-Python.html#knowledge-points">Knowledge Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-reports/timeseries-forecasting-Python.html#reference">Reference:</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-reports/timeseries-forecasting-R.html">R 时间序列建模</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-reports/timeseries-forecasting-R.html#header-n3">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-reports/timeseries-forecasting-R.html#header-n20">介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-reports/timeseries-forecasting-R.html#header-n23">内容</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-reports/timeseries-forecasting-R.html#header-n33">1.基础知识-时间序列模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-reports/timeseries-forecasting-R.html#r-python">2.R 和 Python 中的时间序列数据</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-reports/timeseries-forecasting-R.html#arma">3.ARMA 时间序列模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-reports/timeseries-forecasting-R.html#arima">4.ARIMA 时间序列模型</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">timeseries-tutorial:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-tutorial/Forecasting.html">时间序列分析预测</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-tutorial/Forecasting.html#test-1">test 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-tutorial/Forecasting.html#test-2">test 2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-tutorial/Get-to-know-your-data.html">时间序列分析教程</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-tutorial/Get-to-know-your-data.html#get-to-know-your-data">1.Get to know your data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-tutorial/Get-to-know-your-data.html#header-n4">1.1 了解数据</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-tutorial/Get-to-know-your-data.html#header-n14">1.2 了解数据中包含的信息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries-tutorial/Get-to-know-your-data.html#inflation-adjustment">1.3 通货膨胀调整(Inflation adjustment)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="machine-learning-steps.html" class="btn btn-neutral float-right" title="机器学习项目清单" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, wangzf.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

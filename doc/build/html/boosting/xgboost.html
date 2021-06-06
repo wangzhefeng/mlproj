@@ -1,0 +1,1530 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>XGBoost &mdash; machine learning 1.0.0 alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="LightGBM" href="lightgbm.html" />
+    <link rel="prev" title="Random Forest" href="randomforest.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> machine learning
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ML</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../machine-learning-steps.html">机器学习项目清单</a></li>
+</ul>
+<p class="caption"><span class="caption-text">boosting</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="decisiontree.html">Decision Tree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adaboost.html">AdaBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gbm.html">GBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="randomforest.html">Random Forest</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">XGBoost</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#header-n0">1.XGBoost 模型特点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n65">2.XGBoost 模型理论</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n169">3.XGBoost 使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#xgboost-api">4.XGBoost API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#core-data-structure">4.1 Core Data Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#learning-api">4.2 Learning API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scikit-learn-api">4.3 Scikit-Learn API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#plotting-api">4.4 Plotting API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#callback-api">4.5 Callback API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dask-api">4.6 Dask API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n245">5.XGBoost调参</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lightgbm.html">LightGBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catboost.html">CatBoost</a></li>
+</ul>
+<p class="caption"><span class="caption-text">models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/logistic-regression.html">Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/Navie-Bayes.html">朴素贝叶斯(Navie Bayes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/PCA.html">PCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/SVD.html">奇异值分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/svm.html">SVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/EM-algorithm.html">EM (Expectation Maximization algorithm)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/clustering.html">Cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/AB-test.html">A/B test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/Ad.html">互联网广告</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/anti-fraud-model.html">反欺诈模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/moshishibie.html">模式识别在化学化工中的应用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/PLS.html">偏最小二乘回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/user-portrait.html">用户画像</a></li>
+</ul>
+<p class="caption"><span class="caption-text">tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/python-pycaret.html">PyCaret</a></li>
+</ul>
+<p class="caption"><span class="caption-text">topic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topic/overfitting.html">降低模型过拟合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/accuracy.html">提高模型精度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/model_performance_theory.html">模型表现理论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topic/model_ensemble.html">模型融合</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine class</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/feature_engine.html">特征工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/numeric.html">Numeric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/timeseries.html">Timeseries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/categorical.html">Categorical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/image.html">Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/video.html">Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/audio.html">Audio</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine step</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/feature_build.html">特征构建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/feature_selection.html">特征选择</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/missing.html">缺失值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/outlier.html">异常值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/resample.html">特征采样</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries.html">timeseries</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-modeling.html">传统时间序列建模方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-decomposition.html">时间序列分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-season-analysis.html">时间序列季节性分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries/timeseries-baseline.html">时间序列分析-baseline示例</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-preprocessing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/lvbo.html">滤波</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/statsmodels.html">statsmodels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-aggregation.html">时间序列聚合计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-interpolate.html">时间序列插值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-ma.html">移动平均光滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-outlier-detection-papers.html">时间序列异常值检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-pandas-api.html">时间序列-pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-sample.html">时间序列采样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-smooth.html">时间序列平滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-visual.html">时间序列可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tsfresh.html">tsfresh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tslearn.html">tslearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-base-rule.html">时间序列基本规则法–周期因子法</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-forecasting:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ARIMA2.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ar.html">AR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/arima.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/arma.html">ARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/hwes.html">HWES 模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ma.html">MA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/sarima.html">SARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/sarimax.html">SARIMAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/ses.html">SES</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/var.html">VAR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/varma.html">VARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-forecasting/varmax.html">VARMAX</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-lr:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-lr/timeseries-lr.html">时间序列分析-线性回归</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-ml:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-ml/timeseries-ml.html">时间序列分析-机器学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-dl:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-dl/timeseries-dl.html">时间序列分析-深度学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-prophet:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-doc.html">Prophet 入门</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet.html">Prophet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-paper.html">Paper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Saturating-Forecasts.html">Staturating Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Trend-Changepoints.html">Prophet 趋势变化点</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Seasonality-Holiday-Regressors.html">Seasonality, Holiday Effects, And Regressors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Multiplicative-Seasonality.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Uncertainty-Intervals.html">Prophet 不确定区间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Outliers.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Non-Daily-Data.html">Prophet 非日数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Diagnostics.html">Prophet 模型评估</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-models/timeseries-prophet/prophet-Additional-Topics.html">Prophet 其他话题</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-reports:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/Daily-Female-Births-Dataset.html">时间序列分析示例1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/timeseries-forecasting-Python.html">Time Series Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/timeseries-forecasting-R.html">R 时间序列建模</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-tutorial:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-tutorial/Forecasting.html">时间序列分析预测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-tutorial/Get-to-know-your-data.html">时间序列分析教程</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">machine learning</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>XGBoost</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/boosting/xgboost.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="xgboost">
+<h1>XGBoost<a class="headerlink" href="#xgboost" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="header-n0">
+<span id="id1"></span><h2>1.XGBoost 模型特点<a class="headerlink" href="#header-n0" title="Permalink to this headline">¶</a></h2>
+<p><strong>XGBoost特点：</strong></p>
+<ul class="simple">
+<li><p>弱学习器</p>
+<ul>
+<li><p>传统的 GBDT 以 CART 作为基函数(base learner,b ase classifier, base
+function)，而 XGBoost 除了可以使用 CART, 还支持线性分类器 (linear
+classifier, linear regression, logistic regression)</p></li>
+<li><p>基于预排序(pre_sorted)方法构建决策树</p>
+<ul>
+<li><p>优点：精确地找到分割点</p></li>
+<li><p>缺点：内存消耗大，时间消耗大，对cache优化不友好</p></li>
+<li><p>首先，对所有特征都按照特征的数值进行排序；</p></li>
+<li><p>其次，在遍历分割点的时候用O(#data)的代价找到一个特征上的最好分割点；</p></li>
+<li><p>最后找到一个特征的分割点后，将数据分裂成左右子节点；</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>梯度</p>
+<ul>
+<li><p>传统的 GBDT 在优化时只用到一阶导数信息(负梯度)，XGBoost
+则对代价函数进行了二阶泰勒展开，同时用到一阶和二阶导数。且 XGBoost
+工具支持自定义代价函数，只要函数可一阶和二阶求导</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>XGBoost优势：</strong></p>
+<ul class="simple">
+<li><p>正则化的 GBM (Regularization)</p>
+<ul>
+<li><p>控制模型过拟合问题</p></li>
+</ul>
+</li>
+<li><p>并行化的 GBM (Parallel Processing)</p></li>
+<li><p>高度灵活性 (High Flexibility)</p></li>
+<li><p>能够处理缺失数据</p></li>
+<li><p>自带树剪枝</p></li>
+<li><p>内置交叉验证</p></li>
+<li><p>能够继续使用当前训练的模型</p></li>
+<li><p>可扩展性强</p></li>
+<li><p>为稀疏数据设计的决策树训练方法</p></li>
+<li><p>理论上得到验证的加权分位数粗略图法</p></li>
+<li><p>分布式计算</p></li>
+<li><p>设计高效核外计算，进行 cache-aware 数据块处理</p></li>
+</ul>
+<p><strong>XGBoost缺点(LightGBM的出发点)：</strong></p>
+<ul class="simple">
+<li><p>每轮迭代时，都需要遍历整个训练数据多次。如果把整个训练数据装进内存则会限制训练数据的大小；如果不装进内存，反复地读写训练数据又会消耗非常大的时间</p></li>
+<li><p>预排序方法（pre-sorted）：首先，空间消耗大。这样的算法需要保存数据的特征值，还保存了特征排序的结果（例如排序后的索引，为了后续快速的计算分割点），这里需要消耗训练数据两倍的内存。其次时间上也有较大的开销，在遍历每一个分割点的时候，都需要进行分裂增益的计算，消耗的代价大</p></li>
+<li><p>对 cache
+优化不友好。在预排序后，特征对梯度的访问是一种随机访问，并且不同的特征访问的顺序不一样，无法对
+cache
+进行优化。同时，在每一层长树的时候，需要随机访问一个行索引到叶子索引的数组，并且不同特征访问的顺序也不一样，也会造成较大的
+cache miss</p></li>
+</ul>
+</div>
+<div class="section" id="header-n65">
+<span id="id2"></span><h2>2.XGBoost 模型理论<a class="headerlink" href="#header-n65" title="Permalink to this headline">¶</a></h2>
+<p><strong>模型目标函数：</strong></p>
+<p><span class="math notranslate nohighlight">\(L(\phi)=\sum_{i=1}^{n} l(y_i, \hat{y_i}) + \sum_{k=1}^{K} \Omega(f_k)\)</span></p>
+<p>其中：</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(L(\cdot)\)</span>：目标函数；</p></li>
+<li><p><span class="math notranslate nohighlight">\(l(\cdot)\)</span>：经验损失(误差)函数，通常是凸函数。用于刻画预测值
+<span class="math notranslate nohighlight">\(\hat{y_i}\)</span> 和真实值
+<span class="math notranslate nohighlight">\(y_i\)</span>之间的差异，即模型对训练数据的拟合程度</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Omega(\cdot)\)</span>：模型的正则项。用于降低模型的复杂度，减轻过拟合问题</p>
+<ul>
+<li><p>决策树的叶子节点数量</p></li>
+<li><p>决策树的树深度</p></li>
+<li><p>决策树的叶节点权重得分的L1, L2正则</p></li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(f_k\)</span>：第 <span class="math notranslate nohighlight">\(k\)</span> 棵树</p></li>
+<li><p><span class="math notranslate nohighlight">\(y_i\)</span>：目标变量</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{y_i}=\sum_{k=1}^{K}f_k(x_i), f_k \in F\)</span></p>
+<ul>
+<li><p>回归：预测得分</p></li>
+<li><p>分类：预测概率</p></li>
+<li><p>排序：排序得分</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>模型目标：</strong></p>
+<p><span class="math notranslate nohighlight">\(\min L(\phi)\)</span></p>
+<p><strong>模型损失函数定义：</strong></p>
+<p>根据 Gradient Boosting 思想，假设第 <span class="math notranslate nohighlight">\(t\)</span> 轮迭代的目标函数：</p>
+<div class="math notranslate nohighlight">
+\[L^{(t)} = \sum_{i=1}^{n} l \bigg(y_i, \hat{y_i}^{(t-1)} + f_t(x_i) \bigg) + \Omega(f_t) + constant\]</div>
+<p>对目标函数 <span class="math notranslate nohighlight">\(L^{(t)}\)</span> 在 <span class="math notranslate nohighlight">\(\hat{y_i}^{(t-1)}\)</span>
+处进行二阶泰勒展开，可以加速优化过程，得到目标函数的近似：</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}L^{(t)} \simeq \sum_{i=1}^{n}
+[
+l(y_i, \hat{y_i}^{(t-1)}) +
+g_i f_t (x_i) +
+\frac{1}{2} h_i f_t^2 (x_i)]+ \Omega(f_t) + constant\\-  函数\ :math:`f(x)`\ 在\ :math:`x_0`\ 处的二阶泰勒展开式：
+   :math:`f(x) = f(x_0) + f' (x_0)(x - x_0) + f''(x_0)(x - x_0)^2`\\-  目标函数 :math:`l(y_i, x)` 在 :math:`\hat{y_i}^{(t-1)}`
+   处的二阶泰勒展开式：
+   :math:`l(y_i, x) = l(y_i, \hat{y_i}^{(t - 1)}) + \frac{\partial l(y_i, \hat{y_i}^{(t - 1)})}{\partial \hat{y_i}^{(t - 1)}} (x - \hat{y_i}^{(t - 1)}) + \frac{1}{2} \frac{{\partial ^2} l(y_i, \hat{y_i}^{(t - 1)}) } {\partial \hat{y_i}^{(t - 1)}} (x - \hat{y_i}^{(t - 1)})^2`\\-  令 :math:`x= \hat{y_i}^{(t-1)} + f_t (x_i)`, 记一阶导数为
+   :math:`g_i = \frac{\partial l(y_i, \hat{y_i}^{(t - 1)})}{\partial \hat{y_i}^{(t - 1)}}`\ ，
+   记二阶导数为
+   :math:`h_i = \frac{{\partial ^2} l(y_i, \hat{y_i}^{(t - 1)})}{\partial \hat{y_i}^{(t - 1)}}`\ ；可以得到
+   :math:`l(y_i, \hat{y}^{(t-1)} + f_t(x_i)) = l(y_i, \hat{y}^{(t - 1)}) + g_i f_t(x_i) + \frac{1}{2} h_i f_t^2 (x_i)`\end{aligned}\end{align} \]</div>
+<p>上面的目标函数 <span class="math notranslate nohighlight">\(L^{(t)}\)</span> 中，第一项
+<span class="math notranslate nohighlight">\(l(y_i, \hat{y_i}^{(t-1)})\)</span> 以及 <span class="math notranslate nohighlight">\(constant\)</span>
+为常数项，在优化问题中可直接删除：</p>
+<p><span class="math notranslate nohighlight">\({\tilde L}^{(t)} = \sum_{i=1}^{n} [g_{i}f_{t}(x_i) + \frac{1}{2}h_{i}f_{t}^{2}(x_i)]  + \Omega (f_t)\)</span></p>
+<p><strong>模型正则项定义：</strong></p>
+<p>通过<code class="docutils literal notranslate"><span class="pre">叶子节点的权重得分</span></code>和<code class="docutils literal notranslate"><span class="pre">叶子节点的索引值(结构)</span></code>定义一棵树：</p>
+<p><span class="math notranslate nohighlight">\(f_t(x) = \omega_{q(x)}, \omega \in R^T, q: R^d \rightarrow \{1, 2, \ldots, T\}\)</span></p>
+<p>其中：</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\omega\)</span>: 叶子节点权重得分向量</p></li>
+<li><p><span class="math notranslate nohighlight">\(q(\cdot)\)</span>: 树结构</p></li>
+</ul>
+<p>定义正则项(可以使其他形式)：</p>
+<p><span class="math notranslate nohighlight">\(\Omega(f_t)=\gamma T + \frac{1}{2}\lambda\sum_{j=1}^{T}\omega_j^2\)</span></p>
+<p>其中：</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(T\)</span> 是 叶节点的个数</p></li>
+<li><p><span class="math notranslate nohighlight">\(\omega_j^2\)</span>是叶子节点权重得分的L2范数</p></li>
+</ul>
+<p>记决策树每个叶节点上的样本集合为：</p>
+<p><span class="math notranslate nohighlight">\({I_j} = \{ {i | q(x_i) = j} \}\)</span></p>
+<p>将正则项 <span class="math notranslate nohighlight">\(\Omega(f_t)\)</span> 展开：</p>
+<p><span class="math notranslate nohighlight">\(\eqalign{
+&amp; {\tilde L}^{(t)}
+= \sum_{i=1}^{n}[g_i f_t(x_i) + \frac{1}{2}h_i f_{t}^{2}(X_I)] + \Omega(f_t) \cr
+&amp; \;\;\;\;\;{\rm{
+= }} \sum_{i=1}^{n}[g_i \omega_{q(x_i)} + \frac{1}{2} h_i \omega_{q(x_i)}^{2}] + \gamma T + \frac{1}{2} \lambda \sum_{j = 1}^{T} w_j^2   \cr
+&amp; \;\;\;\;\;{\rm{
+= }} \sum_{j = 1}^{T}[(\sum_{i \in I_j} g_i ) w_j + \frac{1}{2} (\sum_{i \in {I_j}} h_i  + \lambda ) w_j^2 ]  + \gamma T \cr}\)</span></p>
+<p>记 <span class="math notranslate nohighlight">\(G_j=\sum_{i\in I_j}g_i\)</span>， <span class="math notranslate nohighlight">\(H_j=\sum_{i\in I_j}h_i\)</span></p>
+<p><span class="math notranslate nohighlight">\(\eqalign{
+&amp; {\tilde L}^(t)
+= \sum{j = 1}^{T} [(\sum_{i \in {I_j}} g_i) w_j + \frac{1}{2} (\sum_{i \in {I_j}} h_i  + \lambda ) w_j^2 ]  + \gamma T \cr
+&amp; \;\;\;\;\;{\rm{
+= }} \sum_{j = 1}^{T} [G_j w_j + \frac{1}{2} (H_j  + \lambda ) w_j^2 ]  + \gamma T \cr
+}\)</span></p>
+<p><strong>模型目标函数求解</strong></p>
+<p>对于固定的树结构 <span class="math notranslate nohighlight">\(q(x)\)</span>，对 <span class="math notranslate nohighlight">\(\omega_j\)</span>
+求导等于0，得到目标函数的解析解<span class="math notranslate nohighlight">\(\omega_{j}^{\star}\)</span>：</p>
+<p><span class="math notranslate nohighlight">\(w_{j}^{\star} = \frac{\sum\limits_{i \in I_j} g_i}{\sum\limits_{i \in I_j} h_i + \lambda}\)</span></p>
+<p>即</p>
+<p>:math:<a href="#id3"><span class="problematic" id="id4">`</span></a>w_{j}^{star} = -frac{G_j}{H_j+lambda} `</p>
+<p>将上面得到的解析解带入目标函数：</p>
+<p><span class="math notranslate nohighlight">\({{\tilde L}^{( t )}}=-\frac{1}{2}\sum_{j=1}^{T}\frac{G_j^2}{H_j+\lambda} + \gamma T\)</span></p>
+<blockquote>
+<div><p>这里的 <span class="math notranslate nohighlight">\({{\tilde L}^{( t )}}\)</span>
+代表了当指定一个树结构时，在目标函数上最多减少多少，这里叫做<code class="docutils literal notranslate"><span class="pre">结构分数(structure</span> <span class="pre">score)</span></code>；这个分数越小，代表这个树的结构越好；</p>
+</div></blockquote>
+<p><strong>模型中决策树节点分裂算法</strong></p>
+<p>(1)贪心算法(Exact Greedy Algorithm for split finding)</p>
+<p>每次尝试对已有叶节点进行一次分割，分割的规则：</p>
+<p><span class="math notranslate nohighlight">\(Gain = \frac{1}{2}\Bigg[\frac{G_{L}^{2}}{H_K + \lambda} + \frac{G_{R}^{2}}{H_R + \lambda} - \frac{(G_L + G_R)^{2}}{H_L + H_R + \lambda}\Bigg] - \gamma\)</span></p>
+<p>其中：</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\frac{G_{L}^{2}}{H_K + \lambda}\)</span>：左子树分数；</p></li>
+<li><p><span class="math notranslate nohighlight">\(\frac{G_{R}^{2}}{H_R + \lambda}\)</span>：右子树分数；</p></li>
+<li><p><span class="math notranslate nohighlight">\(\frac{(G_L + G_R)^{2}}{H_L + H_R + \lambda}\)</span>：
+不分割可以得到的分数；</p></li>
+<li><p><span class="math notranslate nohighlight">\(\gamma\)</span>：假如新的子节点引入的复杂度代价；</p></li>
+</ul>
+<p>对树的每次扩展，都要枚举所有可能的分割方案；并且对于某次分割，都要计算每个特征值左边和右边的一阶和二阶导数和，从而计算这次分割的增益
+<span class="math notranslate nohighlight">\(Gain\)</span>； 对于上面的分割增益
+<span class="math notranslate nohighlight">\(Gain\)</span>，都要判断分割每次分割对应的 <span class="math notranslate nohighlight">\(Gain\)</span>
+的大小，并且进行优化，取最小的
+<span class="math notranslate nohighlight">\(Gain\)</span>，直到当新引入一个分割带来的增益小于某个阈值时，就去掉这个分割。这里的优化，相当于对树进行剪枝。</p>
+<p>(2)近似算法(Approximate Algorithm for split finding)</p>
+<blockquote>
+<div><p>针对数据量大的情况，不能直接计算</p>
+</div></blockquote>
+<p><strong>自定义损失函数</strong></p>
+</div>
+<div class="section" id="header-n169">
+<span id="id5"></span><h2>3.XGBoost 使用<a class="headerlink" href="#header-n169" title="Permalink to this headline">¶</a></h2>
+<p><strong>下载安装 xgboost 库:</strong></p>
+<p>下载安装 xgboost Pre-build wheel Python 库</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ pip3 install xgboost
+</pre></div>
+</div>
+<p>Building XGBoost from source</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>首先从 C++ 代码构建共享库（libxgboost.so适用于Linux /
+OSX和xgboost.dllWindows)</p></li>
+<li><p>然后安装语言包（例如Python Package）</p></li>
+</ol>
+</div></blockquote>
+<p>1.从 C++ 代码构建共享库</p>
+<ul class="simple">
+<li><p>目标：</p>
+<ul>
+<li><p>在 Linux/OSX 上，目标库是：libxgboost.so</p></li>
+<li><p>在 Windows 上，目标库是：xgboost.dll</p></li>
+</ul>
+</li>
+<li><p>环境要求</p>
+<ul>
+<li><p>最新的支持 C++ 11 的 C++ 编译器(g++-4.8 or higher)</p></li>
+<li><p>CMake 3.2 or higher</p></li>
+</ul>
+</li>
+</ul>
+<p>Ubuntu/Debian</p>
+<p>OSX</p>
+<ol class="arabic simple">
+<li><p>install with pip</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># 使用 Homebrew 安装 gcc-8，开启多线程(多个CUP线程训练)</span>
+brew install gcc@8
+
+<span class="c1"># 安装 XGBoost</span>
+pip3 install xgboost
+<span class="c1"># or</span>
+pip3 install --user xgboost
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>build from the source code</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># 使用 Homebrew 安装 gcc-8，开启多线程(多个CUP线程训练)</span>
+brew install gcc@8
+
+<span class="c1"># Clone the xgboost repository</span>
+git clone --recursive https://github.com/dmlc/xgboost
+
+<span class="c1"># Create `build/` dir and invoker CMake</span>
+<span class="c1"># Make sure to add CC=gcc-8 CXX-g++-8 so that Homebrew GCC is selected</span>
+<span class="c1"># Build XGBoost with make</span>
+mkdir build
+<span class="nb">cd</span> build
+<span class="nv">CC</span><span class="o">=</span>gcc-8 <span class="nv">CXX</span><span class="o">=</span>g++-8 cmake ..
+make -j4
+</pre></div>
+</div>
+<p>Windows</p>
+<p>2.安装 Python 包</p>
+<ul class="simple">
+<li><p>Python 包位于 python-package/，根据安装范围分以下情况安装：</p></li>
+</ul>
+<p>method 1: 在系统范围内安装，需要root权限</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># 依赖模块:distutils</span>
+<span class="c1"># Ubuntu</span>
+sudo apt-get install python-setuptools
+<span class="c1"># MacOS</span>
+<span class="c1"># 1.Download `ez_setup.py` module from &quot;https://pypi.python.org/pypi/setuptools&quot;</span>
+<span class="c1"># 2. cd to the dir put the `ez_setup.py`</span>
+<span class="c1"># 3. `python ez_setup.py`</span>
+
+<span class="nb">cd</span> python-package
+sudo python setup.py install
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># 设置环境变量 在：`~/.zshrc`</span>
+<span class="nb">export</span> <span class="nv">PYTHONPATH</span><span class="o">=</span>~/xgboost/python-package
+</pre></div>
+</div>
+<p>method 2： 仅为当前用户安装</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> python-package
+python setup.py develop --user
+</pre></div>
+</div>
+<p><strong>导入 xgboost 库:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">xgboost</span> <span class="k">as</span> <span class="nn">xgb</span>
+</pre></div>
+</div>
+<p><strong>数据接口:</strong></p>
+<p><strong>参数设置</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># dict</span>
+<span class="n">param</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;eta&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;objective&quot;</span><span class="p">:</span> <span class="s2">&quot;binary:logistic&quot;</span>
+<span class="p">}</span>
+<span class="c1"># list</span>
+<span class="n">param</span><span class="p">[</span><span class="s2">&quot;nthread&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">param</span><span class="p">[</span><span class="s2">&quot;eval_metric&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;auc&quot;</span>
+<span class="n">param</span><span class="p">[</span><span class="s2">&quot;eval_metric&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;auc&quot;</span><span class="p">,</span> <span class="s2">&quot;ams@0&quot;</span><span class="p">]</span>
+
+<span class="c1"># 模型评估验证设置</span>
+<span class="n">evallist</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="n">dtest</span><span class="p">,</span> <span class="s2">&quot;eval&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">dtrain</span><span class="p">,</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>模型训练:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 训练模型</span>
+<span class="c1"># =======</span>
+<span class="n">num_round</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">bst</span> <span class="o">=</span> <span class="n">xgb</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">param</span><span class="p">,</span>
+                <span class="n">dtrain</span><span class="p">,</span>
+                <span class="n">num_round</span><span class="p">,</span>
+                <span class="n">evallist</span><span class="p">,</span>
+                <span class="n">evals</span> <span class="o">=</span> <span class="n">evals</span><span class="p">,</span>
+                <span class="n">early_stopping_rounds</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">bst</span><span class="o">.</span><span class="n">best_score</span>
+<span class="n">bst</span><span class="o">.</span><span class="n">best_iteration</span>
+<span class="n">bst</span><span class="o">.</span><span class="n">best_ntree_limit</span>
+
+
+<span class="c1"># 保存模型</span>
+<span class="c1"># =======</span>
+<span class="n">bst</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="s2">&quot;0001.model&quot;</span><span class="p">)</span>
+<span class="c1"># dump model</span>
+<span class="n">bst</span><span class="o">.</span><span class="n">dump_model</span><span class="p">(</span><span class="s2">&quot;dump.raw.txt&quot;</span><span class="p">)</span>
+<span class="c1"># dump model with feature map</span>
+<span class="n">bst</span><span class="o">.</span><span class="n">dump_model</span><span class="p">(</span><span class="s2">&quot;dump.raw.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;featmap.txt&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># 加载训练好的模型</span>
+<span class="c1"># ==============</span>
+<span class="n">bst</span> <span class="o">=</span> <span class="n">xgb</span><span class="o">.</span><span class="n">Booster</span><span class="p">({</span><span class="s2">&quot;nthread&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">})</span>
+<span class="n">bst</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s2">&quot;model.bin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>模型预测:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dtest</span> <span class="o">=</span> <span class="n">xgb</span><span class="o">.</span><span class="n">DMatrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">bst</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">dtest</span><span class="p">)</span>
+<span class="c1"># early stopping</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">bst</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">dtest</span><span class="p">,</span> <span class="n">ntree_limit</span> <span class="o">=</span> <span class="n">bst</span><span class="o">.</span><span class="n">best_ntree_limit</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>模型结果可视化:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">graphvize</span>
+<span class="kn">import</span> <span class="nn">xgboost</span> <span class="k">as</span> <span class="nn">xgb</span>
+
+<span class="n">xgb</span><span class="o">.</span><span class="n">plot_importance</span><span class="p">(</span><span class="n">bst</span><span class="p">)</span>
+<span class="n">xgb</span><span class="o">.</span><span class="n">plot_tree</span><span class="p">(</span><span class="n">bst</span><span class="p">,</span> <span class="n">num_trees</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+<span class="c1"># IPython option(将目标树转换为graphviz实例)</span>
+<span class="n">xgb</span><span class="o">.</span><span class="n">to_graphviz</span><span class="p">(</span><span class="n">bst</span><span class="p">,</span> <span class="n">num_trees</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="xgboost-api">
+<span id="header-n226"></span><h2>4.XGBoost API<a class="headerlink" href="#xgboost-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="core-data-structure">
+<span id="header-n227"></span><h3>4.1 Core Data Structure<a class="headerlink" href="#core-data-structure" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">xgb</span><span class="o">.</span><span class="n">DMatrix</span><span class="p">(</span><span class="n">data</span><span class="p">,</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">missing</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">weight</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">silent</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="n">feature_name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">feature_type</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">nthread</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">xgb</span><span class="o">.</span><span class="n">Booster</span><span class="p">(</span><span class="n">params</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">cache</span> <span class="o">=</span> <span class="p">(),</span>
+            <span class="n">model_file</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="learning-api">
+<span id="header-n230"></span><h3>4.2 Learning API<a class="headerlink" href="#learning-api" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">xgb</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">params</span><span class="p">,</span>
+          <span class="n">dtrain</span><span class="p">,</span>
+          <span class="n">num_boost_round</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+          <span class="n">evals</span> <span class="o">=</span> <span class="p">(),</span>
+          <span class="n">obj</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+          <span class="n">feval</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+          <span class="n">maximize</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+          <span class="n">early_stopping_rounds</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+          <span class="n">evals_result</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+          <span class="n">verbose_eval</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+          <span class="n">xgb_model</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+          <span class="n">callbacks</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+          <span class="n">learning_rate</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">xgb</span><span class="o">.</span><span class="n">cv</span><span class="p">(</span><span class="n">params</span><span class="p">,</span>
+       <span class="n">dtrain</span><span class="p">,</span>
+       <span class="n">num_boost_round</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+       <span class="c1"># ---------</span>
+       <span class="c1"># cv params</span>
+       <span class="n">nfold</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+       <span class="n">stratified</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+       <span class="n">folds</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+       <span class="n">metrics</span> <span class="o">=</span> <span class="p">(),</span>
+       <span class="c1"># ---------</span>
+       <span class="n">obj</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+       <span class="n">feval</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+       <span class="n">maximize</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+       <span class="n">early_stopping_rounds</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+       <span class="n">fpreproc</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+       <span class="n">as_pandas</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+       <span class="n">verbose_eval</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+       <span class="n">show_stdv</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+       <span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+       <span class="n">callbacks</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+       <span class="n">shuffle</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scikit-learn-api">
+<span id="header-n233"></span><h3>4.3 Scikit-Learn API<a class="headerlink" href="#scikit-learn-api" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">xgb</span><span class="o">.</span><span class="n">XGBRegressor</span><span class="p">(</span><span class="n">max_depth</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+                 <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+                 <span class="n">n_estimators</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+                 <span class="n">verbosity</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="n">silent</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">objective</span> <span class="o">=</span> <span class="s2">&quot;reg:squarederror&quot;</span><span class="p">,</span>
+                 <span class="n">booster</span> <span class="o">=</span> <span class="s2">&quot;gbtree&quot;</span><span class="p">,</span>
+                 <span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="n">nthread</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">gamma</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                 <span class="n">min_child_weight</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="n">max_delta_step</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                 <span class="n">subsample</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="n">colsample_bytree</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="n">colsample_bylevel</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="n">colsample_bynode</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="n">reg_alpha</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                 <span class="n">reg_lambda</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="n">scale_pos_weight</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="n">base_score</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+                 <span class="n">random_state</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                 <span class="n">seed</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">missing</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">importance_type</span> <span class="o">=</span> <span class="s2">&quot;gain&quot;</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="n">xgbr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+         <span class="n">sample_weight</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">eval_set</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">eval_metric</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">early_stopping_rounds</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">verbose</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+         <span class="n">xgb_model</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">sample_weight_eval_set</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">callbacks</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">xgb</span><span class="o">.</span><span class="n">XGBClassifier</span><span class="p">(</span><span class="n">max_depth</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+                  <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+                  <span class="n">n_estimators</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+                  <span class="n">verbosity</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                  <span class="n">silent</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                  <span class="n">objective</span> <span class="o">=</span> <span class="s2">&quot;binary:logistic&quot;</span><span class="p">,</span>
+                  <span class="n">booster</span> <span class="o">=</span> <span class="s2">&quot;gbtree&quot;</span><span class="p">,</span>
+                  <span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                  <span class="n">nthread</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                  <span class="n">gamma</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                  <span class="n">min_child_weight</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                  <span class="n">max_delta_step</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                  <span class="n">subsample</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                  <span class="n">colsample_bytree</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                  <span class="n">colsample_bylevel</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                  <span class="n">colsample_bynode</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                  <span class="n">reg_alpha</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                  <span class="n">reg_lambda</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                  <span class="n">scale_pos_weight</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                  <span class="n">base_score</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+                  <span class="n">random_state</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                  <span class="n">seed</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                  <span class="n">missing</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                  <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="n">xgbc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+         <span class="n">sample_weight</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">eval_set</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">eval_metric</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">early_stopping_rounds</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">verbose</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+         <span class="n">xgb_model</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">sample_weight_eval_set</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">callbacks</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="plotting-api">
+<span id="header-n238"></span><h3>4.4 Plotting API<a class="headerlink" href="#plotting-api" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">xgb</span><span class="o">.</span><span class="n">plot_importance</span><span class="p">(</span><span class="n">booster</span><span class="p">,</span>
+                    <span class="n">ax</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">height</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
+                    <span class="n">xlim</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">ylim</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Feature importance&quot;</span><span class="p">,</span>
+                    <span class="n">xlabel</span> <span class="o">=</span> <span class="s2">&quot;F score&quot;</span><span class="p">,</span>
+                    <span class="n">ylabel</span> <span class="o">=</span> <span class="s2">&quot;Features&quot;</span><span class="p">,</span>
+                    <span class="n">importance_type</span> <span class="o">=</span> <span class="s2">&quot;weight&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="callback-api">
+<span id="header-n241"></span><h3>4.5 Callback API<a class="headerlink" href="#callback-api" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="dask-api">
+<span id="header-n243"></span><h3>4.6 Dask API<a class="headerlink" href="#dask-api" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="header-n245">
+<span id="id6"></span><h2>5.XGBoost调参<a class="headerlink" href="#header-n245" title="Permalink to this headline">¶</a></h2>
+<p><strong>参数类型：</strong></p>
+<ul class="simple">
+<li><p>通用参数</p>
+<ul>
+<li><p>控制整个模型的通用性能；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">booster</span></code>：基本学习器类型</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">gbtree</span></code>：基于树的模型</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gblinear</span></code>：线性模型</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">silent</span></code></p>
+<ul>
+<li><p>0：打印训练过程中的信息</p></li>
+<li><p>1：不会打印训练过程中的信息</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nthread</span></code>：模型并行化使用系统的核数</p></li>
+</ul>
+</li>
+<li><p>Booster参数</p>
+<ul>
+<li><p>控制每步迭代中每个基学习器(树/线性模型)；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eta</span></code>：learning rate</p>
+<ul>
+<li><p>0.3</p></li>
+<li><p>0.01 ~ 0.2</p></li>
+<li><p>通过shrinking每步迭代的中基本学习器的权重，使模型更加稳健</p></li>
+</ul>
+</li>
+<li><p>min<em>child</em>weight</p>
+<ul>
+<li><p>子节点中所有样本的权重和的最小值</p></li>
+<li><p>用于控制过拟合</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_depth</span></code></p>
+<ul>
+<li><p>树的最大深度</p></li>
+<li><p>用于控制过拟合</p></li>
+<li><p>3 ~ 10</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code></p>
+<ul>
+<li><p>树中叶节点的最大数量</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gamma</span></code></p>
+<ul>
+<li><p>当分裂结果使得损失函数减少时，才会进行分裂，指定了节点进行分裂所需的最小损失函数量；</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_delta_step</span></code></p>
+<ul>
+<li><p>每棵树的权重估计，不常用</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">subsample</span></code></p>
+<ul>
+<li><p>定义了构建每棵树使用的样本数量，比较低的值会使模型保守，防止过拟合；太低的值会导致模型欠拟合；</p></li>
+<li><p>0.5 ~ 1</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">colsample_bytree</span></code></p>
+<ul>
+<li><p>类似于GBM中的<code class="docutils literal notranslate"><span class="pre">max_features</span></code>，定义了用来构建每棵树时使用的特征数</p></li>
+<li><p>0.5 ~ 1</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">colsample_bylevel</span></code></p>
+<ul>
+<li><p>定义了树每次分裂时的特征比例，不常用，用<code class="docutils literal notranslate"><span class="pre">colsample_bytree</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lambda</span></code></p>
+<ul>
+<li><p>叶节点权重得分的l2正则参数</p></li>
+<li><p>不常使用，一般用来控制过拟合；</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">alpha</span></code></p>
+<ul>
+<li><p>叶节点权重得分的l1正则参数</p></li>
+<li><p>适用于高维数据中，能使得算法加速</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scale_pos_weight</span></code></p>
+<ul>
+<li><p>用在高度不平衡数据中，能够使算法快速收敛；</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>学习任务参数</p>
+<ul>
+<li><p>控制模型优化的表现；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">objective</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">binary:logistic</span></code>：Logistic
+Regression(二分类)，返回分类概率</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">multi:softmax</span></code>：利用<code class="docutils literal notranslate"><span class="pre">softmax</span></code>目标函数的多分类，返回分类标签</p>
+<ul>
+<li><p>需要设置<code class="docutils literal notranslate"><span class="pre">num_class</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">multi:softprob</span></code>：类似于<code class="docutils literal notranslate"><span class="pre">multi:softmax</span></code>，返回概率值</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eval_metric</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">rmse</span></code>：平方根误差</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mae</span></code>：绝对平均误差</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">logloss</span></code>：负对数似然</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error</span></code>：二分类错误率</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">merror</span></code>：多分类错误率</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mlogloss</span></code>：多分类负对数似然</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">auc</span></code>： Area Under the Curve</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>参数调优的一般策略：</strong></p>
+<ol class="arabic simple">
+<li><p>首先，选择一个相对较大的<code class="docutils literal notranslate"><span class="pre">learning</span> <span class="pre">rate</span></code>，比如:0.1 (一般分为在:
+0.05-0.3)。根据这个选定的<code class="docutils literal notranslate"><span class="pre">learning</span> <span class="pre">rate</span></code>对树的数量<code class="docutils literal notranslate"><span class="pre">number</span> <span class="pre">of</span> <span class="pre">tree</span></code>进行CV调优；</p></li>
+<li><p>调节树参数：<code class="docutils literal notranslate"><span class="pre">max_depth</span></code>, <code class="docutils literal notranslate"><span class="pre">min_child_weight</span></code>, <code class="docutils literal notranslate"><span class="pre">gamma</span></code>,
+<code class="docutils literal notranslate"><span class="pre">subsample</span></code>, <code class="docutils literal notranslate"><span class="pre">colsample_bytree</span></code>；</p></li>
+<li><p>调节正则化参数<code class="docutils literal notranslate"><span class="pre">lambda</span></code>, <code class="docutils literal notranslate"><span class="pre">alpha</span></code>；</p></li>
+<li><p>减小<code class="docutils literal notranslate"><span class="pre">learning</span> <span class="pre">rate</span></code>，并且优化其他参数；</p></li>
+</ol>
+<p><strong>参数调优步骤：</strong></p>
+<ul class="simple">
+<li><p>选择一个初始化的<code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>和<code class="docutils literal notranslate"><span class="pre">n_estimators</span></code>，利用CV对<code class="docutils literal notranslate"><span class="pre">n_estimators</span></code>进行调优，选择一个最优的<code class="docutils literal notranslate"><span class="pre">n_estimators</span></code>；</p>
+<ul>
+<li><p>对其他模型参数进行初始化(选择一个合理的值)：</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_depth</span> <span class="pre">=</span> <span class="pre">5</span></code></p>
+<ul>
+<li><p>3 - 10</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_child_weight</span> <span class="pre">=</span> <span class="pre">1</span></code></p>
+<ul>
+<li><p>类别不平衡数据选择一个较小值</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gamma</span> <span class="pre">=</span> <span class="pre">0</span></code></p>
+<ul>
+<li><p>0.1 - 0.2</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">subsample</span> <span class="pre">=</span> <span class="pre">0.8</span></code></p>
+<ul>
+<li><p>0.5 - 0.9</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">colsample_bytree</span> <span class="pre">=</span> <span class="pre">0.8</span></code></p>
+<ul>
+<li><p>0.5 - 0.9</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scale_pos_weight</span> <span class="pre">=</span> <span class="pre">1</span></code></p>
+<ul>
+<li><p>类别不平衡数据喜讯则一个较小值</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>调节对模型结果影响最大的参数</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_depth</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_child_weight</span></code></p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">rcParams</span>
+<span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">4</span>
+
+<span class="kn">import</span> <span class="nn">xgboost</span> <span class="k">as</span> <span class="nn">xgb</span>
+<span class="kn">from</span> <span class="nn">xgboost.sklearn</span> <span class="kn">import</span> <span class="n">XGBClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">metrics</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+
+
+<span class="c1"># ==========================================</span>
+<span class="c1"># data</span>
+<span class="c1"># ==========================================</span>
+<span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="n">train_path</span><span class="p">,</span> <span class="n">test_path</span><span class="p">):</span>
+     <span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">train_path</span><span class="p">)</span>
+     <span class="n">test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">test_path</span><span class="p">)</span>
+     <span class="n">target</span> <span class="o">=</span> <span class="s2">&quot;Disbursed&quot;</span>
+     <span class="n">IDcol</span> <span class="o">=</span> <span class="s1">&#39;ID&#39;</span>
+     <span class="n">predictors</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">train</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">target</span><span class="p">,</span> <span class="n">IDcol</span><span class="p">]]</span>
+
+     <span class="k">return</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">predictors</span><span class="p">,</span> <span class="n">target</span>
+
+
+<span class="c1"># ==========================================</span>
+<span class="c1"># XGBoost model and cross-validation</span>
+<span class="c1"># ==========================================</span>
+<span class="k">def</span> <span class="nf">modelFit</span><span class="p">(</span><span class="n">alg</span><span class="p">,</span> <span class="n">dtrain</span><span class="p">,</span> <span class="n">predictors</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span>
+                      <span class="n">scoring</span> <span class="o">=</span> <span class="s1">&#39;auc&#39;</span><span class="p">,</span> <span class="n">useTrainCV</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">cv_folds</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">early_stopping_rounds</span> <span class="o">=</span> <span class="mi">50</span><span class="p">):</span>
+     <span class="k">if</span> <span class="n">useTrainCV</span><span class="p">:</span>
+             <span class="n">xgb_param</span> <span class="o">=</span> <span class="n">alg</span><span class="o">.</span><span class="n">get_xgb_params</span><span class="p">()</span>
+             <span class="n">xgb_train</span> <span class="o">=</span> <span class="n">xgb</span><span class="o">.</span><span class="n">DMatrix</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">dtrain</span><span class="p">[</span><span class="n">predictors</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">dtrain</span><span class="p">[</span><span class="n">target</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+             <span class="n">cv_result</span> <span class="o">=</span> <span class="n">xgb</span><span class="o">.</span><span class="n">cv</span><span class="p">(</span><span class="n">params</span> <span class="o">=</span> <span class="n">xgb_param</span><span class="p">,</span>
+                                                <span class="n">dtrain</span> <span class="o">=</span> <span class="n">xgb_train</span><span class="p">,</span>
+                                                <span class="n">num_boost_round</span> <span class="o">=</span> <span class="n">alg</span><span class="o">.</span><span class="n">get_params</span><span class="p">()[</span><span class="s1">&#39;n_estimators&#39;</span><span class="p">],</span>
+                                                <span class="n">nfold</span> <span class="o">=</span> <span class="n">cv_folds</span><span class="p">,</span>
+                                                <span class="n">stratified</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                                                <span class="n">metrics</span> <span class="o">=</span> <span class="n">scoring</span><span class="p">,</span>
+                                                <span class="n">early_stopping_rounds</span> <span class="o">=</span> <span class="n">early_stopping_rounds</span><span class="p">,</span>
+                                                <span class="n">show_stdv</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+             <span class="n">alg</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">n_estimators</span> <span class="o">=</span> <span class="n">cv_result</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+     <span class="n">alg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dtrain</span><span class="p">[</span><span class="n">predictors</span><span class="p">],</span> <span class="n">dtrain</span><span class="p">[</span><span class="n">target</span><span class="p">],</span> <span class="n">eval_metric</span> <span class="o">=</span> <span class="n">scoring</span><span class="p">)</span>
+     <span class="n">dtrain_predictions</span> <span class="o">=</span> <span class="n">alg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">dtrain</span><span class="p">[</span><span class="n">predictors</span><span class="p">])</span>
+     <span class="n">dtrain_predprob</span> <span class="o">=</span> <span class="n">alg</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">dtrain</span><span class="p">[</span><span class="n">predictors</span><span class="p">])[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Model Report:&quot;</span><span class="p">)</span>
+     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy: </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">metrics</span><span class="o">.</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">dtrain</span><span class="p">[</span><span class="n">target</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dtrain_predictions</span><span class="p">))</span>
+     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;AUC Score (Train): </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">metrics</span><span class="o">.</span><span class="n">roc_auc_score</span><span class="p">(</span><span class="n">dtrain</span><span class="p">[</span><span class="n">target</span><span class="p">],</span> <span class="n">dtrain_predprob</span><span class="p">))</span>
+
+     <span class="n">feat_imp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">alg</span><span class="o">.</span><span class="n">booster</span><span class="p">()</span><span class="o">.</span><span class="n">get_fscore</span><span class="p">())</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+     <span class="n">feat_imp</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span> <span class="o">=</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Feature Importances&quot;</span><span class="p">)</span>
+     <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Feature Importance Score&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># ==========================================</span>
+<span class="c1"># parameter tuning</span>
+<span class="c1"># ==========================================</span>
+<span class="k">def</span> <span class="nf">grid_search</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">predictors</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">param_xgb</span><span class="p">,</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">scoring</span><span class="p">,</span> <span class="n">n_jobs</span><span class="p">,</span> <span class="n">cv_method</span><span class="p">):</span>
+     <span class="n">grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">estimator</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">(</span><span class="o">**</span><span class="n">param_xgb</span><span class="p">),</span>
+                                                        <span class="n">param_grid</span> <span class="o">=</span> <span class="n">param_grid</span><span class="p">,</span>
+                                                        <span class="n">scoring</span> <span class="o">=</span> <span class="n">scoring</span><span class="p">,</span>
+                                                        <span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span><span class="p">,</span>
+                                                        <span class="n">iid</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                                                        <span class="n">cv</span> <span class="o">=</span> <span class="n">cv_method</span><span class="p">)</span>
+     <span class="n">grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="n">predictors</span><span class="p">],</span> <span class="n">train</span><span class="p">[</span><span class="n">target</span><span class="p">])</span>
+     <span class="nb">print</span><span class="p">(</span><span class="n">grid_search</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
+     <span class="nb">print</span><span class="p">(</span><span class="n">grid_search</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+     <span class="nb">print</span><span class="p">(</span><span class="n">grid_search</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
+
+     <span class="k">return</span> <span class="n">grid_search</span>
+
+
+<span class="c1"># -----------------------------------</span>
+<span class="c1"># data</span>
+<span class="c1"># -----------------------------------</span>
+<span class="n">train_path</span> <span class="o">=</span> <span class="s2">&quot;./data/GBM_XGBoost_data/Train_nyOWmfK.csv&quot;</span>
+<span class="n">test_path</span> <span class="o">=</span> <span class="s2">&quot;./data/GBM_XGBoost_data/Test_bCtAN1w.csv&quot;</span>
+<span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">predictors</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">data</span><span class="p">(</span><span class="n">train_path</span><span class="p">,</span> <span class="n">test_path</span><span class="p">)</span>
+
+
+<span class="c1"># -----------------------------------</span>
+<span class="c1"># XGBoost 基于默认的learning rate 调节树的数量</span>
+<span class="c1"># n_estimators</span>
+<span class="c1"># -----------------------------------</span>
+<span class="n">param_xgb1</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+     <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+     <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+     <span class="s1">&#39;min_child_weight&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+     <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+     <span class="s1">&#39;subsample&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;colsample_bytree&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;objective&#39;</span><span class="p">:</span> <span class="s1">&#39;binary:logistic&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;nthread&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+     <span class="s1">&#39;scale_pos_weight&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+     <span class="s1">&#39;seed&#39;</span><span class="p">:</span> <span class="mi">27</span>
+<span class="p">}</span>
+<span class="n">scoring</span> <span class="o">=</span> <span class="s2">&quot;auc&quot;</span>
+<span class="n">cv_method</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">early_stopping_rounds</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">xgb_model1</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">(</span><span class="o">**</span><span class="n">param_xgb1</span><span class="p">)</span>
+
+<span class="n">modelFit</span><span class="p">(</span><span class="n">alg</span> <span class="o">=</span> <span class="n">xgb_model1</span><span class="p">,</span>
+              <span class="n">dtrain</span> <span class="o">=</span> <span class="n">train</span><span class="p">,</span>
+              <span class="n">predictors</span> <span class="o">=</span> <span class="n">predictors</span><span class="p">,</span>
+              <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="p">,</span>
+              <span class="n">scoring</span> <span class="o">=</span> <span class="n">scoring</span><span class="p">,</span>
+              <span class="n">useTrainCV</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+              <span class="n">cv_folds</span> <span class="o">=</span> <span class="n">cv_method</span><span class="p">,</span>
+              <span class="n">early_stopping_rounds</span> <span class="o">=</span> <span class="n">early_stopping_rounds</span><span class="p">)</span>
+
+<span class="c1"># -----------------------------------</span>
+<span class="c1"># 调节基于树的模型</span>
+<span class="c1"># max_depth, min_child_weight</span>
+<span class="c1"># -----------------------------------</span>
+<span class="n">param_xgb_tree1</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+     <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="mi">140</span><span class="p">,</span>
+     <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+     <span class="s1">&#39;min_child_weight&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+     <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+     <span class="s1">&#39;subsample&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;colsample_bytree&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;objective&#39;</span><span class="p">:</span> <span class="s2">&quot;binary:logistic&quot;</span><span class="p">,</span>
+     <span class="s1">&#39;nthread&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+     <span class="s1">&#39;scale_pos_weight&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+     <span class="s1">&#39;seed&#39;</span><span class="p">:</span> <span class="mi">27</span>
+<span class="p">}</span>
+<span class="n">param_grid_tree1</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+     <span class="s1">&#39;min_child_weight&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="n">scoring</span> <span class="o">=</span> <span class="s1">&#39;roc_auc&#39;</span>
+<span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">cv_method</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">grid_search</span><span class="p">(</span><span class="n">train</span> <span class="o">=</span> <span class="n">train</span><span class="p">,</span>
+                     <span class="n">predictors</span> <span class="o">=</span> <span class="n">predictors</span><span class="p">,</span>
+                     <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="p">,</span>
+                     <span class="n">param_xgb</span> <span class="o">=</span> <span class="n">param_xgb_tree1</span><span class="p">,</span>
+                     <span class="n">param_grid</span> <span class="o">=</span> <span class="n">param_grid_tree1</span><span class="p">,</span>
+                     <span class="n">scoring</span> <span class="o">=</span> <span class="n">scoring</span><span class="p">,</span>
+                     <span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span><span class="p">,</span>
+                     <span class="n">cv_method</span> <span class="o">=</span> <span class="n">cv_method</span><span class="p">)</span>
+
+
+<span class="c1"># -----------------------------------</span>
+<span class="n">param_xgb_tree2</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+     <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="mi">140</span><span class="p">,</span>
+     <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+     <span class="s1">&#39;min_child_weight&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+     <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+     <span class="s1">&#39;subsample&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;colsample_bytree&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;objective&#39;</span><span class="p">:</span> <span class="s2">&quot;binary:logistic&quot;</span><span class="p">,</span>
+     <span class="s1">&#39;nthread&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+     <span class="s1">&#39;scale_pos_weight&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+     <span class="s1">&#39;seed&#39;</span><span class="p">:</span> <span class="mi">27</span>
+<span class="p">}</span>
+<span class="n">param_grid_tree2</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+     <span class="s1">&#39;min_child_weight&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">scoring</span> <span class="o">=</span> <span class="s1">&#39;roc_auc&#39;</span>
+<span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">cv_method</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">grid_search</span><span class="p">(</span><span class="n">train</span> <span class="o">=</span> <span class="n">train</span><span class="p">,</span>
+                     <span class="n">predictors</span> <span class="o">=</span> <span class="n">predictors</span><span class="p">,</span>
+                     <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="p">,</span>
+                     <span class="n">param_xgb</span> <span class="o">=</span> <span class="n">param_xgb_tree2</span><span class="p">,</span>
+                     <span class="n">param_grid</span> <span class="o">=</span> <span class="n">param_grid_tree2</span><span class="p">,</span>
+                     <span class="n">scoring</span> <span class="o">=</span> <span class="n">scoring</span><span class="p">,</span>
+                     <span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span><span class="p">,</span>
+                     <span class="n">cv_method</span> <span class="o">=</span> <span class="n">cv_method</span><span class="p">)</span>
+
+<span class="c1"># -----------------------------------</span>
+<span class="n">param_xgb_tree3</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+     <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="mi">140</span><span class="p">,</span>
+     <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+     <span class="s1">&#39;min_child_weight&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+     <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+     <span class="s1">&#39;subsample&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;colsample_bytree&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;objective&#39;</span><span class="p">:</span> <span class="s2">&quot;binary:logistic&quot;</span><span class="p">,</span>
+     <span class="s1">&#39;nthread&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+     <span class="s1">&#39;scale_pos_weight&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+     <span class="s1">&#39;seed&#39;</span><span class="p">:</span> <span class="mi">27</span>
+<span class="p">}</span>
+<span class="n">param_grid_tree3</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s1">&#39;min_child_weight&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">scoring</span> <span class="o">=</span> <span class="s1">&#39;roc_auc&#39;</span>
+<span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">cv_method</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">grid_xgb_tree1</span> <span class="o">=</span> <span class="n">grid_search</span><span class="p">(</span><span class="n">train</span> <span class="o">=</span> <span class="n">train</span><span class="p">,</span>
+                                                      <span class="n">predictors</span> <span class="o">=</span> <span class="n">predictors</span><span class="p">,</span>
+                                                      <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="p">,</span>
+                                                      <span class="n">param_xgb</span> <span class="o">=</span> <span class="n">param_xgb_tree3</span><span class="p">,</span>
+                                                      <span class="n">param_grid</span> <span class="o">=</span> <span class="n">param_grid_tree3</span><span class="p">,</span>
+                                                      <span class="n">scoring</span> <span class="o">=</span> <span class="n">scoring</span><span class="p">,</span>
+                                                      <span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span><span class="p">,</span>
+                                                      <span class="n">cv_method</span> <span class="o">=</span> <span class="n">cv_method</span><span class="p">)</span>
+
+
+<span class="n">scoring</span> <span class="o">=</span> <span class="s2">&quot;auc&quot;</span>
+<span class="n">cv_method</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">early_stopping_rounds</span> <span class="o">=</span> <span class="mi">50</span>
+
+<span class="n">modelFit</span><span class="p">(</span><span class="n">alg</span> <span class="o">=</span> <span class="n">grid_xgb_tree1</span><span class="o">.</span><span class="n">best_estimator_</span><span class="p">,</span>
+              <span class="n">dtrain</span> <span class="o">=</span> <span class="n">train</span><span class="p">,</span>
+              <span class="n">predictors</span> <span class="o">=</span> <span class="n">predictors</span><span class="p">,</span>
+              <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="p">,</span>
+              <span class="n">scoring</span> <span class="o">=</span> <span class="n">scoring</span><span class="p">,</span>
+              <span class="n">useTrainCV</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+              <span class="n">cv_folds</span> <span class="o">=</span> <span class="n">cv_method</span><span class="p">,</span>
+              <span class="n">early_stopping_rounds</span> <span class="o">=</span> <span class="n">early_stopping_rounds</span><span class="p">)</span>
+
+
+<span class="c1"># -----------------------------------</span>
+<span class="c1"># 调节基于树的模型</span>
+<span class="c1"># gamma</span>
+<span class="c1"># -----------------------------------</span>
+<span class="n">param_xgb_tree4</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+     <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="mi">140</span><span class="p">,</span>
+     <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+     <span class="s1">&#39;min_child_weight&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+     <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+     <span class="s1">&#39;subsample&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;colsample_bytree&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;objective&#39;</span><span class="p">:</span> <span class="s2">&quot;binary:logistic&quot;</span><span class="p">,</span>
+     <span class="s1">&#39;nthread&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+     <span class="s1">&#39;scale_pos_weight&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+     <span class="s1">&#39;seed&#39;</span><span class="p">:</span> <span class="mi">27</span>
+<span class="p">}</span>
+<span class="n">param_grid_tree4</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">i</span><span class="o">/</span><span class="mf">10.0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)]</span>
+<span class="p">}</span>
+<span class="n">scoring</span> <span class="o">=</span> <span class="s1">&#39;roc_auc&#39;</span>
+<span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">cv_method</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">grid_search</span><span class="p">(</span><span class="n">train</span> <span class="o">=</span> <span class="n">train</span><span class="p">,</span>
+                     <span class="n">predictors</span> <span class="o">=</span> <span class="n">predictors</span><span class="p">,</span>
+                     <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="p">,</span>
+                     <span class="n">param_xgb</span> <span class="o">=</span> <span class="n">param_xgb_tree4</span><span class="p">,</span>
+                     <span class="n">param_grid</span> <span class="o">=</span> <span class="n">param_grid_tree4</span><span class="p">,</span>
+                     <span class="n">scoring</span> <span class="o">=</span> <span class="n">scoring</span><span class="p">,</span>
+                     <span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span><span class="p">,</span>
+                     <span class="n">cv_method</span> <span class="o">=</span> <span class="n">cv_method</span><span class="p">)</span>
+
+<span class="c1"># -----------------------------------</span>
+<span class="n">param_xgb2</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+     <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+     <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+     <span class="s1">&#39;min_child_weight&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+     <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+     <span class="s1">&#39;subsample&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;colsample_bytree&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;objective&#39;</span><span class="p">:</span> <span class="s1">&#39;binary:logistic&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;nthread&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+     <span class="s1">&#39;scale_pos_weight&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+     <span class="s1">&#39;seed&#39;</span><span class="p">:</span> <span class="mi">27</span>
+<span class="p">}</span>
+<span class="n">scoring</span> <span class="o">=</span> <span class="s2">&quot;auc&quot;</span>
+<span class="n">cv_method</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">early_stopping_rounds</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">xgb_model2</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">(</span><span class="o">**</span><span class="n">param_xgb2</span><span class="p">)</span>
+
+<span class="n">modelFit</span><span class="p">(</span><span class="n">alg</span> <span class="o">=</span> <span class="n">xgb_model2</span><span class="p">,</span>
+              <span class="n">dtrain</span> <span class="o">=</span> <span class="n">train</span><span class="p">,</span>
+              <span class="n">predictors</span> <span class="o">=</span> <span class="n">predictors</span><span class="p">,</span>
+              <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="p">,</span>
+              <span class="n">scoring</span> <span class="o">=</span> <span class="n">scoring</span><span class="p">,</span>
+              <span class="n">useTrainCV</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+              <span class="n">cv_folds</span> <span class="o">=</span> <span class="n">cv_method</span><span class="p">,</span>
+              <span class="n">early_stopping_rounds</span> <span class="o">=</span> <span class="n">early_stopping_rounds</span><span class="p">)</span>
+
+
+
+
+<span class="c1"># -----------------------------------</span>
+<span class="c1"># 调节基于树的模型</span>
+<span class="c1"># subsample, colsample_bytree</span>
+<span class="c1"># -----------------------------------</span>
+<span class="n">param_xgb_tree5</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+     <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="mi">140</span><span class="p">,</span>
+     <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+     <span class="s1">&#39;min_child_weight&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+     <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+     <span class="s1">&#39;subsample&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;colsample_bytree&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;objective&#39;</span><span class="p">:</span> <span class="s2">&quot;binary:logistic&quot;</span><span class="p">,</span>
+     <span class="s1">&#39;nthread&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+     <span class="s1">&#39;scale_pos_weight&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+     <span class="s1">&#39;seed&#39;</span><span class="p">:</span> <span class="mi">27</span>
+<span class="p">}</span>
+<span class="n">param_grid_tree5</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s1">&#39;subsample&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">i</span><span class="o">/</span><span class="mf">10.0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">)],</span>
+     <span class="s1">&#39;colsample_bytree&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">i</span><span class="o">/</span><span class="mf">10.0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">)]</span>
+<span class="p">}</span>
+<span class="n">scoring</span> <span class="o">=</span> <span class="s1">&#39;roc_auc&#39;</span>
+<span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">cv_method</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">grid_search</span><span class="p">(</span><span class="n">train</span> <span class="o">=</span> <span class="n">train</span><span class="p">,</span>
+                     <span class="n">predictors</span> <span class="o">=</span> <span class="n">predictors</span><span class="p">,</span>
+                     <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="p">,</span>
+                     <span class="n">param_xgb</span> <span class="o">=</span> <span class="n">param_xgb_tree5</span><span class="p">,</span>
+                     <span class="n">param_grid</span> <span class="o">=</span> <span class="n">param_grid_tree5</span><span class="p">,</span>
+                     <span class="n">scoring</span> <span class="o">=</span> <span class="n">scoring</span><span class="p">,</span>
+                     <span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span><span class="p">,</span>
+                     <span class="n">cv_method</span> <span class="o">=</span> <span class="n">cv_method</span><span class="p">)</span>
+
+<span class="c1"># -----------------------------------</span>
+<span class="n">param_xgb_tree6</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+     <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="mi">140</span><span class="p">,</span>
+     <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+     <span class="s1">&#39;min_child_weight&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+     <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+     <span class="s1">&#39;subsample&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;colsample_bytree&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;objective&#39;</span><span class="p">:</span> <span class="s2">&quot;binary:logistic&quot;</span><span class="p">,</span>
+     <span class="s1">&#39;nthread&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+     <span class="s1">&#39;scale_pos_weight&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+     <span class="s1">&#39;seed&#39;</span><span class="p">:</span> <span class="mi">27</span>
+<span class="p">}</span>
+<span class="n">param_grid_tree6</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s1">&#39;subsample&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">i</span><span class="o">/</span><span class="mf">100.0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">75</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">5</span><span class="p">)],</span>
+     <span class="s1">&#39;colsample_bytree&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">i</span><span class="o">/</span><span class="mf">10.0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">75</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">5</span><span class="p">)]</span>
+<span class="p">}</span>
+<span class="n">scoring</span> <span class="o">=</span> <span class="s1">&#39;roc_auc&#39;</span>
+<span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">cv_method</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">grid_search</span><span class="p">(</span><span class="n">train</span> <span class="o">=</span> <span class="n">train</span><span class="p">,</span>
+                     <span class="n">predictors</span> <span class="o">=</span> <span class="n">predictors</span><span class="p">,</span>
+                     <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="p">,</span>
+                     <span class="n">param_xgb</span> <span class="o">=</span> <span class="n">param_xgb_tree6</span><span class="p">,</span>
+                     <span class="n">param_grid</span> <span class="o">=</span> <span class="n">param_grid_tree6</span><span class="p">,</span>
+                     <span class="n">scoring</span> <span class="o">=</span> <span class="n">scoring</span><span class="p">,</span>
+                     <span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span><span class="p">,</span>
+                     <span class="n">cv_method</span> <span class="o">=</span> <span class="n">cv_method</span><span class="p">)</span>
+
+
+<span class="c1"># -----------------------------------</span>
+<span class="c1"># 调节正则化参数</span>
+<span class="c1"># reg_alpha, reg_lambda</span>
+<span class="c1"># -----------------------------------</span>
+<span class="n">param_xgb_regu1</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+     <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="mi">140</span><span class="p">,</span>
+     <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+     <span class="s1">&#39;min_child_weight&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+     <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+     <span class="s1">&#39;subsample&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;colsample_bytree&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;objective&#39;</span><span class="p">:</span> <span class="s2">&quot;binary:logistic&quot;</span><span class="p">,</span>
+     <span class="s1">&#39;nthread&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+     <span class="s1">&#39;scale_pos_weight&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+     <span class="s1">&#39;seed&#39;</span><span class="p">:</span> <span class="mi">27</span>
+<span class="p">}</span>
+<span class="n">param_grid_regu1</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s1">&#39;reg_alpha&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1e-5</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">scoring</span> <span class="o">=</span> <span class="s1">&#39;roc_auc&#39;</span>
+<span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">cv_method</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">grid_search</span><span class="p">(</span><span class="n">train</span> <span class="o">=</span> <span class="n">train</span><span class="p">,</span>
+                     <span class="n">predictors</span> <span class="o">=</span> <span class="n">predictors</span><span class="p">,</span>
+                     <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="p">,</span>
+                     <span class="n">param_xgb</span> <span class="o">=</span> <span class="n">param_xgb_regu1</span><span class="p">,</span>
+                     <span class="n">param_grid</span> <span class="o">=</span> <span class="n">param_grid_regu1</span><span class="p">,</span>
+                     <span class="n">scoring</span> <span class="o">=</span> <span class="n">scoring</span><span class="p">,</span>
+                     <span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span><span class="p">,</span>
+                     <span class="n">cv_method</span> <span class="o">=</span> <span class="n">cv_method</span><span class="p">)</span>
+
+<span class="n">param_xgb_regu2</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+     <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="mi">140</span><span class="p">,</span>
+     <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+     <span class="s1">&#39;min_child_weight&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+     <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+     <span class="s1">&#39;subsample&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;colsample_bytree&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;objective&#39;</span><span class="p">:</span> <span class="s2">&quot;binary:logistic&quot;</span><span class="p">,</span>
+     <span class="s1">&#39;nthread&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+     <span class="s1">&#39;scale_pos_weight&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+     <span class="s1">&#39;seed&#39;</span><span class="p">:</span> <span class="mi">27</span>
+<span class="p">}</span>
+<span class="n">param_grid_regu2</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s1">&#39;reg_alpha&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">scoring</span> <span class="o">=</span> <span class="s1">&#39;roc_auc&#39;</span>
+<span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">cv_method</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">grid_search</span><span class="p">(</span><span class="n">train</span> <span class="o">=</span> <span class="n">train</span><span class="p">,</span>
+                     <span class="n">predictors</span> <span class="o">=</span> <span class="n">predictors</span><span class="p">,</span>
+                     <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="p">,</span>
+                     <span class="n">param_xgb</span> <span class="o">=</span> <span class="n">param_xgb_regu2</span><span class="p">,</span>
+                     <span class="n">param_grid</span> <span class="o">=</span> <span class="n">param_grid_regu2</span><span class="p">,</span>
+                     <span class="n">scoring</span> <span class="o">=</span> <span class="n">scoring</span><span class="p">,</span>
+                     <span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span><span class="p">,</span>
+                     <span class="n">cv_method</span> <span class="o">=</span> <span class="n">cv_method</span><span class="p">)</span>
+
+
+
+<span class="c1"># -----------------------------------</span>
+<span class="n">param_xgb3</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+     <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+     <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+     <span class="s1">&#39;min_child_weight&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+     <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+     <span class="s1">&#39;subsample&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;colsample_bytree&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;reg_alpha&#39;</span><span class="p">:</span> <span class="mf">0.005</span><span class="p">,</span>
+     <span class="s1">&#39;objective&#39;</span><span class="p">:</span> <span class="s1">&#39;binary:logistic&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;nthread&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+     <span class="s1">&#39;scale_pos_weight&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+     <span class="s1">&#39;seed&#39;</span><span class="p">:</span> <span class="mi">27</span>
+<span class="p">}</span>
+<span class="n">scoring</span> <span class="o">=</span> <span class="s2">&quot;auc&quot;</span>
+<span class="n">cv_method</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">early_stopping_rounds</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">xgb_model3</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">(</span><span class="o">**</span><span class="n">param_xgb3</span><span class="p">)</span>
+
+<span class="n">modelFit</span><span class="p">(</span><span class="n">alg</span> <span class="o">=</span> <span class="n">xgb_model3</span><span class="p">,</span>
+              <span class="n">dtrain</span> <span class="o">=</span> <span class="n">train</span><span class="p">,</span>
+              <span class="n">predictors</span> <span class="o">=</span> <span class="n">predictors</span><span class="p">,</span>
+              <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="p">,</span>
+              <span class="n">scoring</span> <span class="o">=</span> <span class="n">scoring</span><span class="p">,</span>
+              <span class="n">useTrainCV</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+              <span class="n">cv_folds</span> <span class="o">=</span> <span class="n">cv_method</span><span class="p">,</span>
+              <span class="n">early_stopping_rounds</span> <span class="o">=</span> <span class="n">early_stopping_rounds</span><span class="p">)</span>
+
+
+
+<span class="c1"># -----------------------------------</span>
+<span class="c1"># 降低learning rate</span>
+<span class="c1"># 增加n_estimators</span>
+<span class="c1"># -----------------------------------</span>
+<span class="n">param_xgb4</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+     <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="mi">5000</span><span class="p">,</span>
+     <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+     <span class="s1">&#39;min_child_weight&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+     <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+     <span class="s1">&#39;subsample&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;colsample_bytree&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+     <span class="s1">&#39;reg_alpha&#39;</span><span class="p">:</span> <span class="mf">0.005</span><span class="p">,</span>
+     <span class="s1">&#39;objective&#39;</span><span class="p">:</span> <span class="s1">&#39;binary:logistic&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;nthread&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+     <span class="s1">&#39;scale_pos_weight&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+     <span class="s1">&#39;seed&#39;</span><span class="p">:</span> <span class="mi">27</span>
+<span class="p">}</span>
+<span class="n">scoring</span> <span class="o">=</span> <span class="s2">&quot;auc&quot;</span>
+<span class="n">cv_method</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">early_stopping_rounds</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">xgb_model4</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">(</span><span class="o">**</span><span class="n">param_xgb4</span><span class="p">)</span>
+
+<span class="n">modelFit</span><span class="p">(</span><span class="n">alg</span> <span class="o">=</span> <span class="n">xgb_model4</span><span class="p">,</span>
+              <span class="n">dtrain</span> <span class="o">=</span> <span class="n">train</span><span class="p">,</span>
+              <span class="n">predictors</span> <span class="o">=</span> <span class="n">predictors</span><span class="p">,</span>
+              <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="p">,</span>
+              <span class="n">scoring</span> <span class="o">=</span> <span class="n">scoring</span><span class="p">,</span>
+              <span class="n">useTrainCV</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+              <span class="n">cv_folds</span> <span class="o">=</span> <span class="n">cv_method</span><span class="p">,</span>
+              <span class="n">early_stopping_rounds</span> <span class="o">=</span> <span class="n">early_stopping_rounds</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="lightgbm.html" class="btn btn-neutral float-right" title="LightGBM" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="randomforest.html" class="btn btn-neutral float-left" title="Random Forest" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, wangzf.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
