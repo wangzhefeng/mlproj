@@ -208,7 +208,7 @@ def stacking_clf(clf, train_x, train_y, test_x, clf_name, folds, label_split = N
             num_round = 10000
             early_stopping_rounds = 100
             if test_matrix:
-                model = clf.train(params, train_matrix, num_round = num_round, valid_sets = test_matrix, early_stopping_rounds = early_stopping_rounds)
+                model = clf.train(params, train_matrix, num_round, valid_sets = test_matrix, early_stopping_rounds = early_stopping_rounds)
                 pred = model.predict(te_x, num_iteration = model.best_iteration)
                 train[test_index] = pred[:, 0].reshape(-1, 1)
                 test_pred[i, :] = model.predict(test_x, num_iteration = model.best_iteration)[:, 0].reshape(-1, 1)
@@ -230,41 +230,41 @@ regression
 
 def rf_reg(x_train, y_train, x_valid, kf, label_split = None):
     randomforest = RandomForestRegressor(n_estimators=600, max_depth=20, n_jobs = -1, random_state=2017, max_features="auto", verbose=1)
-    rf_train, rf_test = stacking_reg(randomforest, x_train, y_train, x_valid, "rf", kf, label_split=label_split)
+    rf_train, rf_test = stacking_reg(randomforest, x_train, y_train, x_valid, "rf_reg", kf, label_split=label_split)
     return rf_train, rf_test, "rf_reg"
 
 
 def ada_reg(x_train, y_train, x_valid, kf, label_split = None):
     adaboost = AdaBoostRegressor(n_estimators=30, random_state=2017, learning_rate=0.01)
-    ada_train, ada_test = stacking_reg(adaboost, x_train, y_train, x_valid, "ada", kf, label_split=label_split)
+    ada_train, ada_test = stacking_reg(adaboost, x_train, y_train, x_valid, "ada_reg", kf, label_split=label_split)
     return ada_train, ada_test, "ada_reg"
 
 
 def gb_reg(x_train, y_train, x_valid, kf, label_split = None):
     gbdt = GradientBoostingRegressor(learning_rate = 0.04, n_estimators=100, subsample=0.8, random_state=2017, max_depth = 5, verbose=1)
-    gbdt_train, gbdt_test = stacking_reg(gbdt, x_train, y_train, x_valid, "gb", kf, label_split=label_split)
+    gbdt_train, gbdt_test = stacking_reg(gbdt, x_train, y_train, x_valid, "gb_reg", kf, label_split=label_split)
     return gbdt_train, gbdt_test, "gb_reg"
 
 
 def et_reg(x_train, y_train, x_valid, kf, label_split = None):
     extratree = ExtraTreesRegressor(n_estimators=600, max_depth=35, max_features="auto", n_jobs = -1, random_state=2017, verbose=1)
-    et_train, et_test = stacking_reg(extratree, x_train, y_train, x_valid, "et", kf, label_split=label_split)
+    et_train, et_test = stacking_reg(extratree, x_train, y_train, x_valid, "et_reg", kf, label_split=label_split)
     return et_train, et_test, "et_reg"
 
 
 def lr_reg(x_train, y_train, x_valid, kf, label_split = None):
     lr_reg = LinearRegression(n_jobs = -1)
-    lr_train, lr_test = stacking_reg(lr_reg, x_train, y_train, x_valid, "lr", kf, label_split=label_split)
+    lr_train, lr_test = stacking_reg(lr_reg, x_train, y_train, x_valid, "lr_reg", kf, label_split=label_split)
     return lr_train, lr_test, "lr_reg"
 
 
 def xgb_reg(x_train, y_train, x_valid, kf, label_split = None):
-    xgb_train, xgb_test = stacking_reg(xgboost, x_train, y_train, x_valid, "xgb", kf, label_split=label_split)
+    xgb_train, xgb_test = stacking_reg(xgboost, x_train, y_train, x_valid, "xgb_reg", kf, label_split=label_split)
     return xgb_train, xgb_test, "xgb_reg"
 
 
 def lgb_reg(x_train, y_train, x_valid, kf, label_split = None):
-    lgb_train, lgb_test = stacking_reg(lightgbm, x_train, y_train, x_valid, "lgb", kf, label_split=label_split)
+    lgb_train, lgb_test = stacking_reg(lightgbm, x_train, y_train, x_valid, "lgb_reg", kf, label_split=label_split)
     return lgb_train, lgb_test, "lgb_reg"
 
 
@@ -275,51 +275,51 @@ classification
 
 def rf_clf(x_train, y_train, x_valid, kf, label_split = None):
     randomforest = RandomForestClassifier(n_estimators = 1200, max_depth = 20, n_jobs = -1, random_state = 2017, max_features = "auto", verbose = 1)
-    rf_train, rf_test = stacking_clf(randomforest, x_train, y_train, x_valid, "rf", kf, label_split=label_split)
+    rf_train, rf_test = stacking_clf(randomforest, x_train, y_train, x_valid, "rf_clf", kf, label_split=label_split)
     return rf_train, rf_test, "rf_clf"
 
 
 def ada_clf(x_train, y_train, x_valid, kf, label_split = None):
     adaboost = AdaBoostClassifier(n_estimators = 50, random_state = 2017, learning_rate = 0.01)
-    ada_train, ada_test = stacking_clf(adaboost, x_train, y_train, x_valid, "ada", kf, label_split=label_split)
+    ada_train, ada_test = stacking_clf(adaboost, x_train, y_train, x_valid, "ada_clf", kf, label_split=label_split)
     return ada_train, ada_test, "ada_clf"
 
 
 def gb_clf(x_train, y_train, x_valid, kf, label_split = None):
     gbdt = GradientBoostingClassifier(learning_rate = 0.04, n_estimators = 100, subsample = 0.8, random_state = 2017, max_depth = 5, verbose = 1)
-    gbdt_train, gbdt_test = stacking_clf(gbdt, x_train, y_train, x_valid, "gb", kf, label_split=label_split)
+    gbdt_train, gbdt_test = stacking_clf(gbdt, x_train, y_train, x_valid, "gb_clf", kf, label_split=label_split)
     return gbdt_train, gbdt_test, "gb_clf"
 
 
 def et_clf(x_train, y_train, x_valid, kf, label_split = None):
     extratree = ExtraTreesClassifier(n_estimators = 1200, max_depth = 35, max_features = "auto", n_jobs = -1, random_state = 2017, verbose = 1)
-    et_train, et_test = stacking_clf(extratree, x_train, y_train, x_valid, "et", kf, label_split=label_split)
+    et_train, et_test = stacking_clf(extratree, x_train, y_train, x_valid, "et_clf", kf, label_split=label_split)
     return et_train, et_test, "et_clf"
 
 
 def xgb_clf(x_train, y_train, x_valid, kf, label_split = None):
-    xgb_train, xgb_test = stacking_clf(xgboost, x_train, y_train, x_valid, "xgb", kf, label_split=label_split)
+    xgb_train, xgb_test = stacking_clf(xgboost, x_train, y_train, x_valid, "xgb_clf", kf, label_split=label_split)
     return xgb_train, xgb_test, "xgb_clf"
 
 
 def lgb_clf(x_train, y_train, x_valid, kf, label_split = None):
-    lgb_train, lgb_test = stacking_clf(lightgbm, x_train, y_train, x_valid, "lgb", kf, label_split=label_split)
+    lgb_train, lgb_test = stacking_clf(lightgbm, x_train, y_train, x_valid, "lgb_clf", kf, label_split=label_split)
     return lgb_train, lgb_test, "lgb_clf"
 
 
 def gnb_clf(x_train, y_train, x_valid, kf, label_split = None):
     gnb = GaussianNB()
-    gnb_train, gnb_test = stacking_clf(gnb, x_train, y_train, x_valid, "gnb", kf, label_split=label_split)
+    gnb_train, gnb_test = stacking_clf(gnb, x_train, y_train, x_valid, "gnb_clf", kf, label_split=label_split)
     return gnb_train, gnb_test, "gnb_clf"
 
 
 def lr_clf(x_train, y_train, x_valid, kf, label_split = None):
     logisticregression = LogisticRegression(n_jobs = -1, random_state = 2017, C = 0.1, max_iter = 200)
-    lr_train, lr_test = stacking_clf(logisticregression, x_train, y_train, x_valid, "lr", kf, label_split=label_split)
+    lr_train, lr_test = stacking_clf(logisticregression, x_train, y_train, x_valid, "lr_clf", kf, label_split=label_split)
     return lr_train, lr_test, "lr_clf"
 
 
 def knn_clf(x_train, y_train, x_valid, kf, label_split = None):
     kneighbors = KNeighborsClassifier(kneighbors = 200, n_jobs = -1)
-    knn_train, knn_test = stacking_clf(kneighbors, x_train, y_train, x_valid, "knn", kf, label_split=label_split)
+    knn_train, knn_test = stacking_clf(kneighbors, x_train, y_train, x_valid, "knn_clf", kf, label_split=label_split)
     return knn_train, knn_test, "knn_clf"
