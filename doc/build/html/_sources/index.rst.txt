@@ -89,14 +89,14 @@ Welcome to machinelearning's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: timeseries
 
    timeseries/timeseries
 
 
 .. toctree::
    :maxdepth: 2
-   :caption: timeseries-models:
+   :caption: timeseries-models
    
    timeseries/timeseries-modeling
    timeseries/timeseries-decomposition
@@ -106,7 +106,7 @@ Welcome to machinelearning's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: timeseries-preprocessing:
+   :caption: timeseries-preprocessing
 
    timeseries-preprocessing/lvbo
    timeseries-preprocessing/statsmodels
@@ -125,7 +125,7 @@ Welcome to machinelearning's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: timeseries-forecasting:
+   :caption: timeseries-forecasting
 
    timeseries-models/timeseries-forecasting/ARIMA2
    timeseries-models/timeseries-forecasting/ar
@@ -143,28 +143,28 @@ Welcome to machinelearning's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: timeseries-lr:
+   :caption: timeseries-lr
 
    timeseries-models/timeseries-lr/timeseries-lr
 
 
 .. toctree::
    :maxdepth: 2
-   :caption: timeseries-ml:
+   :caption: timeseries-ml
 
    timeseries-models/timeseries-ml/timeseries-ml
 
 
 .. toctree::
    :maxdepth: 2
-   :caption: timeseries-dl:
+   :caption: timeseries-dl
 
    timeseries-models/timeseries-dl/timeseries-dl
 
 
 .. toctree::
    :maxdepth: 2
-   :caption: timeseries-prophet:
+   :caption: timeseries-prophet
 
    timeseries-models/timeseries-prophet/prophet-doc
    timeseries-models/timeseries-prophet/prophet
@@ -182,7 +182,7 @@ Welcome to machinelearning's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: timeseries-reports:
+   :caption: timeseries-reports
 
    timeseries-reports/Daily-Female-Births-Dataset
    timeseries-reports/timeseries-forecasting-Python
@@ -191,7 +191,7 @@ Welcome to machinelearning's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: timeseries-tutorial:
+   :caption: timeseries-tutorial
 
    timeseries-tutorial/Forecasting
    timeseries-tutorial/Get-to-know-your-data

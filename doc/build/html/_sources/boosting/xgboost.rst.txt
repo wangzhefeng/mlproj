@@ -782,7 +782,7 @@ method 2： 仅为当前用户安装
 
 .. code:: python
 
-   #!/usr/bin/env python
+   
    # -*- coding: utf-8 -*-
 
    import numpy as np
