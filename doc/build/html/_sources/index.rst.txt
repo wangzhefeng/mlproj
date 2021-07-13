@@ -100,7 +100,6 @@ Welcome to machinelearning's documentation!
    timeseries/timeseries-preprocessing/statsmodels
    timeseries/timeseries-preprocessing/timeseries-aggregation
    timeseries/timeseries-preprocessing/timeseries-interpolate
-   timeseries/timeseries-preprocessing/timeseries-ma
    timeseries/timeseries-preprocessing/timeseries-outlier-detection-papers
    timeseries/timeseries-preprocessing/timeseries-pandas-api
    timeseries/timeseries-preprocessing/timeseries-sample
@@ -108,13 +107,13 @@ Welcome to machinelearning's documentation!
    timeseries/timeseries-preprocessing/timeseries-visual
    timeseries/timeseries-preprocessing/tsfresh
    timeseries/timeseries-preprocessing/tslearn
-   timeseries/timeseries-preprocessing/timeseries-base-rule
 
 
 .. toctree::
    :maxdepth: 2
    :caption: timeseries-forecasting
 
+   timeseries/timeseries-forecasting/base-rule
    timeseries/timeseries-forecasting/ARIMA2
    timeseries/timeseries-forecasting/ar
    timeseries/timeseries-forecasting/arima

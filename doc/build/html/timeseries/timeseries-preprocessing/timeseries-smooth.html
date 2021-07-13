@@ -161,21 +161,21 @@
 <li class="toctree-l1"><a class="reference internal" href="statsmodels.html">statsmodels</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timeseries-aggregation.html">时间序列聚合计算</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timeseries-interpolate.html">时间序列插值</a></li>
-<li class="toctree-l1"><a class="reference internal" href="timeseries-ma.html">移动平均光滑</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timeseries-outlier-detection-papers.html">时间序列异常值检测</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timeseries-pandas-api.html">时间序列-pandas</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timeseries-sample.html">时间序列采样</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">时间序列平滑</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#header-n17">1.差分运算、变化率</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#header-n18">1.1 差分运算</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#header-n39">1.2 百分比变化率</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">1.差分运算、变化率</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">1.1 差分运算</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">1.2 百分比变化率</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#header-n52">2.移动索引</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#header-n54">3.移动平均、指数平滑</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#rolling">6.1 Rolling</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#expanding">6.2 Expanding</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#exponentially-weighted-moving-window-ewm">6.3 指数加权移动(Exponentially-weighted moving window, EWM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">2.移动索引</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">3.移动平均、指数平滑</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#api">3.1 API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">3.2 简单移动平均</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">3.3 加权移动平均</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exponentially-weighted-moving-window-ewm">3.4 指数加权移动(Exponentially-weighted moving window, EWM)</a></li>
 </ul>
 </li>
 </ul>
@@ -183,10 +183,10 @@
 <li class="toctree-l1"><a class="reference internal" href="timeseries-visual.html">时间序列可视化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tsfresh.html">tsfresh</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tslearn.html">tslearn</a></li>
-<li class="toctree-l1"><a class="reference internal" href="timeseries-base-rule.html">时间序列基本规则法–周期因子法</a></li>
 </ul>
 <p class="caption"><span class="caption-text">timeseries-forecasting</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/base-rule.html">时间序列基本规则法–周期因子法</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/ARIMA2.html">ARIMA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/ar.html">AR</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/arima.html">ARIMA</a></li>
@@ -292,9 +292,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="header-n0">
-<span id="id1"></span><h1>时间序列平滑<a class="headerlink" href="#header-n0" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
+  <div class="section" id="id1">
+<h1>时间序列平滑<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><ul class="simple">
 <li><p>.diff()</p></li>
 <li><p>.shift()</p></li>
 <li><p>.rolling()</p></li>
@@ -302,23 +303,29 @@
 <li><p>.ewm()</p></li>
 <li><p>.pct_change()</p></li>
 </ul>
-<div class="section" id="header-n17">
-<span id="id2"></span><h2>1.差分运算、变化率<a class="headerlink" href="#header-n17" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="header-n18">
-<span id="id3"></span><h3>1.1 差分运算<a class="headerlink" href="#header-n18" title="Permalink to this headline">¶</a></h3>
+</div></blockquote>
+<div class="section" id="id2">
+<h2>1.差分运算、变化率<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3>1.1 差分运算<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p><strong>:math:`p` 阶差分:</strong></p>
-<p>相距一期的两个序列值至之间的减法运算称为 <span class="math notranslate nohighlight">\(1\)</span> 阶差分运算；对
+<blockquote>
+<div><p>相距一期的两个序列值至之间的减法运算称为 <span class="math notranslate nohighlight">\(1\)</span> 阶差分运算；对
 <span class="math notranslate nohighlight">\(1\)</span> 阶差分后序列在进行一次 <span class="math notranslate nohighlight">\(1\)</span> 阶差分运算称为 <span class="math notranslate nohighlight">\(2\)</span>
 阶差分；以此类推，对 <span class="math notranslate nohighlight">\(p-1\)</span> 阶差分后序列在进行一次 <span class="math notranslate nohighlight">\(1\)</span>
 阶差分运算称为 <span class="math notranslate nohighlight">\(p\)</span> 阶差分.</p>
 <p><span class="math notranslate nohighlight">\(\Delta x_{t} = x_{t-1} - x_{t-1}\)</span></p>
 <p><span class="math notranslate nohighlight">\(\Delta^{2} x_{t} = \Delta x_{t} - \Delta x_{t-1}\)</span></p>
 <p><span class="math notranslate nohighlight">\(\Delta^{p} x_{t} = \Delta^{p-1} x_{t} - \Delta^{p-1} x_{t-1}\)</span></p>
+</div></blockquote>
 <p><strong>:math:`k` 步差分：</strong></p>
-<p>相距 <span class="math notranslate nohighlight">\(k\)</span> 期的两个序列值之间的减法运算称为 <span class="math notranslate nohighlight">\(k\)</span> 步差分运算.</p>
+<blockquote>
+<div><p>相距 <span class="math notranslate nohighlight">\(k\)</span> 期的两个序列值之间的减法运算称为 <span class="math notranslate nohighlight">\(k\)</span> 步差分运算.</p>
 <p><span class="math notranslate nohighlight">\(\Delta_{k}x_{t} = x_{t} - x_{t-k}\)</span></p>
+</div></blockquote>
 <p><strong>差分运算 API:</strong></p>
-<ul class="simple">
+<blockquote>
+<div><ul class="simple">
 <li><p>pandas.Series.diff</p></li>
 <li><p>pandas.DataFrame.diff</p></li>
 <li><p>pandas.DataFrame.percent</p></li>
@@ -337,15 +344,17 @@
 <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">periods</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
+</div></blockquote>
 </div>
-<div class="section" id="header-n39">
-<span id="id4"></span><h3>1.2 百分比变化率<a class="headerlink" href="#header-n39" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h3>1.2 百分比变化率<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>当前值与前一个值之间的百分比变化</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">DataFrame</span><span class="o">/</span><span class="n">Series</span><span class="o">.</span><span class="n">pct_change</span><span class="p">(</span><span class="n">periods</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-                                      <span class="n">fill_method</span> <span class="o">=</span> <span class="s1">&#39;pad&#39;</span><span class="p">,</span>
-                                      <span class="n">limit</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                                      <span class="n">freq</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                                      <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">DataFrame</span><span class="o">/</span><span class="n">Series</span><span class="o">.</span><span class="n">pct_change</span><span class="p">(</span><span class="n">periods</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+               <span class="n">fill_method</span> <span class="o">=</span> <span class="s1">&#39;pad&#39;</span><span class="p">,</span>
+               <span class="n">limit</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+               <span class="n">freq</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+               <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -354,20 +363,32 @@
 <li><p>limit</p></li>
 <li><p>freq</p></li>
 </ul>
+</div></blockquote>
 </div>
 </div>
-<div class="section" id="header-n52">
-<span id="id5"></span><h2>2.移动索引<a class="headerlink" href="#header-n52" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">periods</span><span class="p">,</span> <span class="n">freq</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">fill_value</span><span class="p">)</span>
+<div class="section" id="id5">
+<h2>2.移动索引<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">periods</span><span class="p">,</span> <span class="n">freq</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">fill_value</span><span class="p">)</span>
 </pre></div>
 </div>
+</div></blockquote>
 </div>
-<div class="section" id="header-n54">
-<span id="id6"></span><h2>3.移动平均、指数平滑<a class="headerlink" href="#header-n54" title="Permalink to this headline">¶</a></h2>
-<p>API:</p>
-<ul class="simple">
+<div class="section" id="id6">
+<h2>3.移动平均、指数平滑<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>移动平均(simple moving average, SMA)</p></li>
+<li><p>加权移动平均(weighted moving average, WMA)</p></li>
+<li><p>指数加权移动平均(exponential weighted moving average, EMA, EWMA)</p></li>
+</ul>
+</div></blockquote>
+<div class="section" id="api">
+<h3>3.1 API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul>
 <li><p>Standard moving window functions</p>
-<ul>
+<ul class="simple">
 <li><p>ts.rolling(window, min_periods, center).count()</p></li>
 <li><p>ts.rolling(window, min<em>periods, center, win</em>type).sum()</p>
 <ul>
@@ -432,7 +453,7 @@
 </ul>
 </li>
 <li><p>Standard expanding window functions</p>
-<ul>
+<ul class="simple">
 <li><p>ts.expanding(window, min_periods, center).count()</p></li>
 <li><p>ts.expanding(window, min<em>periods, center, win</em>type).sum()</p>
 <ul>
@@ -495,7 +516,7 @@
 </ul>
 </li>
 <li><p>Exponentially-weighted moving window functions</p>
-<ul>
+<ul class="simple">
 <li><p>ts.ewm(window, min<em>periods, center, win</em>type).mean()</p>
 <ul>
 <li><p>win_type</p>
@@ -525,22 +546,41 @@
 <li><p>ts.ewm(window, min_periods, center).cov()</p></li>
 </ul>
 </li>
-</ul>
-<div class="section" id="rolling">
-<span id="header-n311"></span><h3>6.1 Rolling<a class="headerlink" href="#rolling" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1000</span><span class="p">),</span>
-                       <span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">&quot;1/1/2000&quot;</span><span class="p">,</span> <span class="n">periods</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">))</span>
+<li><p>Rolling</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1000</span><span class="p">),</span>
+         <span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">&quot;1/1/2000&quot;</span><span class="p">,</span> <span class="n">periods</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">))</span>
 <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span> <span class="o">=</span> <span class="mi">60</span><span class="p">)</span>
 </pre></div>
 </div>
+</div></blockquote>
+</li>
+<li><p>Expanding</p></li>
+</ul>
+</div></blockquote>
 </div>
-<div class="section" id="expanding">
-<span id="header-n315"></span><h3>6.2 Expanding<a class="headerlink" href="#expanding" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id7">
+<h3>3.2 简单移动平均<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[m_t = \frac{1}{k}\sum_{i=1}^{k}y_{t-i}\]</div>
+</div></blockquote>
+</div>
+<div class="section" id="id8">
+<h3>3.3 加权移动平均<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[m_t = \sum_{i=1}^{k}\omega_{i}y_{t-i}\]</div>
+</div></blockquote>
 </div>
 <div class="section" id="exponentially-weighted-moving-window-ewm">
-<span id="header-n317"></span><h3>6.3 指数加权移动(Exponentially-weighted moving window, EWM)<a class="headerlink" href="#exponentially-weighted-moving-window-ewm" title="Permalink to this headline">¶</a></h3>
+<h3>3.4 指数加权移动(Exponentially-weighted moving window, EWM)<a class="headerlink" href="#exponentially-weighted-moving-window-ewm" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[m_{t} = \beta \times m_{t-1} + (1 - \beta) \times y_{t}\]</div>
+</div></blockquote>
 </div>
 </div>
 </div>
