@@ -1,0 +1,538 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Audio &mdash; machine learning 1.0.0 alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="特征构建" href="../feature_engine_step/feature_build.html" />
+    <link rel="prev" title="Video" href="video.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> machine learning
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ML</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../machine-learning-steps.html">机器学习项目清单</a></li>
+</ul>
+<p class="caption"><span class="caption-text">boosting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/decisiontree.html">Decision Tree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/adaboost.html">AdaBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/gbm.html">GBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/randomforest.html">Random Forest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/xgboost.html">XGBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/lightgbm.html">LightGBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/catboost.html">CatBoost</a></li>
+</ul>
+<p class="caption"><span class="caption-text">models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../models/logistic-regression.html">Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/Navie-Bayes.html">朴素贝叶斯(Navie Bayes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/PCA.html">PCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/SVD.html">奇异值分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/svm.html">SVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/EM-algorithm.html">EM (Expectation Maximization algorithm)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/clustering.html">Cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/AB-test.html">A/B test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/Ad.html">互联网广告</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/anti-fraud-model.html">反欺诈模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/moshishibie.html">模式识别在化学化工中的应用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/PLS.html">偏最小二乘回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/user-portrait.html">用户画像</a></li>
+</ul>
+<p class="caption"><span class="caption-text">tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/python-pycaret.html">PyCaret</a></li>
+</ul>
+<p class="caption"><span class="caption-text">topic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../topic/overfitting.html">降低模型过拟合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../topic/accuracy.html">提高模型精度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../topic/model_performance_theory.html">模型表现理论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../topic/model_ensemble.html">模型融合</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine.html">特征工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numeric.html">Numeric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries.html">Timeseries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="categorical.html">Categorical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image.html">Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="video.html">Video</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Audio</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">1.音频数据了解</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">1.1 音频文件格式介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">1.2 音频文件格式的种类</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">1.3 参考文献</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">2.音频数据读写</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#python-wave">2.1 Python <code class="docutils literal notranslate"><span class="pre">wave</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#wave">2.1.1 <code class="docutils literal notranslate"><span class="pre">wave</span></code> 函数和异常</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wave-read">2.1.2 <code class="docutils literal notranslate"><span class="pre">Wave_read</span></code> 对象</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wave-write">2.1.3 <code class="docutils literal notranslate"><span class="pre">Wave_write</span></code> 对象</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">2.1.4 <code class="docutils literal notranslate"><span class="pre">wave</span></code> 使用示例</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/feature_build.html">特征构建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/feature_selection.html">特征选择</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/missing.html">缺失值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/outlier.html">异常值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_step/resample.html">特征采样</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries.html">timeseries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-modeling.html">传统时间序列建模方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-decomposition.html">时间序列分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-season-analysis.html">时间序列季节性分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-baseline.html">时间序列分析-baseline示例</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-preprocessing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/lvbo.html">滤波</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/statsmodels.html">statsmodels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/timeseries-aggregation.html">时间序列聚合计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/timeseries-interpolate.html">时间序列插值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/timeseries-ma.html">移动平均光滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/timeseries-outlier-detection-papers.html">时间序列异常值检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/timeseries-pandas-api.html">时间序列-pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/timeseries-sample.html">时间序列采样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/timeseries-smooth.html">时间序列平滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/timeseries-visual.html">时间序列可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/tsfresh.html">tsfresh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/tslearn.html">tslearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/timeseries-base-rule.html">时间序列基本规则法–周期因子法</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-forecasting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/ARIMA2.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/ar.html">AR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/arima.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/arma.html">ARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/hwes.html">HWES 模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/ma.html">MA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/sarima.html">SARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/sarimax.html">SARIMAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/ses.html">SES</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/var.html">VAR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/varma.html">VARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/varmax.html">VARMAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/timeseries-lr.html">时间序列分析-线性回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/timeseries-ml.html">时间序列分析-机器学习</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/timeseries-dl.html">时间序列分析-深度学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-prophet</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet-doc.html">Prophet 入门</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet.html">Prophet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet-paper.html">Paper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet-Saturating-Forecasts.html">Staturating Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet-Trend-Changepoints.html">Prophet 趋势变化点</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet-Seasonality-Holiday-Regressors.html">Seasonality, Holiday Effects, And Regressors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet-Multiplicative-Seasonality.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet-Uncertainty-Intervals.html">Prophet 不确定区间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet-Outliers.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet-Non-Daily-Data.html">Prophet 非日数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet-Diagnostics.html">Prophet 模型评估</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet-Additional-Topics.html">Prophet 其他话题</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-reports</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-reports/Daily-Female-Births-Dataset.html">时间序列分析示例1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-reports/timeseries-forecasting-Python.html">Time Series Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-reports/timeseries-forecasting-R.html">R 时间序列建模</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-reports/Forecasting.html">时间序列分析预测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-reports/Get-to-know-your-data.html">时间序列分析教程</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">machine learning</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Audio</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/feature_engine/feature_engine_class/audio.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="audio">
+<h1>Audio<a class="headerlink" href="#audio" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>1.音频数据了解<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3>1.1 音频文件格式介绍<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul>
+<li><p>音频文件格式专指存放音频数据的文件的格式，存在多种不同的格式</p></li>
+<li><p>一般获取音频数据的方法是:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>采用固定的时间间隔，对音频电压采样（量化），并将结果以某种分辨率(例如：CDDA 每个采样为 16 比特或 2 字节)存储</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>采样的时间间隔可以有不同的标准，如:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>CDDA 采用每秒 44100 次</p></li>
+<li><p>DVD 采用每秒 48000 或 96000 次</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>音频文件格式的关键参数:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>采样率</strong></p></li>
+<li><p><strong>分辨率</strong></p></li>
+<li><p><strong>声道数目(例如立体声为2声道</strong></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>音频文件和编解码器不同</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>尽管一种音频文件格式可以支持多种编码，例如 AVI 文件格式，但多数的音频文件仅支持一种音频编码</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="id3">
+<h3>1.2 音频文件格式的种类<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul>
+<li><p>无损格式:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>WAV, FLAC, APE, ALAC, WavPack(WV)</p></li>
+<li><p>无损的音频格式(例如FLAC)压缩比大约是 2：1，解压时不会产生数据/质量上的损失，
+解压产生的数据与未压缩的数据完全相同。如需要保证音乐的原始质量，应当选择无损音频编解码器。例如，用免费的 FLAC 无损音频编解码器你可以在一张 DVD-R 碟上存储相当于 20 张 CD 的音乐</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>有损格式</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>MP3, AAC, Ogg, Vorbis, Opus</p></li>
+<li><p>有损文件格式是基于声学心理学的模型，除去人类很难或根本听不到的声音，
+例如：一个音量很高的声音后面紧跟着一个音量很低的声音。MP3就属于这一类文件</p></li>
+<li><p>有损压缩应用很多，但在专业领域使用不多。有损压缩具有很大的压缩比，提供相对不错的声音质量</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="id4">
+<h3>1.3 参考文献<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://zh.wikipedia.org/wiki/%E9%9F%B3%E9%A2%91%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F">维基百科(音频文件格式)</a></p></li>
+<li><p><a class="reference external" href="https://zh.wikipedia.org/wiki/WAV">维基百科(WAV格式)</a></p></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>2.音频数据读写<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="python-wave">
+<h3>2.1 Python <code class="docutils literal notranslate"><span class="pre">wave</span></code><a class="headerlink" href="#python-wave" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul>
+<li><p>Python 的 <code class="docutils literal notranslate"><span class="pre">wave</span></code> 库用来读写 WAV 格式文件</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">wave</span></code> 模块提供了一个处理 WAV 声音格式的便利接口</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>不支持压缩、解压缩</p></li>
+<li><p>支持单声道、立体声</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<div class="section" id="wave">
+<h4>2.1.1 <code class="docutils literal notranslate"><span class="pre">wave</span></code> 函数和异常<a class="headerlink" href="#wave" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">wave.open(file,</span> <span class="pre">mode</span> <span class="pre">=</span> <span class="pre">None)</span></code></p>
+<blockquote>
+<div><ul>
+<li><p>file: 文件名、文件类对象</p></li>
+<li><p>mode:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">'rb'</span></code>: 只读模式，返回一个 <code class="docutils literal notranslate"><span class="pre">Wave_read</span></code> 对象</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'wb'</span></code>: 只写模式，返回一个 <code class="docutils literal notranslate"><span class="pre">Wave_write</span></code> 对象</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>exception</strong> <code class="docutils literal notranslate"><span class="pre">wave.Error</span></code></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>当不符合 WAV 格式或无法操作时引发的错误</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="wave-read">
+<h4>2.1.2 <code class="docutils literal notranslate"><span class="pre">Wave_read</span></code> 对象<a class="headerlink" href="#wave-read" title="Permalink to this headline">¶</a></h4>
+<p><strong>Wave_read</strong> 对象的常用方法：</p>
+<blockquote>
+<div><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_read.close()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_read.getnchannels()</span></code>: 声道数量，1: 单声道，2: 立体声</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_read.getsampwidth()</span></code>: 采样字节长度</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_read.getframerate()</span></code>: 采样频率</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_read.getnframes()</span></code>: 音频总帧数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_read.getcomptype()</span></code>: 压缩类型(只支持 ‘NONE’ 类型)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_read.getcompname()</span></code>: getcomptype() 的通俗版本。使用 ‘not compressed’ 代替 ‘NONE’</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_read.getparams()</span></code>: 返回一个 namedtuple() (nchannels, sampwidth, framerate, nframes, comptype, compname)，与 get*() 方法的输出相同</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_read.readframes(n)</span></code>: 读取并返回以 bytes 对象表示的最多 n 帧音频</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_read.rewind()</span></code>: 设置当前文件指针位置</p></li>
+<li><p>下面两个方法是为了和 aifc 保持兼容，实际不做任何事情</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_read.getmarkers()</span></code>: 返回 None</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_read.getmark()</span></code>: 引发错误异常</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>下面两个方法都使用指针，具体实现由其底层决定</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_read.setpos(pos)</span></code>: 设置文件指针到指定位置</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_read.tell()</span></code>: 当前文件指针位置</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="wave-write">
+<h4>2.1.3 <code class="docutils literal notranslate"><span class="pre">Wave_write</span></code> 对象<a class="headerlink" href="#wave-write" title="Permalink to this headline">¶</a></h4>
+<p>对于可查找的输出流，wave 头将自动更新以反映实际写入的帧数。对于不可查找的流，当写入第一帧时 nframes 值必须准确。
+获取准确的 nframes 值可以通过调用 setnframes() 或 setparams() 并附带 close() 被调用之前将要写入的帧数，
+然后使用 writeframesraw() 来写入帧数据，或者通过调用 writeframes() 并附带所有要写入的帧。
+在后一种情况下 writeframes() 将计算数据中的帧数并在写入帧数据之前相应地设置 nframes。</p>
+<p><strong>Wave_write</strong> 对象的常用方法：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_write.close()</span></code>: 确保 nframes 是正确的，并在文件被 wave 打开时关闭它。 此方法会在对象收集时被调用。 如果输出流不可查找且 nframes 与实际写入的帧数不匹配时引发异常。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_write.setnchannels(n)</span></code>: 设置声道数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_write.setsampwidth(n)</span></code>: 设置采样字节长度为 n</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_write.setframerate(n)</span></code>: 设置采样频率为 n。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_write.setnframes(n)</span></code>: 设置总帧数为 n。如果与之后实际写入的帧数不一致此值将会被更改(如果输出流不可查找则此更改尝试将引发错误)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_write.setcomptype(type,</span> <span class="pre">name)</span></code>: 设置压缩格式。目前只支持 NONE 即无压缩格式</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_write.setparams(tuple)</span></code>: tuple 应该是 (nchannels, sampwidth, framerate, nframes, comptype, compname)，每项的值应可用于 set*() 方法。设置所有形参</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_write.tell()</span></code>: 返回当前文件指针，其指针含义和`` Wave_read.tell() 以及 Wave_read.setpos() 是一致的</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_write.writeframesraw(data)</span></code>: 写入音频数据但不更新 nframes，可接受任意 bytes-like object。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wave_write.writeframes(data)</span></code>: 写入音频帧并确保 nframes 是正确的。 如果输出流不可查找且在 data 被写入之后写入的总帧数与之前设定的has been written does not match the previously set value for nframes 值不匹配将会引发错误</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>注意在调用 writeframes() 或 writeframesraw() 之后再设置任何格式参数是无效的，而且任何这样的尝试将引发 wave.Error。</p>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id7">
+<h4>2.1.4 <code class="docutils literal notranslate"><span class="pre">wave</span></code> 使用示例<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../feature_engine_step/feature_build.html" class="btn btn-neutral float-right" title="特征构建" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="video.html" class="btn btn-neutral float-left" title="Video" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, wangzf.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

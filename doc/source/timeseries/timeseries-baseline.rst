@@ -55,7 +55,7 @@ baseline 特点
    1901-05-01    180.3
    Name: Sales, dtype: float64
 
-.. figure:: ../../images/shampoo.png
+.. figure:: ../images/shampoo.png
    :alt: 
 
 .. _header-n16:

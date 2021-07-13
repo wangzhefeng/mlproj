@@ -1,0 +1,533 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>R 时间序列建模 &mdash; machine learning 1.0.0 alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="时间序列分析预测" href="Forecasting.html" />
+    <link rel="prev" title="Time Series Forecast" href="timeseries-forecasting-Python.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> machine learning
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ML</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../machine-learning-steps.html">机器学习项目清单</a></li>
+</ul>
+<p class="caption"><span class="caption-text">boosting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/decisiontree.html">Decision Tree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/adaboost.html">AdaBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/gbm.html">GBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/randomforest.html">Random Forest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/xgboost.html">XGBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/lightgbm.html">LightGBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/catboost.html">CatBoost</a></li>
+</ul>
+<p class="caption"><span class="caption-text">models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../models/logistic-regression.html">Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/Navie-Bayes.html">朴素贝叶斯(Navie Bayes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/PCA.html">PCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/SVD.html">奇异值分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/svm.html">SVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/EM-algorithm.html">EM (Expectation Maximization algorithm)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/clustering.html">Cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/AB-test.html">A/B test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/Ad.html">互联网广告</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/anti-fraud-model.html">反欺诈模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/moshishibie.html">模式识别在化学化工中的应用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/PLS.html">偏最小二乘回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/user-portrait.html">用户画像</a></li>
+</ul>
+<p class="caption"><span class="caption-text">tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/python-pycaret.html">PyCaret</a></li>
+</ul>
+<p class="caption"><span class="caption-text">topic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../topic/overfitting.html">降低模型过拟合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../topic/accuracy.html">提高模型精度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../topic/model_performance_theory.html">模型表现理论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../topic/model_ensemble.html">模型融合</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine.html">特征工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_class/numeric.html">Numeric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_class/text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_class/timeseries.html">Timeseries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_class/categorical.html">Categorical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_class/image.html">Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_class/video.html">Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_class/audio.html">Audio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_step/feature_build.html">特征构建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_step/feature_selection.html">特征选择</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_step/missing.html">缺失值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_step/outlier.html">异常值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_step/resample.html">特征采样</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries.html">timeseries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-modeling.html">传统时间序列建模方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-decomposition.html">时间序列分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-season-analysis.html">时间序列季节性分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-baseline.html">时间序列分析-baseline示例</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-preprocessing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/lvbo.html">滤波</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/statsmodels.html">statsmodels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-aggregation.html">时间序列聚合计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-interpolate.html">时间序列插值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-ma.html">移动平均光滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-outlier-detection-papers.html">时间序列异常值检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-pandas-api.html">时间序列-pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-sample.html">时间序列采样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-smooth.html">时间序列平滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-visual.html">时间序列可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tsfresh.html">tsfresh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tslearn.html">tslearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-base-rule.html">时间序列基本规则法–周期因子法</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-forecasting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/ARIMA2.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/ar.html">AR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/arima.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/arma.html">ARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/hwes.html">HWES 模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/ma.html">MA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/sarima.html">SARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/sarimax.html">SARIMAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/ses.html">SES</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/var.html">VAR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/varma.html">VARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/varmax.html">VARMAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/timeseries-lr.html">时间序列分析-线性回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/timeseries-ml.html">时间序列分析-机器学习</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/timeseries-dl.html">时间序列分析-深度学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-prophet</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet-doc.html">Prophet 入门</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet.html">Prophet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet-paper.html">Paper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet-Saturating-Forecasts.html">Staturating Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet-Trend-Changepoints.html">Prophet 趋势变化点</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet-Seasonality-Holiday-Regressors.html">Seasonality, Holiday Effects, And Regressors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet-Multiplicative-Seasonality.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet-Uncertainty-Intervals.html">Prophet 不确定区间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet-Outliers.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet-Non-Daily-Data.html">Prophet 非日数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet-Diagnostics.html">Prophet 模型评估</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet-Additional-Topics.html">Prophet 其他话题</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-reports</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Daily-Female-Births-Dataset.html">时间序列分析示例1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-forecasting-Python.html">Time Series Forecast</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">R 时间序列建模</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#header-n3">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n20">介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n23">内容</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n33">1.基础知识-时间序列模型</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#header-n43">1.1 平稳序列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n57">1.2 随机游走</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rho">1.3 Rho 系数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dickey-fuller-test-of-stationarity">1.4 Dickey Fuller Test of Stationarity(平稳性检验)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#r-python">2.R 和 Python 中的时间序列数据</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#arma">3.ARMA 时间序列模型</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ar">3.1 AR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ma">3.2 MA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acf-pacf">3.3 ACF 和 PACF 图</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n125">3.3 ARMA</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#arima">4.ARIMA 时间序列模型</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Forecasting.html">时间序列分析预测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Get-to-know-your-data.html">时间序列分析教程</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">machine learning</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>R 时间序列建模</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/timeseries/timeseries-reports/timeseries-forecasting-R.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="r">
+<span id="header-n0"></span><h1>R 时间序列建模<a class="headerlink" href="#r" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="header-n3">
+<span id="id1"></span><h2>概述<a class="headerlink" href="#header-n3" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>时间序列分析和时间序列建模是强大的预测工具</p></li>
+<li><p>在时间序列建模之前，时间序列背后的统计理论的先验知识是非常有用的</p></li>
+<li><p>ARMA 和 ARIMA 是执行时间序列分析的重要模型</p>
+<ul>
+<li><p>AR</p></li>
+<li><p>MA</p></li>
+<li><p>ARMA</p></li>
+<li><p>ARIMA</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="header-n20">
+<span id="id2"></span><h2>介绍<a class="headerlink" href="#header-n20" title="Permalink to this headline">¶</a></h2>
+<p>这里讨论的是预测和预测方法，处理基于时间的数据的一种方法是时间序列建模。顾名思义，它涉及按时间(年、月、日、小时、分钟、秒)为基础的数据，从而获得隐藏在数据中的见解，做出明智的决策。</p>
+<p>当具有串行相关数据时，时间序列模型是非常有用的模型。大多数商业公司使用时间序列数据分析下一年的销售数据、网站流量、竞争位置等。</p>
+</div>
+<div class="section" id="header-n23">
+<span id="id3"></span><h2>内容<a class="headerlink" href="#header-n23" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>基础知识-时间序列建模</p></li>
+<li><p>R 中时间序列数据的探索</p></li>
+<li><p>ARMA 时间序列建模简介</p></li>
+<li><p>ARIMA 时间序列建模的框架与应用</p></li>
+</ol>
+</div>
+<div class="section" id="header-n33">
+<span id="id4"></span><h2>1.基础知识-时间序列模型<a class="headerlink" href="#header-n33" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Stationary Seies(平稳序列)</p></li>
+<li><p>Random walks(随机游走)</p></li>
+<li><p>Rho Coefficient(Rho 系数)</p></li>
+<li><p>Dickey Fuller Test of Stationarity(平稳性检验)</p></li>
+</ul>
+<div class="section" id="header-n43">
+<span id="id5"></span><h3>1.1 平稳序列<a class="headerlink" href="#header-n43" title="Permalink to this headline">¶</a></h3>
+<p>时间序列被归类为平稳序列有三个基本标准：</p>
+<ol class="arabic simple">
+<li><p>时间序列的平均值不应该是时间的函数，而应该是一个常数；</p></li>
+<li><p>时间序列的方差不应该是时间的函数，这个性质称为同方差性；</p></li>
+<li><p>时间序列第 <span class="math notranslate nohighlight">\(i\)</span> 项和第 <span class="math notranslate nohighlight">\(i+m\)</span>
+项的协方差不应该是时间的函数；</p></li>
+</ol>
+<div class="figure align-default">
+<img alt="" src="../../_images/Mean_nonstationary.png" />
+</div>
+<div class="figure align-default">
+<img alt="" src="../../_images/Var_nonstationary.png" />
+</div>
+<div class="figure align-default">
+<img alt="" src="../../_images/Cov_nonstationary.png" />
+</div>
+<p>为什么关心时间序列的“平稳性”？</p>
+<p>除非你的时间序列平稳的，否则你无法建立时间序列模型。在违反平稳标准的情况下，第一个必要条件是对时间序列进行修正，然后尝试随机模型来预测该时间序列。有多种方法可以实现这种平稳性。其中一些是<strong>去趋势(Detrending)</strong>，<strong>差分(Differencing)</strong>等。</p>
+</div>
+<div class="section" id="header-n57">
+<span id="id6"></span><h3>1.2 随机游走<a class="headerlink" href="#header-n57" title="Permalink to this headline">¶</a></h3>
+<p>假设一个女孩在一个巨大的棋盘上随机移动，在这种情况下，女孩的下一个位置取决于最后的位置。现在想象一下，你坐在另一个房间，却无法看到那个女孩。你想随时间预测女孩的位置，你有多准确？当然，随着女孩位置发生变化，你变得越来越不准确，在
+<span class="math notranslate nohighlight">\(t=0\)</span>
+时，你确切地知道这个女孩在哪里，下一次，她只能移动到8个方格，因此你的概率下降到
+<span class="math notranslate nohighlight">\(\frac{1}{8}\)</span>，并且随时间继续下降。</p>
+<p>这里用数学公式表示这个现象：</p>
+<p><span class="math notranslate nohighlight">\(X(t)=X(t-1)+Error(t)\)</span></p>
+<p>其中：<span class="math notranslate nohighlight">\(Error(t)\)</span> 是时间点 <span class="math notranslate nohighlight">\(t\)</span>
+的误差，这时女孩在每个时间点带来的随机性</p>
+<p>如果递归拟合所有的 <span class="math notranslate nohighlight">\(X\)</span>，得到：</p>
+<p><span class="math notranslate nohighlight">\(X(t)=X(0)+(Error(1)+Error(1)+\ldots+Error(t))\)</span></p>
+<p>现在，尝试在这个随机游走公式中验证我们对平稳序列的假设：</p>
+<p><strong>1.平均值是否恒定？</strong></p>
+<p><span class="math notranslate nohighlight">\(E[X(t)]=E[X(0)]+(E[Error(1)]+E[Error(2)]+\ldots+E[Error(t)])\)</span></p>
+<p>假设任何错误的期望都是零，因为它是随机的，因此得到时间序列的均值是一个固定的值：</p>
+<p><span class="math notranslate nohighlight">\(E[X(t)]=E[X(0)]\)</span></p>
+<p><strong>2.方差是否恒定？</strong></p>
+<p><span class="math notranslate nohighlight">\(Var[X(t)]=Var[X(0)] + (Var[Error(1)] + Var[Error(1)] + \ldots +  Var[Error(t)])\)</span></p>
+<p><span class="math notranslate nohighlight">\(Var[X(t)]=t*Var(Error)\)</span></p>
+<p>因此，推断随机游走不是平稳过程(平稳序列)，因为它具有随时间变化的方差，此外，如果检查协方差，会发现协方差也取决于时间。</p>
+</div>
+<div class="section" id="rho">
+<span id="header-n73"></span><h3>1.3 Rho 系数<a class="headerlink" href="#rho" title="Permalink to this headline">¶</a></h3>
+<p>在非平稳的随机游走方程中引入一个新的系数：Rho</p>
+<p><span class="math notranslate nohighlight">\(X(t)=Rho * X(t-1)+Error(t)\)</span></p>
+<p>现在来改变 <span class="math notranslate nohighlight">\(Rho\)</span> 系数的数值，来看下时间序列是否能够平稳下来。</p>
+<p>对上面等式两边求期望：</p>
+<p><span class="math notranslate nohighlight">\(E[X(t)]=Rho * E[X(t-1)]\)</span></p>
+<p>时间序列中下一个值 <span class="math notranslate nohighlight">\(X\)</span> 被拉到 <span class="math notranslate nohighlight">\(Rho\)</span> 乘以 <span class="math notranslate nohighlight">\(X\)</span>
+的上一个值(<span class="math notranslate nohighlight">\(X\)</span> 的最后一个值)</p>
+</div>
+<div class="section" id="dickey-fuller-test-of-stationarity">
+<span id="header-n81"></span><h3>1.4 Dickey Fuller Test of Stationarity(平稳性检验)<a class="headerlink" href="#dickey-fuller-test-of-stationarity" title="Permalink to this headline">¶</a></h3>
+<p><span class="math notranslate nohighlight">\(X(t) = Rho * X(t-1)+Error(t)\)</span></p>
+<p><span class="math notranslate nohighlight">\(X(t)-X(t-1)=(Rho - 1)X(t-1) + Error(t)\)</span></p>
+<p>原假设：<span class="math notranslate nohighlight">\(Rho - 1 \nq 0\)</span>，如果原假设被拒绝，将得到一个平稳的时间序列，平稳检验以及将时间序列转换为一个平稳序列是时间序列建模中最关键的过程。</p>
+</div>
+</div>
+<div class="section" id="r-python">
+<span id="header-n86"></span><h2>2.R 和 Python 中的时间序列数据<a class="headerlink" href="#r-python" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>数据：1949 年至 1960 年每月国际航空公司乘客总数</p>
+</div></blockquote>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># data</span>
+<span class="nf">data</span><span class="p">(</span><span class="n">AirPassengers</span><span class="p">)</span>
+<span class="nf">class</span><span class="p">(</span><span class="n">AirPassengers</span><span class="p">)</span>
+<span class="nf">start</span><span class="p">(</span><span class="n">AirPassengers</span><span class="p">)</span>
+<span class="nf">end</span><span class="p">(</span><span class="n">AirPassengers</span><span class="p">)</span>
+<span class="nf">frequency</span><span class="p">(</span><span class="n">AirPassengers</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">AirPassengers</span><span class="p">)</span>
+
+<span class="c1"># Detailed Metrics</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">AirPassengers</span><span class="p">)</span>
+<span class="nf">abline</span><span class="p">(</span><span class="n">reg</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">AirPassengers</span> <span class="o">~</span> <span class="nf">time</span><span class="p">(</span><span class="n">AirPassengers</span><span class="p">)))</span>
+
+<span class="nf">cycle</span><span class="p">(</span><span class="n">AirPassengers</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="nf">aggregate</span><span class="p">(</span><span class="n">AirPassengers</span><span class="p">,</span> <span class="n">FUN</span> <span class="o">=</span> <span class="n">mean</span><span class="p">))</span>
+<span class="nf">boxplot</span><span class="p">(</span><span class="n">AirPassengers</span> <span class="o">~</span> <span class="nf">cycle</span><span class="p">(</span><span class="n">AirPassengers</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>探索性数据分析初步结论：</p>
+<ol class="arabic simple">
+<li><p>时间序列值的趋势明显表明<code class="docutils literal notranslate"><span class="pre">#passengers</span></code>一直在增加</p></li>
+<li><p>7月和8月的方差和均值明显高于其他月份</p></li>
+<li><p>尽管每个月的均值不同，但是他么的方差很小，因此，有季节性的因素影响时间序列，周期为12个月或更短</p></li>
+</ol>
+<p>从数据的探索性分析中可以得到很多有用的信息，比如：时间序列是否平稳，并且根据数据的特点，心中已经有了一些对于预测模型的选择。</p>
+</div>
+<div class="section" id="arma">
+<span id="header-n99"></span><h2>3.ARMA 时间序列模型<a class="headerlink" href="#arma" title="Permalink to this headline">¶</a></h2>
+<p>ARMA 模型通常用于时间序列建模，在 ARMA 模型中，AR 代表自回归，MA 代表
+移动平均。并且，AR 和 MA
+都不适用于非平稳时间序列，如果时间序列是非平稳序列，需要对序列进行平稳化处理，才能够应用时间序列模型进行建模预测。</p>
+<div class="section" id="ar">
+<span id="header-n101"></span><h3>3.1 AR<a class="headerlink" href="#ar" title="Permalink to this headline">¶</a></h3>
+<p>一个国家目前的 GDP <span class="math notranslate nohighlight">\(x(t)\)</span> 取决于去年的 GDP
+<span class="math notranslate nohighlight">\(x(t-1)\)</span>。假设国家一个财政年度的产品和服务总生产成本(GDP)取决于上一年的<strong>制造业、服务业</strong>和<strong>今年新设立的行业、工厂、服务</strong>，这种情况下
+GDP 的主要组成部分是前者，即：</p>
+<p><span class="math notranslate nohighlight">\(x(t) = \alpha * x(t-1) + \epsilon(t)\)</span></p>
+<p>其中：</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x(t)\)</span> 代表今年产生的 GDP</p></li>
+<li><p><span class="math notranslate nohighlight">\(x(t-1)\)</span> 代表去年产生的 GDP</p></li>
+<li><p><span class="math notranslate nohighlight">\(\epsilon(t) 代表今年新产生的的 GDP\)</span></p></li>
+</ul>
+<p>这个公式称为：AR(1)
+公式，其中(1)表示下一个序列值依赖于前一个序列值。<span class="math notranslate nohighlight">\(\alpha\)</span>
+是最小化误差函数来估计的参数值，<span class="math notranslate nohighlight">\(x(t-1)\)</span> 将以相同的方式与
+<span class="math notranslate nohighlight">\(x(t-1)\)</span> 建立关系，因此，<span class="math notranslate nohighlight">\(x(t)\)</span> 的任何变动将越来越小。</p>
+</div>
+<div class="section" id="ma">
+<span id="header-n114"></span><h3>3.2 MA<a class="headerlink" href="#ma" title="Permalink to this headline">¶</a></h3>
+<p>假设某制造商生产某种类型的包装袋，这种袋子在市场上很容易买到。作为一个竞争激烈的市场，突然该厂商的袋子销售量连续很多天都是零，所以该制造商在某一天设计了一个实验，并制作了几种不同类型的的袋子，这种袋子在市场中其他厂商没有在卖，所以，该厂商在某一天一下卖出了1000个的全部库存(<span class="math notranslate nohighlight">\(x(t)\)</span>)。由于需求大于供应，所以，大约有100个顾客没有买到这种袋子，将这个销售缺口值表示为该时间点销售误差，随着时间的推移，这种袋子已经失去了</p>
+<p><span class="math notranslate nohighlight">\(x(t) = \beta * \epsilon(t-1) + \epsilon(t)\)</span></p>
+</div>
+<div class="section" id="acf-pacf">
+<span id="header-n117"></span><h3>3.3 ACF 和 PACF 图<a class="headerlink" href="#acf-pacf" title="Permalink to this headline">¶</a></h3>
+<p>当得到平稳的时间序列后，必须回答两个主要的问题：</p>
+<ol class="arabic simple">
+<li><p>AR or MA?</p></li>
+<li></li>
+</ol>
+</div>
+<div class="section" id="header-n125">
+<span id="id7"></span><h3>3.3 ARMA<a class="headerlink" href="#header-n125" title="Permalink to this headline">¶</a></h3>
+<p>AR 和 MA
+模型之间的主要区别是基于不同时间点的时间序列对象之间的相关性。对于</p>
+</div>
+</div>
+<div class="section" id="arima">
+<span id="header-n130"></span><h2>4.ARIMA 时间序列模型<a class="headerlink" href="#arima" title="Permalink to this headline">¶</a></h2>
+<p>如何进行时间序列分析：</p>
+<ol class="arabic simple">
+<li><p>Visualize the time series</p></li>
+<li><p>Stationarize the series</p></li>
+<li><p>Plot ACF/PACF charts and find optimal parameters</p></li>
+<li><p>Build the ARIMA model</p></li>
+<li><p>Make Predictions</p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="Forecasting.html" class="btn btn-neutral float-right" title="时间序列分析预测" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="timeseries-forecasting-Python.html" class="btn btn-neutral float-left" title="Time Series Forecast" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, wangzf.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

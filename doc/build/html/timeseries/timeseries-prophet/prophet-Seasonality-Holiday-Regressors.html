@@ -1,0 +1,478 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Seasonality, Holiday Effects, And Regressors &mdash; machine learning 1.0.0 alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Prophet 异常" href="prophet-Multiplicative-Seasonality.html" />
+    <link rel="prev" title="Prophet 趋势变化点" href="prophet-Trend-Changepoints.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> machine learning
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ML</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../machine-learning-steps.html">机器学习项目清单</a></li>
+</ul>
+<p class="caption"><span class="caption-text">boosting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/decisiontree.html">Decision Tree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/adaboost.html">AdaBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/gbm.html">GBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/randomforest.html">Random Forest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/xgboost.html">XGBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/lightgbm.html">LightGBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/catboost.html">CatBoost</a></li>
+</ul>
+<p class="caption"><span class="caption-text">models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../models/logistic-regression.html">Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/Navie-Bayes.html">朴素贝叶斯(Navie Bayes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/PCA.html">PCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/SVD.html">奇异值分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/svm.html">SVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/EM-algorithm.html">EM (Expectation Maximization algorithm)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/clustering.html">Cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/AB-test.html">A/B test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/Ad.html">互联网广告</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/anti-fraud-model.html">反欺诈模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/moshishibie.html">模式识别在化学化工中的应用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/PLS.html">偏最小二乘回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/user-portrait.html">用户画像</a></li>
+</ul>
+<p class="caption"><span class="caption-text">tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/python-pycaret.html">PyCaret</a></li>
+</ul>
+<p class="caption"><span class="caption-text">topic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../topic/overfitting.html">降低模型过拟合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../topic/accuracy.html">提高模型精度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../topic/model_performance_theory.html">模型表现理论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../topic/model_ensemble.html">模型融合</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine.html">特征工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_class/numeric.html">Numeric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_class/text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_class/timeseries.html">Timeseries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_class/categorical.html">Categorical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_class/image.html">Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_class/video.html">Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_class/audio.html">Audio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_step/feature_build.html">特征构建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_step/feature_selection.html">特征选择</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_step/missing.html">缺失值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_step/outlier.html">异常值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_step/resample.html">特征采样</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries.html">timeseries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-modeling.html">传统时间序列建模方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-decomposition.html">时间序列分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-season-analysis.html">时间序列季节性分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-baseline.html">时间序列分析-baseline示例</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-preprocessing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/lvbo.html">滤波</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/statsmodels.html">statsmodels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-aggregation.html">时间序列聚合计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-interpolate.html">时间序列插值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-ma.html">移动平均光滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-outlier-detection-papers.html">时间序列异常值检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-pandas-api.html">时间序列-pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-sample.html">时间序列采样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-smooth.html">时间序列平滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-visual.html">时间序列可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tsfresh.html">tsfresh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tslearn.html">tslearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-base-rule.html">时间序列基本规则法–周期因子法</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-forecasting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/ARIMA2.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/ar.html">AR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/arima.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/arma.html">ARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/hwes.html">HWES 模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/ma.html">MA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/sarima.html">SARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/sarimax.html">SARIMAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/ses.html">SES</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/var.html">VAR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/varma.html">VARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/varmax.html">VARMAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/timeseries-lr.html">时间序列分析-线性回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/timeseries-ml.html">时间序列分析-机器学习</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/timeseries-dl.html">时间序列分析-深度学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-prophet</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="prophet-doc.html">Prophet 入门</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prophet.html">Prophet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prophet-paper.html">Paper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prophet-Saturating-Forecasts.html">Staturating Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prophet-Trend-Changepoints.html">Prophet 趋势变化点</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Seasonality, Holiday Effects, And Regressors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">1.假期和特殊事件建模</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">1.1 假期和特殊事件建模</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build-in-country-holiday">1.2 指定内置的国家/地区假期(Build-in Country Holiday)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#fourier-order-for-seasonalities">2.季节性的傅里叶变换(Fourier Order for Seasonalities)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#header-n58">2.2 指定自定义季节性</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="prophet-Multiplicative-Seasonality.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prophet-Uncertainty-Intervals.html">Prophet 不确定区间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prophet-Outliers.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prophet-Non-Daily-Data.html">Prophet 非日数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prophet-Diagnostics.html">Prophet 模型评估</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prophet-Additional-Topics.html">Prophet 其他话题</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-reports</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/Daily-Female-Births-Dataset.html">时间序列分析示例1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/timeseries-forecasting-Python.html">Time Series Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/timeseries-forecasting-R.html">R 时间序列建模</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/Forecasting.html">时间序列分析预测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-reports/Get-to-know-your-data.html">时间序列分析教程</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">machine learning</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Seasonality, Holiday Effects, And Regressors</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/timeseries/timeseries-prophet/prophet-Seasonality-Holiday-Regressors.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="seasonality-holiday-effects-and-regressors">
+<h1>Seasonality, Holiday Effects, And Regressors<a class="headerlink" href="#seasonality-holiday-effects-and-regressors" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>1.假期和特殊事件建模<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3>1.1 假期和特殊事件建模<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>如果一个需要建模的时间序列中存在假期或其他重要的事件，则必须为这些特殊事件创建单独的
+DataFrame。Dataframe 的格式如下：</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>DataFrame</p>
+<ul>
+<li><p>holiday</p></li>
+<li><p>ds</p></li>
+<li><p>lower_window</p></li>
+<li><p>upper_window</p></li>
+<li><p>prior_scale</p></li>
+</ul>
+</li>
+</ul>
+<p>1.创建一个 DataFrame，其中包括了 Peyton Manning 所有季后赛出场的日期：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/example_wp_log_peyton_manning.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># 季后赛</span>
+<span class="n">playoffs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+     <span class="s2">&quot;holiday&quot;</span><span class="p">:</span> <span class="s2">&quot;playoff&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;ds&quot;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">([</span><span class="s2">&quot;2018-01-13&quot;</span><span class="p">,</span> <span class="s2">&quot;2019-01-03&quot;</span><span class="p">,</span> <span class="s2">&quot;2010-01-16&quot;</span><span class="p">,</span>
+                                               <span class="s2">&quot;2010-01-24&quot;</span><span class="p">,</span> <span class="s2">&quot;2010-02-07&quot;</span><span class="p">,</span> <span class="s2">&quot;2011-01-08&quot;</span><span class="p">,</span>
+                                               <span class="s2">&quot;2013-01-12&quot;</span><span class="p">,</span> <span class="s2">&quot;2014-01-12&quot;</span><span class="p">,</span> <span class="s2">&quot;2014-01-19&quot;</span><span class="p">,</span>
+                                               <span class="s2">&quot;2014-02-02&quot;</span><span class="p">,</span> <span class="s2">&quot;2015-01-11&quot;</span><span class="p">,</span> <span class="s2">&quot;2016-01-17&quot;</span><span class="p">,</span>
+                                               <span class="s2">&quot;2016-01-24&quot;</span><span class="p">,</span> <span class="s2">&quot;2016-02-07&quot;</span><span class="p">]),</span>
+     <span class="s2">&quot;lower_window&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+     <span class="s2">&quot;upper_window&quot;</span><span class="p">:</span> <span class="mi">1</span>
+<span class="p">})</span>
+
+<span class="c1"># 超级碗比赛</span>
+<span class="n">superbowls</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+     <span class="s2">&quot;holiday&quot;</span><span class="p">:</span> <span class="s2">&quot;superbowl&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;ds&quot;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">([</span><span class="s2">&quot;2010-02-07&quot;</span><span class="p">,</span> <span class="s2">&quot;2014-02-02&quot;</span><span class="p">,</span> <span class="s2">&quot;2016-02-07&quot;</span><span class="p">]),</span>
+     <span class="s2">&quot;lower_window&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+     <span class="s2">&quot;upper_window&quot;</span><span class="p">:</span> <span class="mi">1</span>
+<span class="p">})</span>
+<span class="c1"># 所有的特殊比赛</span>
+<span class="n">holiday</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">playoffs</span><span class="p">,</span> <span class="n">superbowls</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">holiday</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="" src="../../_images/holiday_df.png" />
+</div>
+<p>2.通过使用 <code class="docutils literal notranslate"><span class="pre">holidays</span></code> 参数传递节假日影响因素</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fbprophet</span> <span class="kn">import</span> <span class="n">Prophet</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">Prophet</span><span class="p">(</span><span class="n">holidays</span> <span class="o">=</span> <span class="n">holidays</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">future</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">make_future_dataframe</span><span class="p">(</span><span class="n">periods</span> <span class="o">=</span> <span class="mi">365</span><span class="p">)</span>
+<span class="n">forecast</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">future</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">forecast</span><span class="p">[(</span><span class="n">forecast</span><span class="p">[</span><span class="s2">&quot;playoff&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">forecast</span><span class="p">[</span><span class="s2">&quot;superbowl&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">][[</span><span class="s2">&quot;ds&quot;</span><span class="p">,</span> <span class="s2">&quot;playoff&quot;</span><span class="p">,</span> <span class="s2">&quot;superbowl&quot;</span><span class="p">]][</span><span class="o">-</span><span class="mi">10</span><span class="p">:]</span>
+</pre></div>
+</div>
+<p>时间序列组件可视化：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">prophet_plot_components</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">forecast</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_forecast_components</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">forecast</span><span class="p">,</span> <span class="s2">&quot;superbowl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-in-country-holiday">
+<span id="header-n33"></span><h3>1.2 指定内置的国家/地区假期(Build-in Country Holiday)<a class="headerlink" href="#build-in-country-holiday" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>通过在 <code class="docutils literal notranslate"><span class="pre">fbprophet.Prophet()</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">holidays</span></code> 参数指定任何假期</p></li>
+<li><p>通过使用 <code class="docutils literal notranslate"><span class="pre">.add_country_holidays()</span></code> 方法使用 <code class="docutils literal notranslate"><span class="pre">fbprophet.Prophet()</span></code>
+内置的 <code class="docutils literal notranslate"><span class="pre">country_name</span></code> 参数特定该国家/地方的主要假期</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 模型-指定假期</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">Prophet</span><span class="p">(</span><span class="n">holidays</span> <span class="o">=</span> <span class="n">holidays</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">add_country_holidays</span><span class="p">(</span><span class="n">country_name</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="c1"># 所有指定的假期</span>
+<span class="n">m</span><span class="o">.</span><span class="n">train_holiday_names</span>
+
+<span class="n">forecast</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">future</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">plot_components</span><span class="p">(</span><span class="n">forecast</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="fourier-order-for-seasonalities">
+<span id="header-n41"></span><h2>2.季节性的傅里叶变换(Fourier Order for Seasonalities)<a class="headerlink" href="#fourier-order-for-seasonalities" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>使用<strong>偏傅里叶和(Partial Fourier Sum)</strong>估计季节性，逼近非定期信号</p>
+<ul>
+<li><p>The number of terms in the partial sum(the order) is a parameter
+that determines how quickly the seasonlity can change</p></li>
+<li><p><a class="reference external" href="https://peerj.com/preprints/3190/">论文</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Fourier_series#/media/File:Fourier_Series.svg">Wiki</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Fourier_series#/media/File:Fourier_Series.svg">Wiki图</a></p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fbprophet.plot</span> <span class="kn">import</span> <span class="n">plot_yearly</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">Prophet</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">plot_yearly</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>通常季节性 <code class="docutils literal notranslate"><span class="pre">yearly_seasonality</span></code>
+的默认值是比较合适的，但是当季节性需要适应更高频率的变化时，可以增加频率。但是增加频率后的序列不会太平滑。即可以在实例化模型时，可以为每个内置季节性指定傅里叶级别</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fbprophet.plot</span> <span class="kn">import</span> <span class="n">plot_yearly</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">Prophet</span><span class="p">(</span><span class="n">yearly_seasonality</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">plot_yearly</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>增加傅里叶项的数量可以使季节性适应更快的变化周期，但也可能导致过拟合：N
+傅里叶项对应于用于建模循环的 2N 变量。</p>
+<div class="section" id="header-n58">
+<span id="id3"></span><h3>2.2 指定自定义季节性<a class="headerlink" href="#header-n58" title="Permalink to this headline">¶</a></h3>
+<p>如果时间序列长度超过两个周期，Prophet
+将默认自适应每周、每年的季节性。它还适合时间序列的每日季节性，可以通过
+<code class="docutils literal notranslate"><span class="pre">add_seasonality</span></code> 方法添加其他季节性, 比如：每月、每季度、每小时</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">Prophet</span><span class="p">(</span><span class="n">weekly_seasonality</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">add_seasonality</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;monthly&quot;</span><span class="p">,</span> <span class="n">period</span> <span class="o">=</span> <span class="mf">30.5</span><span class="p">,</span> <span class="n">fourier_order</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">forecast</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">future</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">plot_components</span><span class="p">(</span><span class="n">forecast</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="prophet-Multiplicative-Seasonality.html" class="btn btn-neutral float-right" title="Prophet 异常" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="prophet-Trend-Changepoints.html" class="btn btn-neutral float-left" title="Prophet 趋势变化点" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, wangzf.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

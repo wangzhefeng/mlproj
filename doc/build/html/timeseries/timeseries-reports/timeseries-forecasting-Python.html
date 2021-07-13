@@ -1,0 +1,845 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Time Series Forecast &mdash; machine learning 1.0.0 alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="R 时间序列建模" href="timeseries-forecasting-R.html" />
+    <link rel="prev" title="时间序列分析示例1" href="Daily-Female-Births-Dataset.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> machine learning
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ML</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../machine-learning-steps.html">机器学习项目清单</a></li>
+</ul>
+<p class="caption"><span class="caption-text">boosting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/decisiontree.html">Decision Tree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/adaboost.html">AdaBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/gbm.html">GBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/randomforest.html">Random Forest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/xgboost.html">XGBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/lightgbm.html">LightGBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/catboost.html">CatBoost</a></li>
+</ul>
+<p class="caption"><span class="caption-text">models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../models/logistic-regression.html">Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/Navie-Bayes.html">朴素贝叶斯(Navie Bayes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/PCA.html">PCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/SVD.html">奇异值分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/svm.html">SVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/EM-algorithm.html">EM (Expectation Maximization algorithm)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/clustering.html">Cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/AB-test.html">A/B test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/Ad.html">互联网广告</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/anti-fraud-model.html">反欺诈模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/moshishibie.html">模式识别在化学化工中的应用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/PLS.html">偏最小二乘回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/user-portrait.html">用户画像</a></li>
+</ul>
+<p class="caption"><span class="caption-text">tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/python-pycaret.html">PyCaret</a></li>
+</ul>
+<p class="caption"><span class="caption-text">topic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../topic/overfitting.html">降低模型过拟合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../topic/accuracy.html">提高模型精度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../topic/model_performance_theory.html">模型表现理论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../topic/model_ensemble.html">模型融合</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine.html">特征工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_class/numeric.html">Numeric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_class/text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_class/timeseries.html">Timeseries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_class/categorical.html">Categorical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_class/image.html">Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_class/video.html">Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_class/audio.html">Audio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_step/feature_build.html">特征构建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_step/feature_selection.html">特征选择</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_step/missing.html">缺失值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_step/outlier.html">异常值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../feature_engine/feature_engine_step/resample.html">特征采样</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries.html">timeseries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-modeling.html">传统时间序列建模方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-decomposition.html">时间序列分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-season-analysis.html">时间序列季节性分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-baseline.html">时间序列分析-baseline示例</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-preprocessing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/lvbo.html">滤波</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/statsmodels.html">statsmodels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-aggregation.html">时间序列聚合计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-interpolate.html">时间序列插值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-ma.html">移动平均光滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-outlier-detection-papers.html">时间序列异常值检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-pandas-api.html">时间序列-pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-sample.html">时间序列采样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-smooth.html">时间序列平滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-visual.html">时间序列可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tsfresh.html">tsfresh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/tslearn.html">tslearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-preprocessing/timeseries-base-rule.html">时间序列基本规则法–周期因子法</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-forecasting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/ARIMA2.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/ar.html">AR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/arima.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/arma.html">ARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/hwes.html">HWES 模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/ma.html">MA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/sarima.html">SARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/sarimax.html">SARIMAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/ses.html">SES</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/var.html">VAR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/varma.html">VARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/varmax.html">VARMAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/timeseries-lr.html">时间序列分析-线性回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/timeseries-ml.html">时间序列分析-机器学习</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-forecasting/timeseries-dl.html">时间序列分析-深度学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-prophet</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet-doc.html">Prophet 入门</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet.html">Prophet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet-paper.html">Paper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet-Saturating-Forecasts.html">Staturating Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet-Trend-Changepoints.html">Prophet 趋势变化点</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet-Seasonality-Holiday-Regressors.html">Seasonality, Holiday Effects, And Regressors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet-Multiplicative-Seasonality.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet-Uncertainty-Intervals.html">Prophet 不确定区间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet-Outliers.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet-Non-Daily-Data.html">Prophet 非日数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet-Diagnostics.html">Prophet 模型评估</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timeseries-prophet/prophet-Additional-Topics.html">Prophet 其他话题</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-reports</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Daily-Female-Births-Dataset.html">时间序列分析示例1</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Time Series Forecast</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#header-n3">内容</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n11">1.时间序列的特别之处</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pandas">2.在 Pandas 中加载和处理时间序列</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stationarity">3.如何检验时间序列的平稳性(Stationarity)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n83">4.如何使得时间序列平稳</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#header-n100">4.1 估计并消除趋势</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-n151">4.2 消除趋势和季节性</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#time-series-forecasting">5.Time Series Forecasting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#knowledge-points">Knowledge Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reference">Reference:</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries-forecasting-R.html">R 时间序列建模</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Forecasting.html">时间序列分析预测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Get-to-know-your-data.html">时间序列分析教程</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">machine learning</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Time Series Forecast</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/timeseries/timeseries-reports/timeseries-forecasting-Python.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="time-series-forecast">
+<span id="header-n0"></span><h1>Time Series Forecast<a class="headerlink" href="#time-series-forecast" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="header-n3">
+<span id="id1"></span><h2>内容<a class="headerlink" href="#header-n3" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Time Series forecast 的步骤</p></li>
+<li><p>Dickey-Fuller 检验 和 ARIMA 模型</p></li>
+<li><p>理论概念、Python 实现</p></li>
+</ul>
+</div>
+<div class="section" id="header-n11">
+<span id="id2"></span><h2>1.时间序列的特别之处<a class="headerlink" href="#header-n11" title="Permalink to this headline">¶</a></h2>
+<p>时间序列，顾名思义，是指在恒定时间间隔收集记录的数据点的集合。时间序列分析及建模是对这些数据进行分析来确定序列的长期趋势，以便预测未来或执行其他形式的分析，但是时间序列分析又不同于常规的回归分析：</p>
+<ul class="simple">
+<li><p>随时间自相关相关的，观测值是独立的线性回归模型的基本假设不成立</p></li>
+<li><p>随着趋势的增加或减小，大多数的时间序列数据呈现出某种形式的季节性趋势，即在特定时间范围内的特定变化</p></li>
+</ul>
+</div>
+<div class="section" id="pandas">
+<span id="header-n19"></span><h2>2.在 Pandas 中加载和处理时间序列<a class="headerlink" href="#pandas" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>数据来自一个航空公司的乘客数时间序列数据 <code class="docutils literal notranslate"><span class="pre">AirPassengers.csv</span></code></p></li>
+<li><p>Pandas 有专门的库来处理时间序列对象，特别是 <code class="docutils literal notranslate"><span class="pre">datetime64['ns']</span></code> 类</p></li>
+<li><p>time</p></li>
+<li><p>datetime</p></li>
+<li><p>calendar</p></li>
+<li><p>dateutil</p></li>
+<li><p>numpy</p></li>
+<li><p>pandas</p></li>
+<li><p>pyts</p></li>
+<li><p>tsfresh</p></li>
+</ul>
+<p>导入工具库：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.pylab</span> <span class="kn">import</span> <span class="n">rcParams</span>
+<span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.figsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">6</span>
+</pre></div>
+</div>
+<p>读取数据：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dateparse</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">dates</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">dates</span><span class="p">,</span> <span class="s2">&quot;%Y-%m&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/AirPassengers/AirPassenger.csv&quot;</span><span class="p">,</span>
+                                <span class="n">parse_dates</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Month&quot;</span><span class="p">],</span>
+                                <span class="n">index_col</span> <span class="o">=</span> <span class="s2">&quot;Month&quot;</span><span class="p">,</span>
+                                <span class="n">date_parser</span> <span class="o">=</span> <span class="n">dateparse</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 将数据转换为 pd.Series</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;#Passengers&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="stationarity">
+<span id="header-n48"></span><h2>3.如何检验时间序列的平稳性(Stationarity)<a class="headerlink" href="#stationarity" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>如果说时间序列是平稳的，是因为它有一些特殊的统计性质，比如：均值和方差对于时间来说是一个恒定的常数</p>
+<ul>
+<li><p>恒定的均值</p></li>
+<li><p>恒定的方差</p></li>
+<li><p>不依赖于时间的自协方差(autovariance)</p></li>
+</ul>
+</li>
+<li><p>几乎所有的时间序列模型都是在平稳性的假设下才能进行的，即认为如果时间序列随着时间的推移具有特定的行为，那么将来它很可能会遵循相同的行为，此外，与非平稳时间序列相比，平稳序列的理论更成熟且更容易实现。</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>根据时间序列图可以看出 #Passengers
+变量总体上呈增长趋势，并伴有一些季节性变化，但是谁都并不能总是能通过视觉推断来得到这样的结论，因此，需要使用更加科学严格的统计方法检验时间序列的平稳性：</p>
+<ul class="simple">
+<li><p>Plotting Rolling Statistics</p>
+<ul>
+<li><p>观察移动均值(moving average) 和 移动方差(moving variance)
+是否随时间变化</p></li>
+</ul>
+</li>
+<li><p>Dickey-Fuller Test</p>
+<ul>
+<li><p>原假设：时间序列时非平稳的</p></li>
+<li><p>检验的结果通过比较检验统计量(Test Statistic)和一个临界值(Critical
+Values)的大小决定</p>
+<ul>
+<li><p>如果测试统计量小于临界值，拒绝原假设，认为时间序列是平稳的</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">statsmodels.tsa.stattools</span> <span class="kn">import</span> <span class="n">adfuller</span>
+
+<span class="k">def</span> <span class="nf">test_stationarity</span><span class="p">(</span><span class="n">timeseries</span><span class="p">):</span>
+     <span class="c1"># determing rolling statistics</span>
+     <span class="n">rolmean</span> <span class="o">=</span> <span class="n">timeseries</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span> <span class="o">=</span> <span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+     <span class="n">rolstd</span> <span class="o">=</span> <span class="n">timeseries</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span> <span class="o">=</span> <span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+
+     <span class="c1"># plot rolling statistics</span>
+     <span class="n">orig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">timeseries</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Original&quot;</span><span class="p">)</span>
+     <span class="n">mean</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rolmean</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Rolling Mean&quot;</span><span class="p">)</span>
+     <span class="n">std</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rolstd</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Rolling Std&quot;</span><span class="p">)</span>
+     <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="s2">&quot;best&quot;</span><span class="p">)</span>
+     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Rolling Mean and Standard Deviation&quot;</span><span class="p">)</span>
+     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">block</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+
+     <span class="c1"># perform Dickey-Fuller test</span>
+     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Results of Dickey-Fuller Test:&quot;</span><span class="p">)</span>
+     <span class="n">dftest</span> <span class="o">=</span> <span class="n">adfuller</span><span class="p">(</span><span class="n">timeseries</span><span class="p">,</span> <span class="n">autolag</span> <span class="o">=</span> <span class="s2">&quot;AIC&quot;</span><span class="p">)</span>
+     <span class="n">dfoutput</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dftest</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span>
+                                              <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Test Statistic&quot;</span><span class="p">,</span>
+                                                               <span class="s2">&quot;p-value&quot;</span><span class="p">,</span>
+                                                               <span class="s2">&quot;#Lags Used&quot;</span><span class="p">,</span>
+                                                               <span class="s2">&quot;Number of Observations Used&quot;</span><span class="p">])</span>
+     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">dftest</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+             <span class="n">dfoutput</span><span class="p">[</span><span class="s2">&quot;Cirtical Value (</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+     <span class="nb">print</span><span class="p">(</span><span class="n">dfoutput</span><span class="p">)</span>
+
+<span class="n">test_stationarity</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>从 Rolling Statistic
+的时序图上可以看到：标准差随时间的变化很小，均值明显随时间在增加，因此
+<code class="docutils literal notranslate"><span class="pre">ts</span></code> 不是一个平稳序列。并且，DF
+检验统计量也大于临界值(所有,比较的带符号的值)，证明 <code class="docutils literal notranslate"><span class="pre">ts</span></code>
+的确不是一个平稳序列，需要对 <code class="docutils literal notranslate"><span class="pre">ts</span></code> 进行平稳化处理</p>
+</div>
+<div class="section" id="header-n83">
+<span id="id3"></span><h2>4.如何使得时间序列平稳<a class="headerlink" href="#header-n83" title="Permalink to this headline">¶</a></h2>
+<p><strong>什么因素使得时间序列非平稳？</strong></p>
+<ol class="arabic simple">
+<li><p>Trend(趋势)</p>
+<ul class="simple">
+<li><p>随时间变化的均值</p></li>
+</ul>
+</li>
+<li><p>Seasonality(季节性)</p>
+<ul class="simple">
+<li><p>特定时间范围内的变化</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>使时间序列平稳的方法：</strong></p>
+<ul class="simple">
+<li><p>基本原则是模拟或估计时间序列中的趋势和季节性，并从时间序列中删除这两个因素的序列，从而使得时间序列平稳。变得平稳的时间序列可以用来进行预测</p></li>
+</ul>
+<div class="section" id="header-n100">
+<span id="id4"></span><h3>4.1 估计并消除趋势<a class="headerlink" href="#header-n100" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>消除时间序列趋势的一个有效方法是对原时间序列进行转换(transformation),对于有显著正向趋势的时间序列，进行转换来惩罚较大的数值</p>
+<ul>
+<li><p>对数转换</p></li>
+<li><p>平方根转换</p></li>
+<li><p>立方根转换</p></li>
+<li><p>…</p></li>
+</ul>
+</li>
+<li><p>对于转换后的时间序列能够很容易观察到趋势的存在，但是由于噪音的存在，不是很直观。可以对时间序列进行估计或模拟这种趋势，然后将其从序列中删除：</p>
+<ul>
+<li><p>聚合(Aggretation)</p>
+<ul>
+<li><p>taking average for a time period like monthly/weekly average</p></li>
+</ul>
+</li>
+<li><p>平滑(Smoothing)</p>
+<ul>
+<li><p>rolling averages</p></li>
+</ul>
+</li>
+<li><p>多项式拟合(Polynomial Fitting)</p>
+<ul>
+<li><p>拟合一个回归模型</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>(1) 对数转换</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ts_log</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts_log</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>(2) 移动平均(Moving Average, MA)</strong></p>
+<ul class="simple">
+<li><p>根据时间序列的频率取 k 个连续值的平均值，这里取过去一年的平均值：</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">moving_avg</span> <span class="o">=</span> <span class="n">ts_log</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span> <span class="o">=</span> <span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts_log</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">moving_avg</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>上面时间序列图中的红色曲线代表的是 rolling
+mean，代表了时间序列的趋势(trend)，现在从时间序列中移除这个序列：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ts_log_moving_avg_diff</span> <span class="o">=</span> <span class="n">ts_log</span> <span class="o">-</span> <span class="n">moving_avg</span>
+<span class="n">ts_log_moving_avg_diff</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>删除序列中的前11个 <code class="docutils literal notranslate"><span class="pre">NaN</span></code> 值，对时间序列重新进行平稳性检验:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ts_log_moving_avg_diff</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">test_stationarity</span><span class="p">(</span><span class="n">ts_log_moving_avg_diff</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>移动平均处理后的时间序列看起来是一个比较平稳的序列，平稳性检验的检验统计量小于
+临界值的 5%，因此，可以说有 95%
+的把握认为移动平均后的序列是一个平稳时间序列。</p>
+<p><strong>(3) 移动加权平均</strong></p>
+<p>然而，这种特定方法的缺点是必须严格定义时间间隔(time-priods)，上面我们采取了年平均值，但是在更加复杂的情况下，如股票价格预测，很难决定使用哪个时间间隔数据。因此，我们需要采用<strong>移动加权平均值</strong>，其中离当前值更近的值被赋予更高的权重，对于权重的分配，有很多技术，比较常用的是<strong>指数加权移动平均值</strong>，其中权重被分配给具有衰减因子的所有先前值</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">expwighted_avg</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">ewm</span><span class="p">(</span><span class="n">halflife</span> <span class="o">=</span> <span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts_log</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">expwighted_avg</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>现在重新从 <code class="docutils literal notranslate"><span class="pre">ts_log</span></code> 中删除趋势序列因素，并且检查时间序列的平稳性：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ts_log_ewm_diff</span> <span class="o">=</span> <span class="n">ts_log</span> <span class="o">-</span> <span class="n">expwighted_avg</span>
+<span class="n">test_stationarity</span><span class="p">(</span><span class="n">ts_log_ewm_diff</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>这里，指数加权移动平均处理后的时间序列的平均值和标准差的变化幅度更小，并且，平稳性检验的检验统计量小于
+1% 的临界值，所以相比于移动平均，指数加权移动平均的处理效果更好</p>
+</div>
+<div class="section" id="header-n151">
+<span id="id5"></span><h3>4.2 消除趋势和季节性<a class="headerlink" href="#header-n151" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>4.1
+讨论的简单趋势消除技术在大多数情况下都不起作用，尤其是对于具有高季节性的时间序列数据，因此需要使用更加复杂的消除趋势和季节性因素的方法：</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>差分</p>
+<ul>
+<li><p>将时间序列与前一时刻的观察值进行相减(taking the differece with a
+particular time lag)，可以改善序列的平稳性</p></li>
+</ul>
+</li>
+<li><p>分解</p>
+<ul>
+<li><p>对趋势和季节性进行建模并将其从模型中移除</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>(1) 一阶差分(Differencing)</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ts_log_diff</span> <span class="o">=</span> <span class="n">ts_log</span> <span class="o">-</span> <span class="n">ts_log</span><span class="o">.</span><span class="n">shift</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts_log_diff</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>检查差分处理后的序列平稳性：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ts_log_diff</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">test_stationarity</span><span class="p">(</span><span class="n">ts_log_diff</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>平稳性检验后的序列平稳性检验结果很好，但是可以继续进行二阶，三阶，甚至更高阶的差分处理，并验证处理后的结果，相信可以得到一个比较好的时间序列。</p>
+<p><strong>(2) 分解(Decomposing)</strong></p>
+<ul class="simple">
+<li><p>时间序列中的趋势和季节性通过建模的方式与序列分离</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">statsmodels.tsa.seasonal</span> <span class="kn">import</span> <span class="n">seasonal_decompose</span>
+
+<span class="n">decomposition</span> <span class="o">=</span> <span class="n">seasonal_decompose</span><span class="p">(</span><span class="n">ts_log</span><span class="p">)</span>
+<span class="n">trend</span> <span class="o">=</span> <span class="n">decomposition</span><span class="o">.</span><span class="n">trend</span>
+<span class="n">seasonal</span> <span class="o">=</span> <span class="n">decomposition</span><span class="o">.</span><span class="n">seasonal</span>
+<span class="n">residual</span> <span class="o">=</span> <span class="n">decomposition</span><span class="o">.</span><span class="n">resid</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">411</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts_log</span><span class="p">,</span> <span class="n">lable</span> <span class="o">=</span> <span class="s2">&quot;Original&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="s2">&quot;best&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">412</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">trend</span><span class="p">,</span> <span class="n">lable</span> <span class="o">=</span> <span class="s2">&quot;Trend&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="s2">&quot;best&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">413</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">seasonal</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Seasonality&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="s2">&quot;best&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">414</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">residual</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Residuals&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="s2">&quot;best&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>对残差(residuals)建模、检验残差的平稳性：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ts_log_decompose</span> <span class="o">=</span> <span class="n">residual</span>
+<span class="n">ts_log_decompose</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">test_stationarity</span><span class="p">(</span><span class="n">ts_log_decompose</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>平稳性检验的结果表明，残差序列非常接近于平稳序列。</p>
+</div>
+</div>
+<div class="section" id="time-series-forecasting">
+<span id="header-n179"></span><h2>5.Time Series Forecasting<a class="headerlink" href="#time-series-forecasting" title="Permalink to this headline">¶</a></h2>
+<p>在执行趋势和季节性估计后，可能存在两种情况：</p>
+<ol class="arabic simple">
+<li><p>时间序列是一个严格的平稳序列，在序列值之间没有依赖性</p>
+<ul class="simple">
+<li><p>可以对残差进行建模为白噪声</p></li>
+</ul>
+</li>
+<li><p>时间序列值有显著的前后依赖关系</p>
+<ul class="simple">
+<li><p>使用统计模型，比如：ARIMA 进行建模</p></li>
+</ul>
+</li>
+</ol>
+<p>Time Series Forecasting Models:</p>
+<ol class="arabic simple">
+<li><p>ARIMA(Auto-Regression Intergrated Moving Averages)</p>
+<ul class="simple">
+<li><p>预测变量相关的模型参数(p, d, q)</p>
+<ul>
+<li><p>p: Number of AR(自回归) terms</p>
+<ul>
+<li><p>AR 项是因变量的滞后项，比如：如果 <span class="math notranslate nohighlight">\(p=5\)</span>，则
+<span class="math notranslate nohighlight">\(x(t)\)</span> 的预测值将是
+<span class="math notranslate nohighlight">\(x(t-1), x(t-2), x(t-3), x(t-4), x(t-5), x(t-6)\)</span></p></li>
+</ul>
+</li>
+<li><p>q: Numver of MA(移动平均) terms</p>
+<ul>
+<li><p>lagged forecast errors in prediction equation</p></li>
+</ul>
+</li>
+<li><p>d: 差异数量(Number of Differences):</p>
+<ul>
+<li><p>the number of nonseasonal differences</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>如何确定模型的参数？</p>
+<ol class="arabic simple">
+<li><p>自相关函数(ACF)</p>
+<ul class="simple">
+<li><p>时间序列与其自身滞后版本之间的相关性度量</p></li>
+</ul>
+</li>
+<li><p>局部自相关函数(PACF)</p>
+<ul class="simple">
+<li><p>在消除已经通过干预比较解释的变化后，时间序列与其自身滞后版本的相关性</p></li>
+</ul>
+</li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># ACF 和 PACF图</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.stattools</span> <span class="kn">import</span> <span class="n">acf</span><span class="p">,</span> <span class="n">pacf</span>
+
+<span class="n">lag_acf</span> <span class="o">=</span> <span class="n">acf</span><span class="p">(</span><span class="n">ts_log_diff</span><span class="p">,</span> <span class="n">nlags</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">lag_pacf</span> <span class="o">=</span> <span class="n">pacf</span><span class="p">(</span><span class="n">ts_log_diff</span><span class="p">,</span> <span class="n">nlags</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;ols&quot;</span><span class="p">)</span>
+
+<span class="c1"># Plot ACF</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lag_acf</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">linetype</span> <span class="o">=</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.96</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ts_log_diff</span><span class="p">)),</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="mf">1.96</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ts_log_diff</span><span class="p">)),</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Autocorrelation Function&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># Plot PACF</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lag_pacf</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.96</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ts_log_diff</span><span class="p">)),</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="mf">1.96</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ts_log_diff</span><span class="p">)),</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Partial Autocorrelation Function&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>在 ACF 和 PACF 图中，纵轴值 0
+上下两侧的虚线代表的是置信区间，利用这两个图可以确定 <span class="math notranslate nohighlight">\(p\)</span> 和
+<span class="math notranslate nohighlight">\(q\)</span> 的值：</p>
+<ul class="simple">
+<li><p>p: PACF 图中首次超过置信区间的滞后值，p=2</p></li>
+<li><p>q: ACF 图中第一次超过置信区间的滞后值，q=2</p></li>
+</ul>
+<p><strong>AR Model:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">statsmodels.tsa.arima_model</span> <span class="kn">import</span> <span class="n">ARIMA</span>
+
+<span class="n">ar_model</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">ts_Log</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">results_ar</span> <span class="o">=</span> <span class="n">ar_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">disp</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts_log_diff</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">results_ar</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;RSS: </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">sum</span><span class="p">(</span><span class="n">results_ar</span><span class="o">.</span><span class="n">fittedvalues</span> <span class="o">-</span> <span class="n">ts_log_diff</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>MA Model:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ma_model</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">ts_log</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">results_ma</span> <span class="o">=</span> <span class="n">ma_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">disp</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts_log_diff</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">results_ma</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;RSS: </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">sum</span><span class="p">(</span><span class="n">results_ma</span><span class="o">.</span><span class="n">fittedvalues</span> <span class="o">-</span> <span class="n">ts_log_diff</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Combined Model:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">arima_model</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">ts_log</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">results_arima</span> <span class="o">=</span> <span class="n">arima_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">disp</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts_log_diff</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">results_arima</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;RSS: </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">sum</span><span class="p">(</span><span class="n">results_arima</span><span class="o">.</span><span class="n">fittedvalues</span> <span class="o">-</span> <span class="n">ts_log_diff</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>上面三个模型中，AR 和 MA 模型的残差(RSS)比较接近，ARIMA
+模型的残差(RSS)相比于前两个模型，明显比较小，所以 ARIMA
+模型的结果是当前最优的。</p>
+</div></blockquote>
+<p><strong>Taking it back to original scale:</strong></p>
+<ol class="arabic simple">
+<li><p>第一步：将预测模型的结果保存为 pd.Series</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">predictions_arima_diff</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">results_arima</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span> <span class="n">copy</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">predictions_arima_diff</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">predictions_arima_diff_cumsum</span> <span class="o">=</span> <span class="n">predictions_arima_diff</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+<span class="n">predictions_arima_diff_cumsum</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">predictions_arima_log</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">ts_log</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">index</span> <span class="o">=</span> <span class="n">ts_log</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">predictions_arima_log</span> <span class="o">=</span> <span class="n">predictions_arima_log</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">predictions_arima_diff_cumsum</span><span class="p">,</span> <span class="n">fill_value</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">predictions_arima_log</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>取指数并与原始时间序列进行比较：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">predictions_arima</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">predictions_arima_log</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">predictions_arima</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;RMSE: </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">predictions_arima</span> <span class="o">-</span> <span class="n">ts</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">ts</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="knowledge-points">
+<span id="header-n260"></span><h2>Knowledge Points<a class="headerlink" href="#knowledge-points" title="Permalink to this headline">¶</a></h2>
+<p>Pandas Standard moving window functions:</p>
+<ul class="simple">
+<li><p>Standard moving window functions</p>
+<ul>
+<li><p>ts.rolling(window).count()</p></li>
+<li><p>ts.rolling(window).sum()</p></li>
+<li><p>ts.rolling(window).mean()</p></li>
+<li><p>ts.rolling(window).median()</p></li>
+<li><p>ts.rolling(window).var()</p></li>
+<li><p>ts.rolling(window).std()</p></li>
+<li><p>ts.rolling(window).min()</p></li>
+<li><p>ts.rolling(window).max()</p></li>
+<li><p>ts.rolling(window).corr()</p></li>
+<li><p>ts.rolling(window).cov()</p></li>
+<li><p>ts.rolling(window).skew()</p></li>
+<li><p>ts.rolling(window).kurt()</p></li>
+<li><p>ts.rolling(window).apply()</p></li>
+<li><p>ts.rolling(window).aggregate()</p></li>
+<li><p>ts.rolling(window).quantile()</p></li>
+<li><p>ts.window().mean()</p></li>
+<li><p>ts.window().sum()</p></li>
+</ul>
+</li>
+<li><p>Standard expanding window functions</p>
+<ul>
+<li><p>ts.expanding(window).count()</p></li>
+<li><p>ts.expanding(window).sum()</p></li>
+<li><p>ts.expanding(window).mean()</p></li>
+<li><p>ts.expanding(window).median()</p></li>
+<li><p>ts.expanding(window).var()</p></li>
+<li><p>ts.expanding(window).std()</p></li>
+<li><p>ts.expanding(window).min()</p></li>
+<li><p>ts.expanding(window).max()</p></li>
+<li><p>ts.expanding(window).corr()</p></li>
+<li><p>ts.expanding(window).cov()</p></li>
+<li><p>ts.expanding(window).skew()</p></li>
+<li><p>ts.expanding(window).kurt()</p></li>
+<li><p>ts.expanding(window).apply()</p></li>
+<li><p>ts.expanding(window).aggregate()</p></li>
+<li><p>ts.expanding(window).quantile()</p></li>
+</ul>
+</li>
+<li><p>Exponentially-weighted moving window functions</p>
+<ul>
+<li><p>ts.ewm().mean()</p></li>
+<li><p>ts.ewm().std()</p></li>
+<li><p>ts.ewm().var()</p></li>
+<li><p>ts.ewm().corr()</p></li>
+<li><p>ts.ewm().cov()</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="reference">
+<span id="header-n347"></span><h2>Reference:<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.analyticsvidhya.com/blog/2016/02/time-series-forecasting-codes-python/">A comprehensive beginner’s guide to create a Time Series Forecast
+(with Codes in Python and
+R)</a></p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="timeseries-forecasting-R.html" class="btn btn-neutral float-right" title="R 时间序列建模" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Daily-Female-Births-Dataset.html" class="btn btn-neutral float-left" title="时间序列分析示例1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, wangzf.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

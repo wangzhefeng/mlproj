@@ -64,27 +64,21 @@ Welcome to machinelearning's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: feature engine class
+   :caption: feature engine
 
-   feature_engine_class/feature_engine
-   feature_engine_class/numeric
-   feature_engine_class/text
-   feature_engine_class/timeseries
-   feature_engine_class/categorical
-   feature_engine_class/image
-   feature_engine_class/video
-   feature_engine_class/audio
-
-
-.. toctree::
-   :maxdepth: 2
-   :caption: feature engine step
-
-   feature_engine_step/feature_build
-   feature_engine_step/feature_selection
-   feature_engine_step/missing
-   feature_engine_step/outlier
-   feature_engine_step/resample
+   feature_engine/feature_engine
+   feature_engine/feature_engine_class/numeric
+   feature_engine/feature_engine_class/text
+   feature_engine/feature_engine_class/timeseries
+   feature_engine/feature_engine_class/categorical
+   feature_engine/feature_engine_class/image
+   feature_engine/feature_engine_class/video
+   feature_engine/feature_engine_class/audio
+   feature_engine/feature_engine_step/feature_build
+   feature_engine/feature_engine_step/feature_selection
+   feature_engine/feature_engine_step/missing
+   feature_engine/feature_engine_step/outlier
+   feature_engine/feature_engine_step/resample
 
 
 .. toctree::
@@ -92,12 +86,6 @@ Welcome to machinelearning's documentation!
    :caption: timeseries
 
    timeseries/timeseries
-
-
-.. toctree::
-   :maxdepth: 2
-   :caption: timeseries-models
-   
    timeseries/timeseries-modeling
    timeseries/timeseries-decomposition
    timeseries/timeseries-season-analysis
@@ -108,90 +96,66 @@ Welcome to machinelearning's documentation!
    :maxdepth: 2
    :caption: timeseries-preprocessing
 
-   timeseries-preprocessing/lvbo
-   timeseries-preprocessing/statsmodels
-   timeseries-preprocessing/timeseries-aggregation
-   timeseries-preprocessing/timeseries-interpolate
-   timeseries-preprocessing/timeseries-ma
-   timeseries-preprocessing/timeseries-outlier-detection-papers
-   timeseries-preprocessing/timeseries-pandas-api
-   timeseries-preprocessing/timeseries-sample
-   timeseries-preprocessing/timeseries-smooth
-   timeseries-preprocessing/timeseries-visual
-   timeseries-preprocessing/tsfresh
-   timeseries-preprocessing/tslearn
-   timeseries-preprocessing/timeseries-base-rule
+   timeseries/timeseries-preprocessing/lvbo
+   timeseries/timeseries-preprocessing/statsmodels
+   timeseries/timeseries-preprocessing/timeseries-aggregation
+   timeseries/timeseries-preprocessing/timeseries-interpolate
+   timeseries/timeseries-preprocessing/timeseries-ma
+   timeseries/timeseries-preprocessing/timeseries-outlier-detection-papers
+   timeseries/timeseries-preprocessing/timeseries-pandas-api
+   timeseries/timeseries-preprocessing/timeseries-sample
+   timeseries/timeseries-preprocessing/timeseries-smooth
+   timeseries/timeseries-preprocessing/timeseries-visual
+   timeseries/timeseries-preprocessing/tsfresh
+   timeseries/timeseries-preprocessing/tslearn
+   timeseries/timeseries-preprocessing/timeseries-base-rule
 
 
 .. toctree::
    :maxdepth: 2
    :caption: timeseries-forecasting
 
-   timeseries-models/timeseries-forecasting/ARIMA2
-   timeseries-models/timeseries-forecasting/ar
-   timeseries-models/timeseries-forecasting/arima
-   timeseries-models/timeseries-forecasting/arma
-   timeseries-models/timeseries-forecasting/hwes
-   timeseries-models/timeseries-forecasting/ma
-   timeseries-models/timeseries-forecasting/sarima
-   timeseries-models/timeseries-forecasting/sarimax
-   timeseries-models/timeseries-forecasting/ses
-   timeseries-models/timeseries-forecasting/var
-   timeseries-models/timeseries-forecasting/varma
-   timeseries-models/timeseries-forecasting/varmax
-
-
-.. toctree::
-   :maxdepth: 2
-   :caption: timeseries-lr
-
-   timeseries-models/timeseries-lr/timeseries-lr
-
-
-.. toctree::
-   :maxdepth: 2
-   :caption: timeseries-ml
-
-   timeseries-models/timeseries-ml/timeseries-ml
-
-
-.. toctree::
-   :maxdepth: 2
-   :caption: timeseries-dl
-
-   timeseries-models/timeseries-dl/timeseries-dl
+   timeseries/timeseries-forecasting/ARIMA2
+   timeseries/timeseries-forecasting/ar
+   timeseries/timeseries-forecasting/arima
+   timeseries/timeseries-forecasting/arma
+   timeseries/timeseries-forecasting/hwes
+   timeseries/timeseries-forecasting/ma
+   timeseries/timeseries-forecasting/sarima
+   timeseries/timeseries-forecasting/sarimax
+   timeseries/timeseries-forecasting/ses
+   timeseries/timeseries-forecasting/var
+   timeseries/timeseries-forecasting/varma
+   timeseries/timeseries-forecasting/varmax
+   timeseries/timeseries-forecasting/timeseries-lr
+   timeseries/timeseries-forecasting/timeseries-ml
+   timeseries/timeseries-forecasting/timeseries-dl
 
 
 .. toctree::
    :maxdepth: 2
    :caption: timeseries-prophet
 
-   timeseries-models/timeseries-prophet/prophet-doc
-   timeseries-models/timeseries-prophet/prophet
-   timeseries-models/timeseries-prophet/prophet-paper
-   timeseries-models/timeseries-prophet/prophet-Saturating-Forecasts
-   timeseries-models/timeseries-prophet/prophet-Trend-Changepoints
-   timeseries-models/timeseries-prophet/prophet-Seasonality-Holiday-Regressors
-   timeseries-models/timeseries-prophet/prophet-Multiplicative-Seasonality
-   timeseries-models/timeseries-prophet/prophet-Uncertainty-Intervals
-   timeseries-models/timeseries-prophet/prophet-Outliers
-   timeseries-models/timeseries-prophet/prophet-Non-Daily-Data
-   timeseries-models/timeseries-prophet/prophet-Diagnostics
-   timeseries-models/timeseries-prophet/prophet-Additional-Topics
+   timeseries/timeseries-prophet/prophet-doc
+   timeseries/timeseries-prophet/prophet
+   timeseries/timeseries-prophet/prophet-paper
+   timeseries/timeseries-prophet/prophet-Saturating-Forecasts
+   timeseries/timeseries-prophet/prophet-Trend-Changepoints
+   timeseries/timeseries-prophet/prophet-Seasonality-Holiday-Regressors
+   timeseries/timeseries-prophet/prophet-Multiplicative-Seasonality
+   timeseries/timeseries-prophet/prophet-Uncertainty-Intervals
+   timeseries/timeseries-prophet/prophet-Outliers
+   timeseries/timeseries-prophet/prophet-Non-Daily-Data
+   timeseries/timeseries-prophet/prophet-Diagnostics
+   timeseries/timeseries-prophet/prophet-Additional-Topics
 
 
 .. toctree::
    :maxdepth: 2
    :caption: timeseries-reports
 
-   timeseries-reports/Daily-Female-Births-Dataset
-   timeseries-reports/timeseries-forecasting-Python
-   timeseries-reports/timeseries-forecasting-R
-
-
-.. toctree::
-   :maxdepth: 2
-   :caption: timeseries-tutorial
-
-   timeseries-tutorial/Forecasting
-   timeseries-tutorial/Get-to-know-your-data
+   timeseries/timeseries-reports/Daily-Female-Births-Dataset
+   timeseries/timeseries-reports/timeseries-forecasting-Python
+   timeseries/timeseries-reports/timeseries-forecasting-R
+   timeseries/timeseries-reports/Forecasting
+   timeseries/timeseries-reports/Get-to-know-your-data

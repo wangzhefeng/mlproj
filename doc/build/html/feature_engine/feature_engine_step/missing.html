@@ -1,0 +1,575 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-cn" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>缺失值处理 &mdash; machine learning 1.0.0 alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="异常值处理" href="outlier.html" />
+    <link rel="prev" title="特征选择" href="feature_selection.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> machine learning
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ML</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../machine-learning-steps.html">机器学习项目清单</a></li>
+</ul>
+<p class="caption"><span class="caption-text">boosting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/decisiontree.html">Decision Tree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/adaboost.html">AdaBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/gbm.html">GBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/randomforest.html">Random Forest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/xgboost.html">XGBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/lightgbm.html">LightGBM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../boosting/catboost.html">CatBoost</a></li>
+</ul>
+<p class="caption"><span class="caption-text">models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../models/logistic-regression.html">Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/Navie-Bayes.html">朴素贝叶斯(Navie Bayes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/PCA.html">PCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/SVD.html">奇异值分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/svm.html">SVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/EM-algorithm.html">EM (Expectation Maximization algorithm)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/clustering.html">Cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/AB-test.html">A/B test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/Ad.html">互联网广告</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/anti-fraud-model.html">反欺诈模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/moshishibie.html">模式识别在化学化工中的应用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/PLS.html">偏最小二乘回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models/user-portrait.html">用户画像</a></li>
+</ul>
+<p class="caption"><span class="caption-text">tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/python-pycaret.html">PyCaret</a></li>
+</ul>
+<p class="caption"><span class="caption-text">topic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../topic/overfitting.html">降低模型过拟合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../topic/accuracy.html">提高模型精度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../topic/model_performance_theory.html">模型表现理论</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../topic/model_ensemble.html">模型融合</a></li>
+</ul>
+<p class="caption"><span class="caption-text">feature engine</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine.html">特征工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/numeric.html">Numeric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/text.html">Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/timeseries.html">Timeseries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/categorical.html">Categorical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/image.html">Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/video.html">Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_engine_class/audio.html">Audio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_build.html">特征构建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_selection.html">特征选择</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">缺失值处理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#header-n3">1.缺失值处理理论</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#header-n32">2.缺失值处理实战</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pandas">2.1 Pandas 中缺失值的处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api">2.2 缺失值插值算法 API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pandas-dataframe-interpolate">2.2.1 pandas.DataFrame.interpolate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scipy-interpolate-xxx">2.2.2 scipy.interpolate.XXX</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="outlier.html">异常值处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resample.html">特征采样</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries.html">timeseries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-modeling.html">传统时间序列建模方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-decomposition.html">时间序列分解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-season-analysis.html">时间序列季节性分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-baseline.html">时间序列分析-baseline示例</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-preprocessing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/lvbo.html">滤波</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/statsmodels.html">statsmodels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/timeseries-aggregation.html">时间序列聚合计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/timeseries-interpolate.html">时间序列插值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/timeseries-ma.html">移动平均光滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/timeseries-outlier-detection-papers.html">时间序列异常值检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/timeseries-pandas-api.html">时间序列-pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/timeseries-sample.html">时间序列采样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/timeseries-smooth.html">时间序列平滑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/timeseries-visual.html">时间序列可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/tsfresh.html">tsfresh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/tslearn.html">tslearn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-preprocessing/timeseries-base-rule.html">时间序列基本规则法–周期因子法</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-forecasting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/ARIMA2.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/ar.html">AR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/arima.html">ARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/arma.html">ARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/hwes.html">HWES 模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/ma.html">MA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/sarima.html">SARIMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/sarimax.html">SARIMAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/ses.html">SES</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/var.html">VAR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/varma.html">VARMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/varmax.html">VARMAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/timeseries-lr.html">时间序列分析-线性回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/timeseries-ml.html">时间序列分析-机器学习</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-forecasting/timeseries-dl.html">时间序列分析-深度学习</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-prophet</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet-doc.html">Prophet 入门</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet.html">Prophet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet-paper.html">Paper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet-Saturating-Forecasts.html">Staturating Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet-Trend-Changepoints.html">Prophet 趋势变化点</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet-Seasonality-Holiday-Regressors.html">Seasonality, Holiday Effects, And Regressors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet-Multiplicative-Seasonality.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet-Uncertainty-Intervals.html">Prophet 不确定区间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet-Outliers.html">Prophet 异常</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet-Non-Daily-Data.html">Prophet 非日数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet-Diagnostics.html">Prophet 模型评估</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-prophet/prophet-Additional-Topics.html">Prophet 其他话题</a></li>
+</ul>
+<p class="caption"><span class="caption-text">timeseries-reports</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-reports/Daily-Female-Births-Dataset.html">时间序列分析示例1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-reports/timeseries-forecasting-Python.html">Time Series Forecast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-reports/timeseries-forecasting-R.html">R 时间序列建模</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-reports/Forecasting.html">时间序列分析预测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeseries/timeseries-reports/Get-to-know-your-data.html">时间序列分析教程</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">machine learning</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>缺失值处理</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/feature_engine/feature_engine_step/missing.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="header-n0">
+<span id="id1"></span><h1>缺失值处理<a class="headerlink" href="#header-n0" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="header-n3">
+<span id="id2"></span><h2>1.缺失值处理理论<a class="headerlink" href="#header-n3" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>当缺失数据比例很小时，可直接对缺失记录进行舍弃或进行手工处理</p></li>
+<li><p>实际数据中，缺失数据往往占有相当的比重，这时如果手工处理，非常低效；如果舍弃缺失记录，则会丢失大量信息，使不完全观测数据与观测数据间产生系统差异，对这样的数据进行分析，可能会得出错误的结论</p></li>
+</ul>
+<p>缺失的类型:</p>
+<ul class="simple">
+<li><p>在对缺失数据进行处理前，了解数据缺失的机制和形式是十分必要的。将数据集中不含缺失值的变量称为<strong>完全变量</strong>，数据集中含有缺失值的变量称为不完全变量。</p></li>
+<li><p>从缺失的分布可以将缺失分为：</p>
+<ul>
+<li><p>完全随机缺失(missing completely at random, MCAR)</p>
+<ul>
+<li><p>数据的缺失完全随机的，不依赖任何不完全变量或完全变量，不影响样本的无偏性。如：家庭地址缺失</p></li>
+</ul>
+</li>
+<li><p>随机缺失(missing at random, MAR)</p>
+<ul>
+<li><p>数据的缺失不是完全随机的，即该类数据的缺失依赖于其他完全变量。如：财务数据缺失情况与企业的大小有关</p></li>
+</ul>
+</li>
+<li><p>完全非随机缺失(missing not at random, MNAR)</p>
+<ul>
+<li><p>数据的缺失于不完全变量自身的取值有关。如：高收入人群不愿意提供家庭收入</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>对于完全随机缺失和完全非随机缺失，删除记录是不合适的，
+随机缺失可以通过已知变量对缺失值进行估计；
+非随机缺失没有很好的处理方法；</p>
+</div>
+<div class="section" id="header-n32">
+<span id="id3"></span><h2>2.缺失值处理实战<a class="headerlink" href="#header-n32" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pandas">
+<span id="header-n33"></span><h3>2.1 Pandas 中缺失值的处理<a class="headerlink" href="#pandas" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Python 缺失值类型</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">numpy.nan</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NaN</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NaT</span></code></p></li>
+</ul>
+</li>
+<li><p>缺失值配置选项</p>
+<ul class="simple">
+<li><p>将<code class="docutils literal notranslate"><span class="pre">inf</span></code>和<code class="docutils literal notranslate"><span class="pre">-inf</span></code>当作<code class="docutils literal notranslate"><span class="pre">NA</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">pandas.options.mod.use_inf_as_na</span> <span class="pre">=</span> <span class="pre">True</span></code></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>缺失值检测</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pd.isna()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.isna()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pd.notna()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.notna()</span></code></p></li>
+</ul>
+</li>
+<li><p>缺失值填充</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">.fillna()</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">.where(pd.notna(df),</span> <span class="pre">dict(),</span> <span class="pre">axis</span> <span class="pre">=</span> <span class="pre">&quot;columns&quot;)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.ffill()</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">.fillna(method</span> <span class="pre">=</span> <span class="pre">&quot;ffill&quot;,</span> <span class="pre">limit</span> <span class="pre">=</span> <span class="pre">None)</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.bfill()</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">.fillna(method</span> <span class="pre">=</span> <span class="pre">&quot;bfill&quot;,</span> <span class="pre">limit</span> <span class="pre">=</span> <span class="pre">None)</span></code></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.interpolate(method)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.replace(,</span> <span class="pre">method)</span></code></p></li>
+</ul>
+</li>
+<li><p>缺失值删除</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">.dropna(axis)</span></code></p></li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="api">
+<span id="header-n93"></span><h3>2.2 缺失值插值算法 API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="pandas-dataframe-interpolate">
+<span id="header-n94"></span><h4>2.2.1 pandas.DataFrame.interpolate<a class="headerlink" href="#pandas-dataframe-interpolate" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span>
+     <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">,</span>
+     <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+     <span class="n">limit</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+     <span class="n">inplace</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+     <span class="n">limit_direction</span> <span class="o">=</span> <span class="s1">&#39;forward&#39;</span><span class="p">,</span>
+     <span class="n">limit_area</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+     <span class="n">downcast</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+     <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">method</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">linear</span></code>: 等间距插值，支持多多索引</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">time</span></code>: 对索引为不同分辨率时间序列数据插值</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">index</span></code>,<code class="docutils literal notranslate"><span class="pre">value</span></code>: 使用索引的实际数值插值</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pad</span></code>: 使用其他不为<code class="docutils literal notranslate"><span class="pre">NaN</span></code>的值插值</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nearest</span></code>: 参考<code class="docutils literal notranslate"><span class="pre">scipy.iterpolate.interp1d</span></code>中的插值算法</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">zero</span></code>: 参考<code class="docutils literal notranslate"><span class="pre">scipy.iterpolate.interp1d</span></code>中的插值算法</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">slinear</span></code>: 参考<code class="docutils literal notranslate"><span class="pre">scipy.iterpolate.interp1d</span></code>中的插值算法</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">quadratic</span></code>: 参考<code class="docutils literal notranslate"><span class="pre">scipy.iterpolate.interp1d</span></code>中的插值算法</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cubic</span></code>: 参考<code class="docutils literal notranslate"><span class="pre">scipy.iterpolate.interp1d</span></code>中的插值算法</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spline</span></code>: 参考<code class="docutils literal notranslate"><span class="pre">scipy.iterpolate.interp1d</span></code>中的插值算法</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">barycentric</span></code>: 参考<code class="docutils literal notranslate"><span class="pre">scipy.iterpolate.interp1d</span></code>中的插值算法</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">polynomial</span></code>: 参考<code class="docutils literal notranslate"><span class="pre">scipy.iterpolate.interp1d</span></code>中的插值算法</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">krogh</span></code>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">scipy.interpolate.KroghInterpolator</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">piecewise_polynomial</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spline</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">scipy.interpolate.CubicSpline</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pchip</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">scipy.interpolate.PchipInterpolator</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">akima</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">scipy.interpolate.Akima1DInterpolator</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">from_derivatives</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">scipy.interpolate.BPoly.from_derivatives</span></code></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">axis</span></code>:</p>
+<ul>
+<li><p>1</p></li>
+<li><p>0</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">limit</span></code>: 要填充的最大连续 <code class="docutils literal notranslate"><span class="pre">NaN</span></code>数量，<span class="math notranslate nohighlight">\(&gt;0\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">inplace</span></code>: 是否在原处更新数据</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">limit_direction</span></code>: 缺失值填充的方向</p>
+<ul>
+<li><p>forward</p></li>
+<li><p>backward</p></li>
+<li><p>both</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">limit_area</span></code>: 缺失值填充的限制区域</p>
+<ul>
+<li><p>None</p></li>
+<li><p>inside</p></li>
+<li><p>outside</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">downcast</span></code>: 强制向下转换数据类型</p>
+<ul>
+<li><p>infer</p></li>
+<li><p>None</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">**kwargs</span></code></p>
+<ul>
+<li><p>传递给插值函数的参数</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({})</span>
+
+<span class="n">s</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scipy-interpolate-xxx">
+<span id="header-n193"></span><h4>2.2.2 scipy.interpolate.XXX<a class="headerlink" href="#scipy-interpolate-xxx" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>scipy.interpolate.Akima1DInterpolator</p>
+<ul>
+<li><p>三次多项式插值</p></li>
+</ul>
+</li>
+<li><p>scipy.interpolate.BPoly.from_derivatives</p>
+<ul>
+<li><p>多项式插值</p></li>
+</ul>
+</li>
+<li><p>scipy.interpolate.interp1d</p>
+<ul>
+<li><p>1-D 函数插值</p></li>
+</ul>
+</li>
+<li><p>scipy.interpolate.KroghInterpolator</p>
+<ul>
+<li><p>多项式插值</p></li>
+</ul>
+</li>
+<li><p>scipy.interpolate.PchipInterpolator</p>
+<ul>
+<li><p>PCHIP 1-d 单调三次插值</p></li>
+</ul>
+</li>
+<li><p>scipy.interpolate.CubicSpline</p>
+<ul>
+<li><p>三次样条插值</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="outlier.html" class="btn btn-neutral float-right" title="异常值处理" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="feature_selection.html" class="btn btn-neutral float-left" title="特征选择" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, wangzf.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
