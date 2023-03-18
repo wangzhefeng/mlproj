@@ -201,7 +201,8 @@ class DotDict(dict):
 
 
 
-if __name__ == "__main__":
+# 测试代码 main 函数
+def main():
     a = [1, np.nan, 3]
     print(SafeArraySum(a))
     assert CheckValid(1) == True
@@ -219,3 +220,6 @@ if __name__ == "__main__":
     assert CheckValid(None,_max=0.1) == False
     assert CheckValid(np.nan,_max=0.1) == False
     assert CheckValid(0.01,_max=0.1) == True
+
+if __name__ == "__main__":
+    main()

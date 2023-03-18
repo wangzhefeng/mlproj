@@ -14,14 +14,19 @@
 # * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
 # ***************************************************
 
-
+# python libraries
 import os
+import sys
 from typing import Callable, List
 
 import numpy as np
 import pandas as pd
 from sklearn.datasets import load_svmlight_file
 import xgboost as xgb
+
+
+# global variable
+LOGGING_LABEL = __file__.split('/')[-1][:-3]
 
 
 class IterLoadForDMatrix(xgb.core.DataIter):
@@ -112,9 +117,5 @@ def main():
     # but has some caveats as noted in following sections.
     booster = xgb.train({"tree_method": "approx"}, Xy)
 
-
-
 if __name__ == "__main__":
     main()
-
-

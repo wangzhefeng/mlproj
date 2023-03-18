@@ -1,7 +1,31 @@
+# -*- coding: utf-8 -*-
+
+
+# ***************************************************
+# * File        : data_memory_optim2.py
+# * Author      : Zhefeng Wang
+# * Email       : wangzhefengr@163.com
+# * Date        : 2023-03-19
+# * Version     : 0.1.031901
+# * Description : description
+# * Link        : link
+# * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
+# ***************************************************
+
+
+# python libraries
 import os
+import sys
+
 import psutil
 import numpy as np
 import pandas as pd
+
+
+# global variable
+LOGGING_LABEL = __file__.split('/')[-1][:-3]
+
+
 
 
 def get_memory_usage():
@@ -59,3 +83,13 @@ def merge_by_concat(df1, df2, merge_on):
     df1 = pd.concat([df1, merged_gf[new_columns]], axis = 1)
 
     return df1
+
+
+
+
+# 测试代码 main 函数
+def main():
+    pass
+
+if __name__ == "__main__":
+    main()

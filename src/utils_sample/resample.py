@@ -1,20 +1,21 @@
 # -*- coding: utf-8 -*-
 
 
-"""
-issue:
-    1.如何判断一个feature是类别型, 还是数值型；
+# ***************************************************
+# * File        : utils.py
+# * Author      : Zhefeng Wang
+# * Email       : wangzhefengr@163.com
+# * Date        : 2023-03-19
+# * Version     : 0.1.031900
+# * Description : description
+# * Link        : link
+# * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
+# ***************************************************
 
-method:
-    1.数据格式转换
-    2.异常feature删除
-    3.异常值处理
-    4.缺失值处理
-    5.数值型变量: 标准化, 规范化
-    6.类别型变量: 哑变量
-    7.不平衡样本处理
-"""
 
+# python libraries
+import os
+import sys
 
 import numpy as np
 import pandas as pd
@@ -24,13 +25,8 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn import VarianceThreshold
 
 
-
-def change_data_format(data):
-    """
-    以下预处理都是基于 pandas.DataFrame 格式进行的
-    """
-    data_new = pd.DataFrame(data)
-    return data_new
+# global variable
+LOGGING_LABEL = __file__.split('/')[-1][:-3]
 
 
 def smote(data, tag_label = "tag_1", amount_personal = 0, std_rate = 5, k = 5, method = "mean"):
@@ -98,22 +94,10 @@ def smote(data, tag_label = "tag_1", amount_personal = 0, std_rate = 5, k = 5, m
     return data_res
 
 
-# 数据分列
-def reload(data):
-    feature = pd.concat([data.iloc[:, :2], data.iloc[:, 4:]], axis = 1)
-    tag = data.iloc[:, 3]
-    return feature, tag
-
-
-# 数据切割
-def split_data(feature, tag):
-    x_train, x_test, y_train, y_test = train_test_split(feature, tag, test_size = 0.33, random_state = 42)
-    return x_train, x_test, y_train, y_test
-
-
 class sample_s(object):
+
     def __init__(self):
-        ''''this is my pleasure'''
+        pass
 
     def group_sample(self, data_set, label, percent=0.1):
         # 分层抽样
@@ -209,7 +193,7 @@ class sample_s(object):
 
 def var_filter(data, k = None):
     """
-    # 方差选择法
+    方差选择法
     """
     var_data = data.var().sort_values()
     if k is not None:
@@ -221,7 +205,7 @@ def var_filter(data, k = None):
 
 def pearson_value(data, label, k = None):
     """
-    # 线性相关系数衡量
+    线性相关系数衡量
     """
     lable = str(label)
     # k为想删除的feature个数
@@ -247,7 +231,7 @@ def pearson_value(data, label, k = None):
 
 def vif_test(data, label, k = None):
     lable = str(label)
-    # k为想删除的feature个数
+    # k为想删除的 feature 个数
     x = data[[x for x in data.colunms if x != label]]
     res = np.abs(np.corrcoef(x.T))
     vif_value = []
@@ -273,3 +257,13 @@ def vif_test(data, label, k = None):
     else:
         return vif_value
 
+
+
+
+
+# 测试代码 main 函数
+def main():
+    pass
+
+if __name__ == "__main__":
+    main()

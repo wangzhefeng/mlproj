@@ -22,8 +22,10 @@ from numpy.core.fromnumeric import mean
 from numpy.lib.npyio import load
 from scipy.sparse import data, dia
 from scipy.sparse.construct import random
-from sklearn import linear_model
+
 import sklearn
+from sklearn import linear_model
+
 
 
 # global variable
@@ -374,18 +376,9 @@ def sklearn_visualizations_2():
 
 
 
-
-
-
-
-
 # 测试代码 main 函数
 def main():
     sklearn_visualizations()
 
-    
-
-
 if __name__ == "__main__":
     main()
-

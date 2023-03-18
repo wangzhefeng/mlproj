@@ -52,10 +52,6 @@ from sklearn.impute import SimpleImputer, MissingIndicator
 from sklearn.preprocessing import OrdinalEncoder, OneHotEncoder
 
 
-# global variable
-GLOBAL_VARIABLE = None
-
-
 # =============================================================
 # data
 # =============================================================
@@ -79,7 +75,7 @@ y_test = []
         - Logistic with L1 or L2
         - SVM with RBF kernel and L1 or L2
     - PCA
-- 需要MinMaxScaler的特征
+- 需要 MinMaxScaler 的特征
     - 标准差较小的特征
     - 稀疏特征(很多元素是0)
 """

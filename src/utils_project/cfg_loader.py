@@ -14,6 +14,7 @@
 
 
 import os
+from typing import Dict
 import yaml
 
 
@@ -25,33 +26,19 @@ def load_yaml(file_name):
         )
 
 
-# --------------------
-# 配置文件读取
-# --------------------
-cfg_dir = os.path.dirname(__file__)
-# 项目配置 yaml 文件
-sys_cfg_yaml = load_yaml(os.path.join(cfg_dir, "sys_cfg.yaml"))
-# 项目后端配置 yaml 文件
-api_cfg_yaml = load_yaml(os.path.join(cfg_dir, "backend_api_cfg.yaml"))
-# --------------------
-# 热电项目配置信息
-# --------------------
-# 热电平衡项目配置文件路径
-project_path = sys_cfg_yaml["project_cfg_path"]
-if project_path is not None:
-    # 热电平衡项目项目名称
-    project_name = project_path.split('.')[0]
-    # 热电平衡项目日志名称
-    project_log_name = project_name.split("_")[-1]
-    # 热电平衡配置参数
-    sys_cfg = load_yaml(os.path.join(cfg_dir, project_path))
-    # 热电后端配置参数
-    api_cfg = api_cfg_yaml[project_name]
-else:
-    project_name = None
-    project_log_name = "TEP_BASE"
-    sys_cfg = None
-    api_cfg = None
+def get_params(yaml_path: str) -> Dict:
+    """
+    读取项目配置参数
+
+    Returns:
+        Dict: 项目配置参数
+    """
+    # 配置文件读取
+    cfg_dir = os.path.dirname(__file__)
+    # 项目配置 yaml 文件
+    cfg_params = load_yaml(os.path.join(cfg_dir, yaml_path))
+
+    return cfg_params
 
 
 

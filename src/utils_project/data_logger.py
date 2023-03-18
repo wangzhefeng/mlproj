@@ -2,7 +2,7 @@
 
 
 # ***************************************************
-# * File        : data_logging.py
+# * File        : data_logger.py
 # * Author      : Zhefeng Wang
 # * Email       : wangzhefengr@163.com
 # * Date        : 2022-07-17
@@ -22,7 +22,6 @@ import pandas as pd
 
 # global variable
 LOGGING_LABEL = __file__.split('/')[-1][:-3]
-GLOBAL_VARIABLE = None
 
 
 def data_logging(data: pd.DataFrame, data_name: str):

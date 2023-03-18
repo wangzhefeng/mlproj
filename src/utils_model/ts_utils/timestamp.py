@@ -2,21 +2,26 @@
 
 
 # ***************************************************
-# * File        : stamp_processing.py
+# * File        : timestamp.py
 # * Author      : Zhefeng Wang
 # * Email       : wangzhefengr@163.com
-# * Date        : 2022-04-01
-# * Version     : 0.1.040117
+# * Date        : 2023-03-19
+# * Version     : 0.1.031901
 # * Description : description
 # * Link        : link
 # * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
 # ***************************************************
 
 
+# python libraries
+import os
+import sys
+import pytz
 from datetime import datetime
 
-import pytz
-from pytz import timezone
+
+# global variable
+LOGGING_LABEL = __file__.split('/')[-1][:-3]
 
 
 def timestamp2datetime(stamp: int, time_zone="Asia/Shanghai") -> datetime:
@@ -83,7 +88,7 @@ def align_timestamp(timestamp: int, time_zone = "Asia/Shanghai", resolution = "5
     >>> _align_timestamp(1503497069, "Australia/Sydney", resolution="1d")
     1503496800
     """
-    tz = timezone(time_zone)
+    tz = pytz.timezone(time_zone)
     if resolution is None:
         return timestamp
     elif resolution == "1s":
@@ -134,11 +139,10 @@ def align_timestamp(timestamp: int, time_zone = "Asia/Shanghai", resolution = "5
 
 
 
+# 测试代码 main 函数
 def main():
     datetime_data = timestamp2datetime(1591148504)
     print(datetime_data)
 
-
-if __name__ == "__main__":    
+if __name__ == "__main__":
     main()
-

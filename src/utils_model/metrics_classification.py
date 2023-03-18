@@ -1,34 +1,26 @@
 # -*- coding: utf-8 -*-
 
-"""
-@author:
-@date:
-"""
+
+# ***************************************************
+# * File        : metrics_classification.py
+# * Author      : Zhefeng Wang
+# * Email       : wangzhefengr@163.com
+# * Date        : 2023-03-19
+# * Version     : 0.1.031901
+# * Description : description
+# * Link        : link
+# * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
+# ***************************************************
+
+
+# python libraries
+import os
+import sys
 
 import itertools
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-
-
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import KFold
-from sklearn.model_selection import RepeatedKFold
-from sklearn.model_selection import LeaveOneOut
-from sklearn.model_selection import LeavePOut
-from sklearn.model_selection import ShuffleSplit
-from sklearn.model_selection import StratifiedKFold
-from sklearn.model_selection import StratifiedShuffleSplit
-from sklearn.model_selection import GroupKFold
-from sklearn.model_selection import LeaveOneGroupOut
-from sklearn.model_selection import LeavePGroupsOut
-from sklearn.model_selection import GroupShuffleSplit
-from sklearn.model_selection import TimeSeriesSplit
-from sklearn.model_selection import cross_val_score
-from sklearn.model_selection import cross_validate
-from sklearn.model_selection import cross_val_predict
-from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import RandomizedSearchCV
 
 from sklearn import metrics
 from sklearn.metrics import make_scorer
@@ -49,14 +41,9 @@ from sklearn.metrics import brier_score_loss
 from sklearn.metrics import log_loss
 
 
-"""
-* confusion matrix
-* precision
-* recall
-* F1
+# global variable
+LOGGING_LABEL = __file__.split('/')[-1][:-3]
 
-* ROC_AUC
-"""
 
 class binary_score(object):
 
@@ -147,7 +134,6 @@ class binary_score(object):
 		return AUC
 
 
-
 class metric_visual:
 
 	def __init__(self):
@@ -195,19 +181,12 @@ class metric_visual:
 		plt.ylim([0, 1])
 
 
-
-
-
-
-# ======================================================================================================================
 class multi_scores(object):
 
 	def __init__(self):
 		pass
 
 
-
-# ======================================================================================================================
 def scoring():
 	scoring_classifier = {
 		'accuracy': accuracy_score,
@@ -218,7 +197,9 @@ def scoring():
 
 
 
+# 测试代码 main 函数
+def main():
+    pass
 
-
-
-
+if __name__ == "__main__":
+    main()
