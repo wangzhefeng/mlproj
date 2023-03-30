@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 
 
-# *********************************************
-# * Author      : zhefeng wang
+# ***************************************************
+# * File        : model_deploy.py
+# * Author      : Zhefeng Wang
 # * Email       : wangzhefengr@163.com
-# * Date        : 2021.11.03
-# * Version     : 1.0.0
+# * Date        : 2023-03-19
+# * Version     : 0.1.031919
 # * Description : 模型部署方法
 # * Link        : https://zhuanlan.zhihu.com/p/92691256
-# **********************************************
+# * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
+# ***************************************************
 
 
 # python libraries
@@ -17,6 +19,7 @@ import sys
 from typing import List
 import logging
 import pickle
+
 from sklearn.externals import joblib
 from sklearn2pmml import sklearn2pmml, PMMLPipeline
 from sklearn_pandas import DataFrameMapper
@@ -24,11 +27,7 @@ from pypmml import Model
 
 
 # global variable
-GLOBAL_VARIABLE = None
-
-
-def func():
-    pass
+LOGGING_LABEL = __file__.split('/')[-1][:-3]
 
 
 # TODO
