@@ -141,3 +141,5 @@ dmypy.json
 .ipynb_checkpoints/
 .DS_Store
 .Trashes
+/data/
+/models/

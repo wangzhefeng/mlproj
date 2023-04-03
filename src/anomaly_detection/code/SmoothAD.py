@@ -25,6 +25,7 @@ import matplotlib.pyplot as plt
 from celluloid import Camera
 
 from tsmoothie.smoother import *
+from tsmoothie.utils_func import sim_randomwalk, sim_seasonal_data
 
 
 # global variable
@@ -35,7 +36,6 @@ class SmoothAnomalyDetection:
     """
     使用时间序列光滑模型进行异常检测
     """
-    
     def __init__(self, data, method: str = "convolution", window_len: int = 20, gif_filename = None) -> None:
         """
         data (_type_): _description_
@@ -275,7 +275,7 @@ class SmoothAnomalyDetection:
 
 # 测试代码 main 函数
 def main():
-    from tsmoothie.utils_func import sim_randomwalk, sim_seasonal_data
+    pass
 
 
 if __name__ == "__main__":
