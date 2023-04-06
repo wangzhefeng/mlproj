@@ -26,6 +26,9 @@ from scipy import signal
 LOGGING_LABEL = __file__.split('/')[-1][:-3]
 
 
+# ------------------------------
+# 
+# ------------------------------
 t = np.linspace(0, 3, 20, endpoint = False)
 y = np.cos(t ** 2)
 print(t)
@@ -47,9 +50,9 @@ print(len(re_y))
 # plt.legend()
 # plt.show();
 
-
-
-
+# ------------------------------
+# 
+# ------------------------------
 # 原始数据
 t = np.linspace(0, 3, 40, endpoint = False)
 y = np.cos(t ** 2)
@@ -64,7 +67,9 @@ t_new = np.linspace(0, 3, len(re_y), endpoint = False)
 # plt.legend()
 # plt.show()
 
-
+# ------------------------------
+# 
+# ------------------------------
 # 原始数据
 t = np.array([
     0, 2, 3, 3.5, 4.5, 
@@ -83,7 +88,9 @@ re_x, re_t = signal.resample(x, 20, t = t1)
 # plt.legend()
 # plt.show()
 
-
+# ------------------------------
+# 
+# ------------------------------
 # 原始数据
 t = np.array([
     0, 2, 3, 3.5, 4.5, 
@@ -101,7 +108,9 @@ re_x = signal.resample(x, 20)
 # plt.legend()
 # plt.show()
 
-
+# ------------------------------
+# 
+# ------------------------------
 # 原始数据
 t = np.linspace(0, 3, 40, endpoint = False)
 y = np.cos(t ** 2)
@@ -117,11 +126,10 @@ plt.show()
 
 
 
+
 # 测试代码 main 函数
 def main():
     pass
 
-
 if __name__ == "__main__":
     main()
-

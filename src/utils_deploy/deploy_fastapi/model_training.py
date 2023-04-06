@@ -14,11 +14,12 @@
 
 
 # python libraries
-from fileinput import filename
 import os
 import sys
-import numpy as np
+
 import joblib
+from fileinput import filename
+import numpy as np
 from sklearn import datasets
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression
@@ -56,4 +57,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

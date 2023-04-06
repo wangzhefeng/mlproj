@@ -99,7 +99,7 @@ def RRMSE(y_true, y_pred):
 
 def RAE(y_true, y_pred):
     """
-    relative absolute error
+    Relative Absolute Error (RAE)
     """
     true_mean = np.mean(y_true)
     squared_error_num = np.sum(np.abs(y_true - y_pred))
@@ -111,7 +111,7 @@ def RAE(y_true, y_pred):
 
 def MSLE(y_true, y_pred):
     """
-    root_mean_squared_log_error
+    Mean Squared Logarithmic Error(MSLE)
     """
     square_error = np.square((np.log(y_true + 1) - np.log(y_pred + 1)))
     msle_error = np.mean(square_error)
@@ -121,9 +121,9 @@ def MSLE(y_true, y_pred):
 
 def RMSLE(y_true, y_pred):
     """
-    root_mean_squared_log_error
+    Root Mean Squared Logarithmic Error (RMSLE)
     """
-    square_error = np.square((np.log(y_true + 1) - np.log(y_pred + 1)))
+    square_error = np.square((np.log1p(y_true + 1) - np.log1p(y_pred + 1)))
     msle_error = np.mean(square_error)
     rmsle_loss = np.sqrt(msle_error)
 

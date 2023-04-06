@@ -16,11 +16,12 @@
 # python libraries
 import os
 import sys
-from typing import List
 import logging
-import pickle
+from typing import List
 
+import pickle
 from sklearn.externals import joblib
+
 from sklearn2pmml import sklearn2pmml, PMMLPipeline
 from sklearn_pandas import DataFrameMapper
 from pypmml import Model
@@ -30,7 +31,6 @@ from pypmml import Model
 LOGGING_LABEL = __file__.split('/')[-1][:-3]
 
 
-# TODO
 class ModelDeploy:
     """
     模型部署类
@@ -90,7 +90,6 @@ class ModelDeployPkl(ModelDeploy):
         self.model = joblib.load(self.save_file_path)
 
 
-
 class ModelDeployPmml(ModelDeploy):
     """
     模型在线部署类
@@ -112,7 +111,9 @@ class ModelDeployPmml(ModelDeploy):
         if not self.save_file_path.endswith(".pmml"):
             raise Exception("参数 save_file_path 后缀必须为 'pmml', 请检查.")
 
-        mapper = DataFrameMapper([([i], None) for i in features_list])
+        mapper = DataFrameMapper([
+            ([i], None) for i in features_list
+        ])
         pipeline = PMMLPipeline([
             ("mapper", mapper),
             ("classifier", model),

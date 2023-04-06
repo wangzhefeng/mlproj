@@ -14,11 +14,12 @@
 
 
 # python libraries
-import uvicorn
-from fastapi import FastAPI
-import joblib
 import os
 from typing import List
+
+import joblib
+import uvicorn
+from fastapi import FastAPI
 
 
 app = FastAPI(
@@ -104,7 +105,5 @@ def main():
     # result = predict_iris(request)
     # print(result)
 
-
 if __name__ == "__main__":
     main()
-

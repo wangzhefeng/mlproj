@@ -13,6 +13,22 @@
 # ***************************************************
 
 
+"""
+* Confusion Matrix
+* Accuracy Score(准确度)
+* Precision, Recall, F1
+* Receiver operating cahracteristic(ROC)
+* Cohen's Kappa
+* Balanced accuracy score
+* Hamming Loss
+* Jaccard similarity coefficient score
+* Hinge Loss
+* Log Loss
+* Matthews correlation coefficient
+* Zero one Loss
+* Brier Score Loss
+"""
+
 # python libraries
 import os
 import sys
@@ -173,6 +189,14 @@ class metric_visual:
         plt.xlabel("Thresholds")
         plt.legend(loc="upper left")
         plt.ylim([0, 1])
+
+
+def log_loss(preds, labels):
+    """
+    Logarithmic loss with non-necessarily-binary labels.
+    """
+    log_likelihood = np.sum(labels * np.log(preds)) / len(preds)
+    return -log_likelihood
 
 
 class multi_scores(object):
