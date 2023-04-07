@@ -1,30 +1,52 @@
 # -*- coding: utf-8 -*-
+
+
+# ***************************************************
+# * File        : FeatureSelection.py
+# * Author      : Zhefeng Wang
+# * Email       : wangzhefengr@163.com
+# * Date        : 2023-04-06
+# * Version     : 0.1.040614
+# * Description : description
+# * Link        : link
+# * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
+# ***************************************************
+
+
+# python libraries
 import os
+import sys
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from sklearn.decomposition import PCA
-from sklearn.decomposition import IncrementalPCA
-from sklearn.decomposition import KernelPCA
-from sklearn.decomposition import TruncatedSVD
-from sklearn.decomposition import SparsePCA
-from sklearn.decomposition import FactorAnalysis
+from sklearn.decomposition import (
+    PCA,
+    IncrementalPCA,
+    KernelPCA,
+    TruncatedSVD,
+    SparsePCA,
+    FactorAnalysis,
+)
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-
-from sklearn import feature_selection
-from sklearn.feature_selection import VarianceThreshold
-from sklearn.feature_selection import SelectionKBest
-from sklearn.feature_selection import chi2
-from sklearn.feature_selection import RFE
-from sklearn.feature_selection import SelectFromModel
-
+from sklearn.feature_selection import (
+    VarianceThreshold,
+    SelectionKBest,
+    chi2,
+    RFE,
+    SelectFromModel,
+)
 from sklearn.svm import LinearSVC
 from sklearn.linear_model import Lasso
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.ensemble import GradientBoostingClassifier
 from minepy import MINE
+
+
+# global variable
+LOGGING_LABEL = __file__.split('/')[-1][:-3]
 
 
 class pca:
@@ -84,8 +106,8 @@ class lda:
 
 def nan_feature_remove(data, rate_base = 0.4):
     """
-    # 针对每一列feature统计nan的个数
-    # 个数大于全量样本的rate_base的认为是异常feature, 进行剔除
+    针对每一列 feature 统计 nan 的个数
+    个数大于全量样本的 rate_base 的认为是异常 feature, 进行剔除
     """
     all_cnt = data.shape[0]
     feature_cnt = data.shape[1]
@@ -100,10 +122,7 @@ def nan_feature_remove(data, rate_base = 0.4):
 
 def low_variance_feature_remove(data, rate_base = 0.0):
     """
-    # 对样本数据集中方差小于某一阈值的特征进行剔除
-    :param data:
-    :param p:
-    :return:
+    对样本数据集中方差小于某一阈值的特征进行剔除
     """
     sel = VarianceThreshold(threshold = rate_base)
     data_available = sel.fit_transform(data)
@@ -131,3 +150,12 @@ def model_based_feature_selection(data, target, model = "tree", n_estimators = 5
         clf = ""
     else:
         print("Error model, Please choose one of 'tree', 'svm' or 'lr'!")
+
+
+
+# 测试代码 main 函数
+def main():
+    pass
+
+if __name__ == "__main__":
+    main()

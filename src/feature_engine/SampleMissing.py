@@ -13,10 +13,11 @@
 
 
 # python libraries
-from numpy.core.shape_base import vstack
-import pandas as pd
 import numpy as np
-from sklearn.impute import SimpleImputer, MissingIndicator
+import pandas as pd
+from numpy.core.shape_base import vstack
+
+from sklearn.impute import MissingIndicator, SimpleImputer
 
 
 # global variable
@@ -33,12 +34,10 @@ class MissingPreprocessing(object):
     def __init__(self, feature):
         self.feature = feature
 
-
     def simple_imputer(self):
         si = SimpleImputer()
         processed_feature = si.fit_transform(self.feature)
         return processed_feature
-
 
     def QuantileImpute(self, data_input, key_value = 0.95):
         data_union = []
@@ -100,25 +99,17 @@ class MissingPreprocessing(object):
                 # continue variables
                 if len(pd.DataFrame(data.iloc[:, i]).drop_duplicates()) >= limit_value:
                     if continuous_dealed_method == "mean":
-                        continuous_feature_df = pd.concat([continuous_feature_df,
-                                                           data.iloc[:, i].fillna(data.iloc[:, i].mean())],
-                                                          axis = 1)
+                        continuous_feature_df = pd.concat([continuous_feature_df, data.iloc[:, i].fillna(data.iloc[:, i].mean())], axis = 1)
                         continuous_feature_index.append(i)
                     elif continuous_dealed_method == "max":
-                        continuous_feature_df = pd.concat([continuous_feature_df,
-                                                           data.iloc[:, i].fillna(data.iloc[:, i].max())],
-                                                          axis = 1)
+                        continuous_feature_df = pd.concat([continuous_feature_df, data.iloc[:, i].fillna(data.iloc[:, i].max())], axis = 1)
                         continuous_feature_index.append(i)
                     elif continuous_dealed_method == "min":
-                        continuous_feature_df = pd.concat([continuous_feature_df,
-                                                           data.iloc[:, i].fillna(data.iloc[:, i].min())],
-                                                          axis = 1)
+                        continuous_feature_df = pd.concat([continuous_feature_df, data.iloc[:, i].fillna(data.iloc[:, i].min())], axis = 1)
                         continuous_feature_index.append(i)
                 # categorical variables
                 elif len(pd.DataFrame(data.iloc[:, i]).drop_duplicates()) > 0 and len(pd.DataFrame(data.iloc[:, i]).drop_duplicates()) < limit_value:
-                    class_feature_df = pd.concat([class_feature_df,
-                                                  pd.get_dummies(data.iloc[:, i], prefix = data.columns[i])],
-                                                 axis = 1)
+                    class_feature_df = pd.concat([class_feature_df, pd.get_dummies(data.iloc[:, i], prefix = data.columns[i])], axis = 1)
                     class_feature_index.append(i)
             else:
                 normal_index.append(i)
@@ -128,11 +119,10 @@ class MissingPreprocessing(object):
 
 
 
+
 # 测试代码 main 函数
 def main():
     pass
 
-
 if __name__ == "__main__":
     main()
-

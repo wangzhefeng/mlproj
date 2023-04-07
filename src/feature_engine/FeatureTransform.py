@@ -1,8 +1,23 @@
 # -*- coding: utf-8 -*-
+
+
+# ***************************************************
+# * File        : FeatureTransform.py
+# * Author      : Zhefeng Wang
+# * Email       : wangzhefengr@163.com
+# * Date        : 2023-04-06
+# * Version     : 0.1.040617
+# * Description : description
+# * Link        : link
+# * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
+# ***************************************************
+
+
+# python libraries
+import os
+import sys
+
 import numpy as np
-import pandas as pd
-import matplotlib as mpl
-import matplotlib.pyplot as plt
 # 标准化
 from sklearn.preprocessing import StandardScaler
 # from sklearn.preprocessing import scale
@@ -24,11 +39,23 @@ from sklearn.preprocessing import FunctionTransformer
 from sklearn.preprocessing import Powertransformer
 # from sklearn.compose import transformedTargetRegressor
 
+from sklearn.preprocessing import QuantileTransformer
 
-"""
-数值型变量分布转换:
-    - 
-"""
+
+# global variable
+LOGGING_LABEL = __file__.split('/')[-1][:-3]
+
+
+def NormalityTransform(feature):
+    """
+    # Map data from any distribution to as close to Gaussian distribution as possible
+    # in order to stabilize variance and minimize skewness:
+    #   - log(1 + x) transform
+    #   - Yeo-Johnson transform
+    #   - Box-Cox transform
+    #   - Quantile transform
+    """
+    pass
 
 
 def standard_center(features, is_copy = True, with_mean = True, with_std = True):
@@ -141,4 +168,29 @@ def ploynomial_transform(features):
     pn = PolynomialFeatures()
     transformed_data = pn.fit_transform(features)
     return transformed_data
+
+
+def quantileNorm(feature):
+    qt = QuantileTransformer(output_distribution = "normal", random_state = 0)
+    feat_trans = qt.fit_transform(feature)
+
+    return feat_trans
+
+
+def quantileUniform(feature, feat_test = None):
+    qu = QuantileTransformer(random_state = 0)
+    feat_trans = qu.fit_transform(feature)
+    feat_trans_test = qu.transform(feat_test)
+
+    return feat_trans, feat_trans_test
+
+
+
+
+# 测试代码 main 函数
+def main():
+    pass
+
+if __name__ == "__main__":
+    main()
 

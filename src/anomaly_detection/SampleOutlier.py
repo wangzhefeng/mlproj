@@ -1,20 +1,39 @@
 # -*- coding: utf-8 -*-
-import logging
-import pandas as pd
-import numpy as np
-from sklearn.metrics import mean_squared_error
-import matplotlib.pyplot as plt
+
+
+# ***************************************************
+# * File        : SampleOutlier.py
+# * Author      : Zhefeng Wang
+# * Email       : wangzhefengr@163.com
+# * Date        : 2023-04-06
+# * Version     : 0.1.040618
+# * Description : description
+# * Link        : link
+# * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
+# ***************************************************
+
+
+# python libraries
+import os
+import sys
 from collections import Counter
-import time
+
 import numpy as np
+import pandas as pd
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-from sklearn.datasets import make_moons, make_blobs
+
 from sklearn.covariance import EllipticEnvelope
-from sklearn.svm import OneClassSVM
 from sklearn.ensemble import IsolationForest
+from sklearn.metrics import mean_squared_error
 from sklearn.neighbors import LocalOutlierFactor
+from sklearn.svm import OneClassSVM
+
 mpl.rcParams['contour.negative_linestyle'] = 'solid'
+
+
+# global variable
+LOGGING_LABEL = __file__.split('/')[-1][:-3]
 
 
 class OutlierPreprocessing(object):
@@ -25,7 +44,6 @@ class OutlierPreprocessing(object):
         self.data = data
         self.outliers_index = []
         self.feature_change = []
-
 
     def outlier_detect_box(self, n):
         """
@@ -47,7 +65,6 @@ class OutlierPreprocessing(object):
         self.outliers_index = Counter(self.outliers_index)
         multiple_outliers = [k for k, v in self.outliers_index.items() if v > n]
         print("multiple_outliers: {}".format(multiple_outliers))
-
 
     def outlier_detect(self, model, sigma = 3):
         """
@@ -156,89 +173,18 @@ class OutlierPreprocessing(object):
                             self.data.iloc[:, i][self.data.iloc[:, i]] = q_limit
                             self.feature_change.append(i)
 
-
-# ======================================================
-# 数据
-# ======================================================
-n_samples = 300
-outliers_fraction = 0.15
-n_outliers = int(outliers_fraction * n_samples)
-n_inliers = n_samples - n_outliers
-
-blobs_params ={
-    'random_state': 0,
-    'n_samples': n_inliers,
-    'n_features': 2
-}
-dataset = [
-    make_blobs(centers = [[0, 0], [0, 0]], cluster_std = 0.5, **blobs_params)[0],
-    make_blobs(centers = [[2, 2], [-2, -2]], cluster_std = [0.5, 0.5], **blobs_params)[0],
-    make_blobs(centers = [[2, 2], [-2, -2]], cluster_std = [1.5, 0.3], **blobs_params)[0],
-    4.0 * (make_moons(n_samples = n_samples, noise = 0.05, random_state = 0)[0] - np.array([0.5, 0.25])),
-    14.0 * (np.random.RandomState(42).rand(n_samples, 2) - 0.5)
-]
-# ======================================================
-# 训练好的模型
-# ======================================================
-elliptic_envelope = EllipticEnvelope(contamination = outliers_fraction)
-one_class_svm = OneClassSVM(nu = outliers_fraction, kernel = 'rbf', gamma = 0.1)
-isolation_forest = IsolationForest(behaviour = 'new', contamination = outliers_fraction, random_state = 42)
-local_outlier_factor = LocalOutlierFactor(n_neighbors = 35, contamination = outliers_fraction)
-
-anomaly_algorithms = [
-    ("Robust covariance", EllipticEnvelope(contamination = outliers_fraction)),
-    ("One-Class SVM", OneClassSVM(nu = outliers_fraction, kernel = "rbf", gamma = 0.1)),
-    ("Isolation Forest", IsolationForest(behaviour = 'new', contamination = outliers_fraction, random_state = 42)),
-    ("Local Outlier Factor", LocalOutlierFactor(n_neighbors = 35, contamination = outliers_fraction))
-]
-# ======================================================
-#
-# ======================================================
-xx, yy = np.meshgrid(np.linspace(-7, 7, 150), np.linspace(-7, 7, 150))
-plt.figure(figsize = (len(anomaly_algorithms) * 2 + 3, 12.5))
-plt.subplots_adjust(left = 0.02, right = 0.98, bottom = 0.01, top = 0.96, wspace = 0.05, hspace = 0.01)
-
-plot_num = 1
-rng = np.random.RandomState(42)
-for i_dataset, X in enumerate(dataset):
-    X = np.concatenate([X, rng.uniform(low = -6, high = 6, size = (n_outliers, 2))], axis = 0)
-    for name, algorithm in anomaly_algorithms:
-        stime = time.time()
-        algorithm.fit(X)
-        etime = time.time()
-        plt.subplot(len(dataset), len(anomaly_algorithms), plot_num)
-        if i_dataset == 0:
-            plt.title(name, size = 18)
-
-        if name == "Local Outlier Factor":
-            y_pred = algorithm.fit_predict(X)
-        else:
-            y_pred = algorithm.fit(X).predict(X)
-
-        if name != "Local Outlier Factor":
-            Z = algorithm.predict(np.c_[xx.ravel(), yy.ravel()])
-            Z = Z.reshape(xx.shape)
-            plt.contour(xx, yy, Z, level = [0], linewidths = 2, colors = 'black')
-
-        colors = np.array(['#377eb8', '#ff7f00'])
-        plt.scatter(X[:, 0], X[:, 1], s = 10, color = colors[(y_pred + 1) // 2])
-
-        plt.xlim(-7, 7)
-        plt.ylim(-7, 7)
-        plt.xticks(())
-        plt.yticks(())
-        plt.text(.99, .01,
-                 ('%.2fs' % (etime - stime)).lstrip('0'),
-                 transform = plt.gca().transAxes,
-                 size=15,
-                 horizontalalignment='right')
-        plot_num += 1
-plt.show()
+        elliptic_envelope = EllipticEnvelope(contamination = outliers_fraction)
+        one_class_svm = OneClassSVM(nu = outliers_fraction, kernel = 'rbf', gamma = 0.1)
+        isolation_forest = IsolationForest(behaviour = 'new', contamination = outliers_fraction, random_state = 42)
+        local_outlier_factor = LocalOutlierFactor(n_neighbors = 35, contamination = outliers_fraction)
 
 
 
 
-if __name__ == "__main__":
+
+
+# 测试代码 main 函数
+def main():
     from sklearn.linear_model import Ridge
 
     train_data_file = "/Users/zfwang/machinelearning/mlproj/src/utils/data/zhengqi_train.txt"
@@ -247,3 +193,6 @@ if __name__ == "__main__":
     outlier_preprocessing = OutlierPreprocessing(train_data)
     y, y_pred, Z = outlier_preprocessing.outlier_detect(model = Ridge(), sigma = 3)
     outlier_preprocessing.outlier_visual(y = y, y_pred = y_pred, Z = Z)
+
+if __name__ == "__main__":
+    main()

@@ -1,52 +1,55 @@
+# -*- coding: utf-8 -*-
+
+
+# ***************************************************
+# * File        : FeatureEncoding.py
+# * Author      : Zhefeng Wang
+# * Email       : wangzhefengr@163.com
+# * Date        : 2023-04-06
+# * Version     : 0.1.040618
+# * Description : description
+# * Link        : link
+# * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
+# ***************************************************
+
+
+# python libraries
+import os
+import sys
+
+import category_encoders as ce
 import pandas as pd
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.preprocessing import OrdinalEncoder
-from sklearn.preprocessing import LabelEncoder
+from category_encoders import LeaveOneOutEncoder, TargetEncoder, WOEEncoder
 from sklearn.feature_extraction import FeatureHasher
-from category_encoders import TargetEncoder
-from category_encoders import LeaveOneOutEncoder
-from category_encoders import WOEEncoder
-import category_encoders as ce
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder, OrdinalEncoder
 
 
-"""
-# -----------------------
-# 类别性特征重编码方法
-# -----------------------
-    1.One-Hot Encoding
-    2.Target Encoding (目标编码)
-    3.Leave-one-out Encoding (留一法编码)
-    4.Bayesian Target Encoding (贝叶斯目标编码)
-    5.Weight of Evidence(WoE) (证据权重)
-    6.Nonlinear PCA (非线性 PCA)
-    2.Order Encoding
+# global variable
+LOGGING_LABEL = __file__.split('/')[-1][:-3]
 
-# -----------------------
-# category_encoders 库
-# -----------------------
-import category_encoders as ce
 
-encoder = ce.BackwardDifferenceEncoder(cols=[...])
-encoder = ce.BaseNEncoder(cols=[...])
-encoder = ce.BinaryEncoder(cols=[...])
-encoder = ce.CatBoostEncoder(cols=[...])
-encoder = ce.CountEncoder(cols=[...])
-encoder = ce.GLMMEncoder(cols=[...])
-encoder = ce.HashingEncoder(cols=[...])
-encoder = ce.HelmertEncoder(cols=[...])
-encoder = ce.JamesSteinEncoder(cols=[...])
-encoder = ce.LeaveOneOutEncoder(cols=[...])
-encoder = ce.MEstimateEncoder(cols=[...])
-encoder = ce.OneHotEncoder(cols=[...])
-encoder = ce.OrdinalEncoder(cols=[...])
-encoder = ce.SumEncoder(cols=[...])
-encoder = ce.PolynomialEncoder(cols=[...])
-encoder = ce.TargetEncoder(cols=[...])
-encoder = ce.WOEEncoder(cols=[...])
+class CategoryFeatureEncoder(object):
 
-encoder.fit(X, y)
-X_cleaned = encoder.transform(X_dirty)
-"""
+    def __init__(self) -> None:
+        pass
+
+    def ValueCounts(self):
+        """
+        Examples:
+            # data
+            >>> df = pd.DataFrame({
+                    '区域' : ['西安', '太原', '西安', '太原', '郑州', '太原'], 
+                    '10月份销售' : ['0.477468', '0.195046', '0.015964', '0.259654', '0.856412', '0.259644'],
+                    '9月份销售' : ['0.347705', '0.151220', '0.895599', '0236547', '0.569841', '0.254784']
+                })
+            # feature engine
+            >>> df_counts = df['区域'].value_counts().reset_index()
+            >>> df_counts.columns = ['区域', '区域频度统计']
+            >>> print(df_counts)
+            >>> df = df.merge(df_counts, on = ['区域'], how = 'left')
+            >>> print(df)
+        """
+        pass
 
 
 def oneHotEncoding(data, limit_value = 10):
@@ -65,8 +68,6 @@ def oneHotEncoding(data, limit_value = 10):
             normal_index.append(i)
     data_update = pd.concat([data.iloc[:, normal_index], class_df], axis = 1)
     return data_update
-
-
 
 def one_hot_encoder(feature):
     """
@@ -88,13 +89,7 @@ def order_encoder(feature):
 
 def label_encoder(data):
     """
-    Label Encoder
-
-    Args:
-        data ([type]): [description]
-
-    Returns:
-        [type]: [description]
+    Label Encoder: sklearn.preprocessing.LabelEncoder
     """
     le = LabelEncoder()
     for c in data.columns:
@@ -104,7 +99,10 @@ def label_encoder(data):
     return data
 
 
-if __name__ == "__main__":
+
+
+# 测试代码 main 函数
+def main():
     # order
     le =  LabelEncoder()
     classes = [1, 2, 6, 4, 2]
@@ -118,11 +116,11 @@ if __name__ == "__main__":
     print(le.classes_)
     print(new_classes)
     
-    # enc = OrdinalEncoder()
-    # classes = [1, 2, 6, 4, 2]
-    # new_classes = enc.fit_transform(classes)
-    # print(enc.classes_)
-    # print(new_classes)
+    enc = OrdinalEncoder()
+    classes = [1, 2, 6, 4, 2]
+    new_classes = enc.fit_transform(classes)
+    print(enc.classes_)
+    print(new_classes)
 
     # one-hot
     df = pd.DataFrame({
@@ -152,36 +150,5 @@ if __name__ == "__main__":
     effect_df = vir_df[3:5, ["city_SF", "city_Seattle"]] = -1
     print(effect_df)
 
-
-    # 单词特征的特征散列化
-    def hash_features(word_list, m):
-        output = [0] * m
-        for word in word_list:
-            index = hash_fcn(word) % m
-            output[index] += 1
-        return output
-
-    # 带符号的特征散列化
-    def hash_features(word_list, m):
-        output = [0] * m
-        for word in word_list:
-            index = hash_fcn(word) % m
-            sign_bit = sign_hash(word) % 2
-            if sign_bit == 0:
-                output[index] -= 1
-            else:
-                output[index] += 1
-        return output
-
-    h = FeatureHasher(n_features = m, input_type = "string")
-    f = h.trasnform(df["feat"])
-
-    
-    enc = TargetEncoder(cols=['Name_of_col','Another_name']) 
-    training_set = enc.fit_transform(X_train, y_train)
-
-    enc = LeaveOneOutEncoder(cols=['Name_of_col','Another_name'])
-    training_set = enc.fit_transform(X_train, y_train)
-
-    enc = WOEEncoder(cols=['Name_of_col','Another_name']) 
-    training_set = enc.fit_transform(X_train, y_train)
+if __name__ == "__main__":
+    main()

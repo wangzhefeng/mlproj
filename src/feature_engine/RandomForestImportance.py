@@ -17,9 +17,55 @@
 import os
 import sys
 
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+
 
 # global variable
 LOGGING_LABEL = __file__.split('/')[-1][:-3]
+
+
+
+def RandomForestClf(x_train, y_train, feature_labels, threshold = 0.15):
+    # rf model
+    rf_clf = RandomForestClassifier(
+        n_estimators = 10000,
+        random_state = 0,
+        n_jobs = -1,
+    )
+    rf_clf.fit(x_train, y_train)
+    # importance
+    importances = rf_clf.feature_importances_
+    indices = np.argsort(importances)[::-1]
+    for f in range(x_train.shape[1]):
+        print("%2d) %-*s %f" % (f + 1, 30, feature_labels[indices[f]], importances[indices[f]]))
+    # features selection
+    x_selected = x_train[:, importances > threshold]
+
+    return x_selected
+
+
+def RandomForestClf(x_train, y_train, feature_labels, threshold = 0.15):
+    # rf model
+    rf_clf = RandomForestRegressor(
+        n_estimators = 10000,
+        random_state = 0,
+        n_jobs = -1,
+    )
+    rf_clf.fit(x_train, y_train)
+    # importance
+    importances = rf_clf.feature_importances_
+    indices = np.argsort(importances)[::-1]
+    for f in range(x_train.shape[1]):
+        print("%2d) %-*s %f" % (f + 1, 30, feature_labels[indices[f]], importances[indices[f]]))
+    # features selection
+    x_selected = x_train[:, importances > threshold]
+
+    return x_selected
+
+
+
+
 
 
 # 测试代码 main 函数
@@ -27,8 +73,7 @@ def main():
     import numpy as np
     import pandas as pd
     from sklearn.model_selection import train_test_split
-    from sklearn.ensemble import RandomForestClassifier
-
+    
     # data
     data_url = 'http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data'
     df = pd.read_csv(data_url, header = None)
@@ -38,7 +83,6 @@ def main():
         'Flavanoids', 'Nonflavanoid phenols', 'Proanthocyanins', 
         'Color intensity', 'Hue', 'OD280/OD315 of diluted wines', 'Proline'
     ]
-
     # data split
     x, y = df.iloc[:, 1:].values, df.iloc[:, 0].values
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.3, random_state = 0)
