@@ -128,6 +128,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# user
 .vscode/
 *.csv
 *.zip
@@ -143,3 +144,7 @@ dmypy.json
 .Trashes
 data/
 /models/
+.vector_cache/
+tensorboard/
+*.h5
+flagged/
