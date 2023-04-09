@@ -1,7 +1,29 @@
+# -*- coding: utf-8 -*-
+
+
+# ***************************************************
+# * File        : demo_2.py
+# * Author      : Zhefeng Wang
+# * Email       : wangzhefengr@163.com
+# * Date        : 2023-04-08
+# * Version     : 0.1.040822
+# * Description : description
+# * Link        : link
+# * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
+# ***************************************************
+
+
+# python libraries
+import os
+import sys
+
+
+# global variable
+LOGGING_LABEL = __file__.split('/')[-1][:-3]
+
 import numpy as np
 import pandas as pd
 import warnings
-import time
 import lightgbm as lgb
 import json
 from bayes_opt import BayesianOptimization
@@ -10,13 +32,27 @@ warnings.filterwarnings("ignore")
 
 
 # --------------------------------------------
-# 1.定义数据集
+# data
 # --------------------------------------------
 # 原始数据
-df_train = pd.read_csv("https://cdn.coggle.club/LightGBM/examples/binary_classification/binary.train", header = None, sep = "\t")
-df_test = pd.read_csv("https://cdn.coggle.club/LightGBM/examples/binary_classification/binary.test", header = None, sep = "\t")
-W_train = pd.read_csv("https://cdn.coggle.club/LightGBM/examples/binary_classification/binary.train.weight", header = None)[0]
-W_test = pd.read_csv("https://cdn.coggle.club/LightGBM/examples/binary_classification/binary.test.weight", header = None)[0]
+df_train = pd.read_csv(
+    "https://cdn.coggle.club/LightGBM/examples/binary_classification/binary.train", 
+    header = None, 
+    sep = "\t"
+)
+df_test = pd.read_csv(
+    "https://cdn.coggle.club/LightGBM/examples/binary_classification/binary.test", 
+    header = None, 
+    sep = "\t"
+)
+W_train = pd.read_csv(
+    "https://cdn.coggle.club/LightGBM/examples/binary_classification/binary.train.weight", 
+    header = None
+)[0]
+W_test = pd.read_csv(
+    "https://cdn.coggle.club/LightGBM/examples/binary_classification/binary.test.weight", 
+    header = None
+)[0]
 y_train = df_train[0]
 y_test = df_test[0]
 X_train = df_train.drop(0, axis = 1)
@@ -29,9 +65,8 @@ print(num_feature)
 lgb_train = lgb.Dataset(X_train, y_train, weight = W_train, free_raw_data = False)
 lgb_eval = lgb.Dataset(X_test, y_test, reference = lgb_train, weight = W_test, free_raw_data = False)
 
-
 # --------------------------------------------
-# 2.模型训练
+# model training
 # --------------------------------------------
 params = {
     "boosting_type": "gbdt",
@@ -55,9 +90,8 @@ gbm = lgb.train(
     categorical_feature = [21]
 )
 
-
 # --------------------------------------------
-# 3.模型保存与加载
+# 模型保存与加载
 # --------------------------------------------
 gbm.save_model("model.txt")
 print("Dumping model to JSON ...")
@@ -65,16 +99,14 @@ model_json = gbm.dump_model()
 with open("model.json", "w+") as f:
     json.dump(model_json, f, indent = 4)
 
-
 # --------------------------------------------
-# 4.查看特征重要性
+# 查看特征重要性
 # --------------------------------------------
 print("Feature names:", gbm.feature_name())
 print("Feature importances:", list(gbm.feature_importance()))
 
-
 # --------------------------------------------
-# 5.训练
+# 训练
 # --------------------------------------------
 gbm = lgb.train(
     params, 
@@ -85,9 +117,8 @@ gbm = lgb.train(
 )
 print("Finished 10 - 20 rounds with model file ...")
 
-
 # --------------------------------------------
-# 6.动态调整模型超参数
+# 动态调整模型超参数
 # --------------------------------------------
 gbm = lgb.train(
     params,
@@ -110,16 +141,14 @@ gbm = lgb.train(
 )
 print("Finised 30 ~ 40 rounds with changing bagging_fraction...")
 
-
 # --------------------------------------------
-# 7.自定义损失函数
+# 自定义损失函数
 # --------------------------------------------
 def loglikelihood(preds, train_data):
     labels = train_data.get_label()
     preds = 1. / (1. + np.exp(-preds))
     grad = preds - labels
     hess = preds * (1. - preds)
-    
     return grad, hess
 
 
@@ -140,12 +169,11 @@ gbm = lgb.train(
 )
 print("Finished 40 ~ 50 rounds with self-defined objective function and eval metric...")
 
-
 # --------------------------------------------
-# 8.调参方法
+# 调参方法
 # --------------------------------------------
 # ----------------------
-# 8.1 人工调参
+# 人工调参
 # ----------------------
 """
 - 提高速度
@@ -173,7 +201,7 @@ print("Finished 40 ~ 50 rounds with self-defined objective function and eval met
     - Try increasing path_smooth
 """
 # ----------------------
-# 8.2 网格搜索
+# 网格搜索
 # ----------------------
 lg = lgb.LGBMClassifier(silent = False)
 param_dist = {
@@ -188,9 +216,8 @@ grid_search.fit(X_train, y_train)
 grid_search.best_estimator_
 grid_search.best_score_
 
-
 # ----------------------
-# 8.3 贝叶斯优化
+# 贝叶斯优化
 # ----------------------
 def lgb_eval(max_depth, learning_rate, num_leaves, n_estimators):
     params = {"metrics": "auc"}
@@ -200,7 +227,7 @@ def lgb_eval(max_depth, learning_rate, num_leaves, n_estimators):
     params["n_estimators"] = int(max(n_estimators, 1))
     cv_result = lgb.cv(
         params, 
-        d_train, 
+        df_train, 
         nfold = 5, 
         seed = 0, 
         verbose_eval = 200, 
@@ -222,3 +249,13 @@ lgbBO = BayesianOptimization(
 lgbBO.maximize(init_points = 5, n_iter = 50, acq = "ei")
 print(lgbBO.max)
 
+
+
+
+
+# 测试代码 main 函数
+def main():
+    pass
+
+if __name__ == "__main__":
+    main()

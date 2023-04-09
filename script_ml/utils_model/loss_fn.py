@@ -14,6 +14,10 @@
 
 
 # python libraries
+import os
+import sys
+import math
+
 import numpy as np
 
 
@@ -39,13 +43,21 @@ def loglikelihood(pred, train_data):
     return grad, hess
 
 
+def logloss(y_true, y_pred):
+    label2num = dict(
+        (name, i) for i, name in enumerate(sorted(set(y_true)))
+    )
+    return -1 * sum(
+        math.log(y[label2num[label]]) if y[label2num[label]] > 0 else -np.inf 
+        for y, label in zip(y_pred, y_true)
+    ) / len(y_pred)
+
+
 
 
 # 测试代码 main 函数
 def main():
     pass
 
-
 if __name__ == "__main__":
     main()
-
