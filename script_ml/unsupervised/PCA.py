@@ -26,7 +26,6 @@ import matplotlib.pyplot as plt
 LOGGING_LABEL = __file__.split('/')[-1][:-3]
 
 
-
 def loadData(fileName, delim = "\t"):
     data = pd.read_csv(fileName, sep = delim, header = None)
     return np.mat(data)

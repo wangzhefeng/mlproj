@@ -16,19 +16,20 @@
 # python libraries
 import os
 import sys
+import json
+
+import numpy as np
+import pandas as pd
+import lightgbm as lgb
+from bayes_opt import BayesianOptimization
+from sklearn.model_selection import GridSearchCV
+
+import warnings
+warnings.filterwarnings("ignore")
 
 
 # global variable
 LOGGING_LABEL = __file__.split('/')[-1][:-3]
-
-import numpy as np
-import pandas as pd
-import warnings
-import lightgbm as lgb
-import json
-from bayes_opt import BayesianOptimization
-from sklearn.model_selection import GridSearchCV
-warnings.filterwarnings("ignore")
 
 
 # --------------------------------------------

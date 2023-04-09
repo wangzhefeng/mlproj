@@ -20,6 +20,7 @@ import sys
 from sklearn.datasets import load_iris
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 
+
 # global variable
 LOGGING_LABEL = __file__.split('/')[-1][:-3]
 
@@ -29,7 +30,8 @@ iris = load_iris()
 
 # 线性判别分析法，返回降维后的数据
 # 参数 n_components 为降维后的维数
-LinearDiscriminantAnalysis(n_components = 2).fit_transform(iris.data, iris.target)
+lda = LinearDiscriminantAnalysis(n_components = 2)
+lda.fit_transform(iris.data, iris.target)
 
 
 
