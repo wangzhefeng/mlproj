@@ -69,6 +69,7 @@ lgb_eval = lgb.Dataset(X_test, y_test, reference = lgb_train, weight = W_test, f
 # --------------------------------------------
 # model training
 # --------------------------------------------
+# model params
 params = {
     "boosting_type": "gbdt",
     "objective": "binary",
@@ -80,7 +81,7 @@ params = {
     "bagging_freq": 5,
     "verbose": 0,
 }
-# 生成特征名称
+# model
 feature_name = ["feature_" + str(col) for col in range(num_feature)]
 gbm = lgb.train(
     params,
@@ -94,8 +95,11 @@ gbm = lgb.train(
 # --------------------------------------------
 # 模型保存与加载
 # --------------------------------------------
+# txt
 gbm.save_model("model.txt")
 print("Dumping model to JSON ...")
+
+# json
 model_json = gbm.dump_model()
 with open("model.json", "w+") as f:
     json.dump(model_json, f, indent = 4)
@@ -204,16 +208,20 @@ print("Finished 40 ~ 50 rounds with self-defined objective function and eval met
 # ----------------------
 # 网格搜索
 # ----------------------
+# model
 lg = lgb.LGBMClassifier(silent = False)
+# hyperparameters
 param_dist = {
     "max_depth": [4, 5, 7],
     "learning_rate": [0.01, 0.05, 0.1],
     "num_leaves": [300, 900, 1200],
     "n_estimators": [50, 100, 150]
 }
+# grid search cv
 grid_search = GridSearchCV(lg, n_jobs = -1, param_grid = param_dist, cv = 5, scoring = "roc_auc", verbose = 5)
 grid_search.fit(X_train, y_train)
 
+# best hyper parameters
 grid_search.best_estimator_
 grid_search.best_score_
 
