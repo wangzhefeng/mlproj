@@ -142,7 +142,7 @@ for epoch in range(num_epochs):
         labels = labels.to(device)
         # forward
         outputs = lstm_one_hidden(images)
-        loss = criterion(outputs, labels)
+        loss = loss_fn(outputs, labels)
         # backward
         optimizer.zero_grad()
         loss.backward()

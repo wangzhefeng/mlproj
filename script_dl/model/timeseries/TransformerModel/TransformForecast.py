@@ -12,16 +12,17 @@
 # * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
 # ***************************************************
 
-
 # python libraries
 import os
 import sys
-
-import time
-import math
-import torch
 import logging
+import math
+import time
+from typing import Union, List
+
 import numpy as np
+import pandas as pd
+import torch
 from sklearn.preprocessing import MinMaxScaler
 from TransformerAm import TransformerAm
 
@@ -33,48 +34,45 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 class TransformForecasting:
     
-    def __init__(self, d_model,
+    def __init__(self, 
+                 d_model,
                  num_head,
                  num_layers,
-                 input_wsz=100,
-                 output_wsz=5,
-                 train_factor=0.8,
-                 batch_size=20,
-                 dropout=0.1,
-                 lr=0.005):
+                 input_wsz = 100,
+                 output_wsz = 5,
+                 train_size = 0.8,
+                 batch_size = 20,
+                 dropout = 0.1,
+                 lr = 0.005):
+        # params
         self.input_wsz = input_wsz  # number of input steps
         self.output_wsz = output_wsz  # number of prediction steps
-        self.train_factor = train_factor  # train data factor
+        self.train_size = train_size  # train data factor
         self.batch_size = batch_size  # batch size
-        self.scaler = MinMaxScaler(feature_range=(-1, 1))
-
-        # feature_size = 250, num_head = 10, num_layers = 1, dropout = 0.1
-        self.model = TransformerAm(feature_size=d_model,
-                             num_head=num_head,
-                             num_layers=num_layers,
-                             dropout=dropout).to(device)
+        # data transformer
+        self.scaler = MinMaxScaler(feature_range = (-1, 1))
+        # model
+        self.model = TransformerAm(
+            feature_size = d_model,
+            num_head = num_head,
+            num_layers = num_layers,
+            dropout = dropout
+        ).to(device)  # feature_size = 250, num_head = 10, num_layers = 1, dropout = 0.1
+        # loss
         self.loss_fn = torch.nn.MSELoss()
-        self.optimizer = torch.optim.AdamW(self.model.parameters(), lr=lr)
-        self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, 1, gamma=0.95)
+        # optimizer
+        self.optimizer = torch.optim.AdamW(self.model.parameters(), lr = lr)
+        # lr scheduler
+        self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, 1, gamma = 0.95)
 
-    def Predict(self, data_source, steps=10):
-        self.model.eval()
-        data, _ = self.GetBatch(data_source, 0, 1)
-        with torch.no_grad():
-            for i in range(0, steps):
-                output = self.model(data[-self.input_wsz:])
-                data = torch.cat((data, output[-1:]))
-        return data
-
-    def Train(self, series_data, epochs=100):
+    def Train(self, series_data, epochs = 100):
         train_data, val_data = self.GetData(series_data)
         for epoch_i in range(1, epochs + 1):
             epoch_start_time = time.time()
             self.EpochTrain(train_data, epoch_i)
             val_loss = self.Validate(val_data)
             logging.info("-" * 89)
-            epoch_info = '| end of epoch {:3d} | time: {:5.2f}s | valid loss {:5.5f} | valid ppl {:8.2f}'.format(epoch_i, (
-                time.time() - epoch_start_time), val_loss, math.exp(val_loss))
+            epoch_info = '| end of epoch {:3d} | time: {:5.2f}s | valid loss {:5.5f} | valid ppl {:8.2f}'.format(epoch_i, (time.time() - epoch_start_time), val_loss, math.exp(val_loss))
             logging.info(epoch_info)
             logging.info("-" * 89)
             self.scheduler.step()
@@ -117,6 +115,15 @@ class TransformForecasting:
                 total_loss += len(data[0]) * self.criterion(output, targets).cpu().item()
         return total_loss / len(validate_data)
 
+    def Predict(self, data_source, steps = 10):
+        self.model.eval()
+        data, _ = self.GetBatch(data_source, 0, 1)
+        with torch.no_grad():
+            for i in range(0, steps):
+                output = self.model(data[-self.input_wsz:])
+                data = torch.cat((data, output[-1:]))
+        return data
+
     def GetBatch(self, source_data, i, batch_size):
         seq_len = min(batch_size, len(source_data) - 1 - i)
         data = source_data[i:i + seq_len]
@@ -124,31 +131,27 @@ class TransformForecasting:
         target_data = torch.stack(torch.stack([item[1] for item in data]).chunk(self.input_wsz, 1))
         return input_data, target_data
 
-    def GetData(self, series):
+    def GetData(self, series: pd.Series):
         """
         将时序数据转为训练样本
-        Parameters: 
-            series: pandas series
         """
+        # data scale
         amplitude = self.scaler.fit_transform(series.to_numpy().reshape(-1, 1)).reshape(-1)
-
-        samples = int(len(series) * self.train_factor)
-        train_data = amplitude[:samples]
-        test_data = amplitude[samples:]
-
+        # data split
+        train_len = int(len(series) * self.train_size)
+        train_data = amplitude[:train_len]
+        test_data = amplitude[train_len:]
+        # data sequence
         train_sequence = self.CreateIOSequences(train_data)
-        train_sequence = train_sequence[:-self.output_wsz]
+        train_sequence = train_sequence[:-self.output_wsz].to(device)
+        test_sequence = self.CreateIOSequences(test_data)
+        test_sequence = test_data[:-self.output_wsz].to(device)
 
-        test_data = self.CreateIOSequences(test_data)
-        test_data = test_data[:-self.output_wsz]
+        return train_sequence, test_sequence
 
-        return train_sequence.to(device), test_data.to(device)
-
-    def CreateIOSequences(self, series_data):
+    def CreateIOSequences(self, series_data: Union[List, pd.Series]):
         """
         convert series data to train sequences
-        Parameters:
-            series_data: list or pandas series
         """
         io_seq = []
         L = len(series_data)
@@ -163,16 +166,19 @@ class TransformForecasting:
         data = np.load(param_path)
         self.input_wsz = data['input_wsz']
         self.output_wsz = data['output_wsz']
-        self.train_factor = data['train_factor']
+        self.train_size = data['train_size']
         self.batch_size = data['batch_size']
+
         self.model = torch.load(model_path)
 
     def Save(self, param_path, model_path):
-        np.savez(param_path,
-                 input_wsz=self.input_wsz,
-                 output_wsz=self.output_wsz,
-                 train_factor=self.train_factor,
-                 batch_size=self.batch_size)
+        np.savez(
+            param_path,
+            input_wsz = self.input_wsz,
+            output_wsz = self.output_wsz,
+            train_size = self.train_size,
+            batch_size = self.batch_size
+        )
         torch.save(self.model, model_path)
 
 

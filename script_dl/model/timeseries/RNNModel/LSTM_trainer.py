@@ -125,7 +125,7 @@ for epoch in range(num_epochs):
     for X, Y in tqdm(train_loader):
         # forward
         Y_outputs = lstm_reg(X)
-        loss = criterion(Y_outputs.ravel(), Y)
+        loss = loss_fn(Y_outputs.ravel(), Y)
         train_losses.append(loss.item())
         # backward
         optimizer.zero_grad()
@@ -137,7 +137,7 @@ for epoch in range(num_epochs):
         val_losses = []
         for X, Y in test_loader:
             preds = lstm_reg(X)
-            val_loss = criterion(preds.ravel(), Y)
+            val_loss = loss_fn(preds.ravel(), Y)
             val_losses.append(val_loss)
         print(f"Valid Loss: {torch.tensor(val_losses).mean()}")
 

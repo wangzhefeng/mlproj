@@ -16,7 +16,6 @@
 # python libraries
 import os
 import sys
-
 import torch
 from torch import nn
 
@@ -52,7 +51,8 @@ class Regressor(nn.Module):
         return out
 
 
-net = Regressor()
+net = Regressor().to(device)
+
 
 
 

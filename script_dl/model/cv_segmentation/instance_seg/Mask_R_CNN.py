@@ -2,13 +2,13 @@
 
 
 # ***************************************************
-# * File        : mclf_wine.py
+# * File        : Mask_R_CNN.py
 # * Author      : Zhefeng Wang
 # * Email       : wangzhefengr@163.com
-# * Date        : 2023-04-09
-# * Version     : 0.1.040921
+# * Date        : 2023-03-29
+# * Version     : 0.1.032916
 # * Description : description
-# * Link        : link
+# * Link        : Instance Segmentation Model
 # * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
 # ***************************************************
 
@@ -17,34 +17,29 @@
 import os
 import sys
 
-import pandas as pd
-from sklearn.datasets import load_wine
+from torchvision.models.detection import (
+    mask_rcnn,
+    maskrcnn_resnet50_fpn,
+    maskrcnn_resnet50_fpn_v2,
+    MaskRCNN,
+    MaskRCNN_ResNet50_FPN_Weights,
+    MaskRCNN_ResNet50_FPN_V2_Weights,
+)
 
 
 # global variable
 LOGGING_LABEL = __file__.split('/')[-1][:-3]
 
 
-def get_wine(logging: bool = False):
-    wine = load_wine()
-    wine_df = pd.DataFrame(
-        data = wine.data,
-        columns = wine.feature_names,
-    )
-    wine_df["WineType"] = wine.target
-
-    if logging:
-        print(wine_df.head())
-        print(wine_df.shape)
-    
-    return wine
+net = maskrcnn_resnet50_fpn(weights = MaskRCNN_ResNet50_FPN_Weights.COCO_V1)
+net.eval();
 
 
 
 
 # 测试代码 main 函数
 def main():
-    wine_df = get_wine(True)
+    pass
 
 if __name__ == "__main__":
     main()

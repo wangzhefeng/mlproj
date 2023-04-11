@@ -8,7 +8,7 @@
 # * Date        : 2023-03-28
 # * Version     : 0.1.032805
 # * Description : Single Shot MultiBox Detector
-# * Link        : link
+# * Link        : https://github.com/lyhue1991/torchkeras/blob/master/torchkeras/models/ssd.py
 # * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
 # ***************************************************
 
@@ -16,22 +16,24 @@
 # python libraries
 import os
 import sys
+_path = os.path.abspath(os.path.dirname(__file__))
+if os.path.join(_path, "..") not in sys.path:
+    sys.path.append(os.path.join(_path, ".."))
+if os.path.join(_path, "../..") not in sys.path:
+    sys.path.append(os.path.join(_path, "../.."))
 from math import sqrt
 import itertools
-
 import numpy as np
-
 import torch
 from torch import nn, Tensor
 import torch.nn.functional as F
 from torch.jit.annotations import Tuple, List
-from .resnet import resnet50
+from cv_classification.resnet.ResNet50 import resnet50
 
 
 # global variable
 LOGGING_LABEL = __file__.split('/')[-1][:-3]
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
 
 
 def box_area(boxes):
@@ -66,32 +68,33 @@ def calc_iou_tensor(boxes1, boxes2):
     return iou
 
 
-# This function is from https://github.com/kuangliu/pytorch-ssd.
 class Encoder(object):
     """
-        Inspired by https://github.com/kuangliu/pytorch-src
-        Transform between (bboxes, lables) <-> SSD output
-        dboxes: default boxes in size 8732 x 4,
-            encoder: input ltrb format, output xywh format
-            decoder: input xywh format, output ltrb format
-        encode:
-            input  : bboxes_in (Tensor nboxes x 4), labels_in (Tensor nboxes)
-            output : bboxes_out (Tensor 8732 x 4), labels_out (Tensor 8732)
-            criteria : IoU threshold of bboexes
-        decode:
-            input  : bboxes_in (Tensor 8732 x 4), scores_in (Tensor 8732 x nitems)
-            output : bboxes_out (Tensor nboxes x 4), labels_out (Tensor nboxes)
-            criteria : IoU threshold of bboexes
-            max_output : maximum number of output bboxes
+    # This function is from https://github.com/kuangliu/pytorch-ssd.
+
+    Inspired by https://github.com/kuangliu/pytorch-src
+    Transform between (bboxes, lables) <-> SSD output
+    dboxes: default boxes in size 8732 x 4,
+        encoder: input ltrb format, output xywh format
+        decoder: input xywh format, output ltrb format
+    encode:
+        input  : bboxes_in (Tensor nboxes x 4), labels_in (Tensor nboxes)
+        output : bboxes_out (Tensor 8732 x 4), labels_out (Tensor 8732)
+        criteria : IoU threshold of bboexes
+    decode:
+        input  : bboxes_in (Tensor 8732 x 4), scores_in (Tensor 8732 x nitems)
+        output : bboxes_out (Tensor nboxes x 4), labels_out (Tensor nboxes)
+        criteria : IoU threshold of bboexes
+        max_output : maximum number of output bboxes
     """
     def __init__(self, dboxes):
-        self.dboxes = dboxes(order='ltrb')
-        self.dboxes_xywh = dboxes(order='xywh').unsqueeze(dim=0)
-        self.nboxes = self.dboxes.size(0)  # default boxes的数量
+        self.dboxes = dboxes(order = 'ltrb')
+        self.dboxes_xywh = dboxes(order = 'xywh').unsqueeze(dim = 0)
+        self.nboxes = self.dboxes.size(0)  # default boxes 的数量
         self.scale_xy = dboxes.scale_xy
         self.scale_wh = dboxes.scale_wh
 
-    def encode(self, bboxes_in, labels_in, criteria=0.5):
+    def encode(self, bboxes_in, labels_in, criteria = 0.5):
         """
         encode:
             input  : bboxes_in (Tensor nboxes x 4), labels_in (Tensor nboxes)
@@ -102,15 +105,15 @@ class Encoder(object):
         self.dboxes = self.dboxes.to(bboxes_in.device)
         ious = calc_iou_tensor(bboxes_in, self.dboxes)  # 计算每个GT与default box的iou
         # [8732,]
-        best_dbox_ious, best_dbox_idx = ious.max(dim=0)  # 寻找每个default box匹配到的最大IoU
+        best_dbox_ious, best_dbox_idx = ious.max(dim = 0)  # 寻找每个default box匹配到的最大IoU
         # [nboxes,]
-        best_bbox_ious, best_bbox_idx = ious.max(dim=1)  # 寻找每个GT匹配到的最大IoU
+        best_bbox_ious, best_bbox_idx = ious.max(dim = 1)  # 寻找每个GT匹配到的最大IoU
 
         # 将每个GT匹配到的最佳default box设置为正样本（对应论文中Matching strategy的第一条）
         # set best ious 2.0
         best_dbox_ious.index_fill_(0, best_bbox_idx, 2.0)  # dim, index, value
         # 将相应default box匹配最大IOU的GT索引进行替换
-        idx = torch.arange(0, best_bbox_idx.size(0), dtype=torch.int64).to(bboxes_in.device)
+        idx = torch.arange(0, best_bbox_idx.size(0), dtype = torch.int64).to(bboxes_in.device)
         best_dbox_idx[best_bbox_idx[idx]] = idx
 
         # filter IoU > 0.5
@@ -545,6 +548,7 @@ class Backbone(nn.Module):
     def forward(self, x):
         x = self.feature_extractor(x)
         return x
+
 
 class Loss(nn.Module):
     """

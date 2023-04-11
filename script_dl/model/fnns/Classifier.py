@@ -16,7 +16,6 @@
 # python libraries
 import os
 import sys
-
 import torch
 from torch import nn
 
@@ -55,7 +54,8 @@ class Classifier(nn.Module):
         return out
 
 
-net = Classifier()
+net = Classifier().to(device)
+
 
 
 

@@ -112,7 +112,7 @@ for epoch in range(num_epochs):
         # forward
         outputs = model(images)
         # loss
-        loss = criterion(outputs, labels)
+        loss = loss_fn(outputs, labels)
         # get gradient
         loss.backward()
         # update parameters

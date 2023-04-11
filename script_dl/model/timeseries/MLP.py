@@ -17,7 +17,6 @@
 import os
 import sys
 
-
 import torch
 import torch.nn as nn
 from torch import Tensor
@@ -26,6 +25,7 @@ import torch.nn.functional as F
 
 # global variable
 LOGGING_LABEL = __file__.split('/')[-1][:-3]
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 class MLP(nn.Module):

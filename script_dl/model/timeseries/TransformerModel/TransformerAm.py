@@ -25,16 +25,17 @@ torch.manual_seed(0)
 
 # global variable
 LOGGING_LABEL = __file__.split('/')[-1][:-3]
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 class PositionalEncoding(nn.Module):
     """
     position encoding for transformer
     """
-    def __init__(self, d_model, max_len=1000):
+    def __init__(self, d_model, max_len = 1000):
         super(PositionalEncoding, self).__init__()
         pe = torch.zeros(max_len, d_model)
-        position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)
+        position = torch.arange(0, max_len, dtype = torch.float).unsqueeze(1)
         div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model))
         pe[:, 0::2] = torch.sin(position * div_term)
         pe[:, 1::2] = torch.cos(position * div_term)
@@ -47,21 +48,26 @@ class PositionalEncoding(nn.Module):
 
 class TransformerAm(nn.Module):
     
-    def __init__(self, feature_size=250, num_head=10, num_layers=1, dropout=0.1):
+    def __init__(self, feature_size = 250, num_head = 10, num_layers = 1, dropout = 0.1):
         """
         包含 encoder 和 decoder 的 transformer 模型
+
         Parameters:
             feature_size: d_model, int
             num_head: 注意力机制头数, int
-            num_layers: encoder layer层数
+            num_layers: encoder layer 层数
             dropout: float
         """
         super(TransformerAm, self).__init__()
-        self.model_type = 'TransformerForecasting'
+        # self.model_type = 'TransformerForecasting'
         self.src_mask = None
         self.pos_encoder = PositionalEncoding(feature_size)  # d_model = feature_size
-        self.encoder_layer = nn.TransformerEncoderLayer(d_model=feature_size, nhead=num_head, dropout=dropout)
-        self.transformer_encoder = nn.TransformerEncoder(self.encoder_layer, num_layers=num_layers)
+        self.encoder = nn.TransformerEncoderLayer(
+            d_model = feature_size, 
+            nhead = num_head, 
+            dropout = dropout
+        )
+        self.transformer_encoder = nn.TransformerEncoder(self.encoder, num_layers = num_layers)
         self.decoder = nn.Linear(feature_size, 1)
         self.init_weights()
 

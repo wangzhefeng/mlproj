@@ -81,7 +81,7 @@ for epoch in range(num_epochs):
     # forward
     outputs = model(inputs)
     # loss
-    loss = criterion(outputs, labels)
+    loss = loss_fn(outputs, labels)
     # get gradients w.r.t parameters
     loss.backward()
     # update parameters
