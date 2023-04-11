@@ -25,7 +25,7 @@ from scipy.linalg import cholesky as cholesky_upper
 from scipy.linalg import solve_triangular as solve_ut  # 三角求解ax=b
 
 
-class BTMF:
+class BayesianTMF:
     """
     矩阵分解 + VAR多维时序数据填补与预测模型
     """
