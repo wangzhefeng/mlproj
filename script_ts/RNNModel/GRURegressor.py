@@ -17,10 +17,21 @@
 import os
 import sys
 
+import torch
+from torch import nn
+
 
 # global variable
 LOGGING_LABEL = __file__.split('/')[-1][:-3]
 
+
+class GRURegressor(nn.Module):
+
+    def __init__(self,) -> None:
+        super(GRURegressor, self).__init__()
+    
+    def forward(self):
+        pass
 
 
 
