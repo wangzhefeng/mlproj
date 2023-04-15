@@ -19,18 +19,20 @@ import sys
 _path = os.path.abspath(os.path.dirname(__file__))
 if os.path.join(_path, "..") not in sys.path:
     sys.path.append(os.path.join(_path, ".."))
-
-from utils_data.sample_data.AirPassengers import air_passengers
+if os.path.join(_path, "../..") not in sys.path:
+    sys.path.append(os.path.join(_path, "../.."))
 
 import matplotlib.pyplot as plt
 from darts import TimeSeries
 from darts.models import ExponentialSmoothing
 from darts.datasets import AirPassengersDataset
 
+from data.timeseries_data.AirPassengers import darts_data
+
 
 # data
-series = TimeSeries.from_dataframe(air_passengers, "Month", "#Passengers")
-# series = AirPassengersDataset().load()
+series = TimeSeries.from_dataframe(darts_data, "Month", "#Passengers")
+series = AirPassengersDataset().load()
 
 # data split
 train, val = series[:-36], series[-36:]

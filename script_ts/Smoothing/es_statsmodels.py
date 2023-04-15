@@ -121,7 +121,7 @@ y_pred = des_model.forecast(48)
 plot_prediction(train, test, y_pred, "Double Exponential Smoothing")
 
 # 模型参数调优
-def des_optimizer(trian, alphas, betas, step = 48):
+def des_optimizer(train, alphas, betas, step = 48):
     best_alpha, best_beta, best_mae = None, None, float("inf")
     for alpha in alphas:
         for beta in betas:
