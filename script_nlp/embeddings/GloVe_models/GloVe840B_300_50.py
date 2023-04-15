@@ -14,24 +14,18 @@
 
 
 # python libraries
-import gc
 import os
 import sys
-from tqdm import tqdm
 
-import numpy as np
-import matplotlib.pyplot as plt
-import scikitplot as skplt
-from sklearn.metrics import (
-    accuracy_score, 
-    classification_report,
-    confusion_matrix
-)
+from tqdm import tqdm
+from sklearn.metrics import accuracy_score
+import gc
 
 import torch
-import torch.nn.functional as F
 from torch import nn
+import torch.nn.functional as F
 from torch.utils.data import DataLoader
+import torchtext
 from torchtext import datasets
 from torchtext.data import get_tokenizer
 from torchtext.data.functional import to_map_style_dataset
@@ -91,7 +85,7 @@ def vectorize_batch(batch):
         # embedding
         X_tensor[i] = global_vectors.get_vecs_by_tokens(tokens)
     
-    return X_tensor.sum(dim = 1), torch.tensor(Y) - 1
+    return X_tensor.reshape(len(batch), -1), torch.tensor(Y) - 1
 
 # dataset
 target_classes = ["World", "Sports", "Business", "Sci/Tech"]
@@ -111,7 +105,7 @@ test_loader = DataLoader(
 )
 
 # ------------------------------
-# classififer model 
+# model training
 # ------------------------------
 # classifier model
 embed_clf = EmbeddingClassifier(max_words = max_words, embed_len = embed_len, target_classes = target_classes)
@@ -122,9 +116,6 @@ loss_fn = nn.CrossEntropyLoss()
 # otpimizer
 optimizer = torch.optim.Adam(embed_clf.parameters(), lr = learning_rate)
 
-# ------------------------------
-# model training
-# ------------------------------
 # validition
 def CalcValLossAndAccuracy(model, loss_fn, val_loader):
     with torch.no_grad():
@@ -162,7 +153,18 @@ def TrainModel(model, loss_fn, optimizer, train_loader, val_loader, epochs = 10)
             print(f"Train Loss : {torch.tensor(losses).mean()}")
             CalcValLossAndAccuracy(model, loss_fn, val_loader)
 
-# predict
+
+TrainModel(
+    model = embed_clf,
+    loss_fn = loss_fn,
+    optimizer = optimizer,
+    train_loader = train_loader,
+    val_loader = test_loader,
+    epochs = num_epochs,
+)
+
+
+
 def MakePredictions(model, loader):
     Y_shuffled, Y_preds = [], []
     for X, Y in loader:
@@ -174,38 +176,31 @@ def MakePredictions(model, loader):
 
     return Y_shuffled.detach().numpy(), F.softmax(Y_preds, dim=-1).argmax(dim=-1).detach().numpy()
 
-# train
-TrainModel(
-    model = embed_clf,
-    loss_fn = criterion,
-    optimizer = optimizer,
-    train_loader = train_loader,
-    val_loader = test_loader,
-    epochs = num_epochs,
-)
-
-# predict
 Y_actual, Y_preds = MakePredictions(embed_clf, test_loader)
+
+
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+
 print("Test Accuracy : {}".format(accuracy_score(Y_actual, Y_preds)))
 print("\nClassification Report : ")
-print(classification_report(Y_actual, Y_preds, target_names = target_classes))
+print(classification_report(Y_actual, Y_preds, target_names=target_classes))
 print("\nConfusion Matrix : ")
 print(confusion_matrix(Y_actual, Y_preds))
 
-# 分类结果可视化
+from sklearn.metrics import confusion_matrix
+import scikitplot as skplt
+import matplotlib.pyplot as plt
+import numpy as np
+
 skplt.metrics.plot_confusion_matrix(
-    [target_classes[i] for i in Y_actual], 
-    [target_classes[i] for i in Y_preds],
-    normalize = True,
-    title = "Confusion Matrix",
-    cmap = "Purples",
-    hide_zeros = True,
-    figsize = (5,5)
+    [target_classes[i] for i in Y_actual], [target_classes[i] for i in Y_preds],
+    normalize=True,
+    title="Confusion Matrix",
+    cmap="Purples",
+    hide_zeros=True,
+    figsize=(5,5)
 )
-plt.xticks(rotation = 90);
-
-
-
+plt.xticks(rotation=90);
 
 # 测试代码 main 函数
 def main():

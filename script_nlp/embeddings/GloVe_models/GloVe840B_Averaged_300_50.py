@@ -62,7 +62,7 @@ tokenizer = get_tokenizer("basic_english")
 # ------------------------------
 # pre-train model
 # ------------------------------
-global_vectors = GloVe(name = "42B", dim = embed_len)
+global_vectors = GloVe(name = "840B", dim = embed_len)
 
 # ------------------------------
 # data
@@ -85,7 +85,7 @@ def vectorize_batch(batch):
         # embedding
         X_tensor[i] = global_vectors.get_vecs_by_tokens(tokens)
     
-    return X_tensor.reshape(len(batch), -1), torch.tensor(Y) - 1
+    return X_tensor.mean(dim = 1), torch.tensor(Y) - 1
 
 # dataset
 target_classes = ["World", "Sports", "Business", "Sci/Tech"]
@@ -156,7 +156,7 @@ def TrainModel(model, loss_fn, optimizer, train_loader, val_loader, epochs = 10)
 
 TrainModel(
     model = embed_clf,
-    loss_fn = criterion,
+    loss_fn = loss_fn,
     optimizer = optimizer,
     train_loader = train_loader,
     val_loader = test_loader,
@@ -201,12 +201,6 @@ skplt.metrics.plot_confusion_matrix(
     figsize=(5,5)
 )
 plt.xticks(rotation=90);
-
-
-
-
-
-
 
 # 测试代码 main 函数
 def main():

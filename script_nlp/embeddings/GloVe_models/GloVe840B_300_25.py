@@ -36,8 +36,8 @@ from EmbeddingClassifier import EmbeddingClassifier
 
 """
 GloVe paper Model
-GloVe 840B(Embedding Length = 300, Tokens per Text Example = 25)
-> GloVe 840B(Embedding Length = 300, Tokens per Text Example = 50)
+> GloVe 840B(Embedding Length = 300, Tokens per Text Example = 25)
+GloVe 840B(Embedding Length = 300, Tokens per Text Example = 50)
 GloVe 42B(Embedding Length = 300, Tokens per Text Example = 50)
 GloVe 840B Averaged(Embedding Length = 300, Tokens per Text Example = 50)
 GloVe 840B Summed(Embedding Length = 300, Tokens per Text Example = 50)
@@ -47,7 +47,7 @@ GloVe 840B Summed(Embedding Length = 300, Tokens per Text Example = 50)
 # global variable
 LOGGING_LABEL = __file__.split('/')[-1][:-3]
 # hyper parameters
-max_words = 50
+max_words = 25
 embed_len = 300
 batch_size = 1024
 num_epochs = 25
@@ -156,7 +156,7 @@ def TrainModel(model, loss_fn, optimizer, train_loader, val_loader, epochs = 10)
 
 TrainModel(
     model = embed_clf,
-    loss_fn = criterion,
+    loss_fn = loss_fn,
     optimizer = optimizer,
     train_loader = train_loader,
     val_loader = test_loader,
