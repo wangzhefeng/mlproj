@@ -16,6 +16,7 @@
 # python libraries
 import os
 import sys
+
 import torch
 from torch import nn
 
@@ -23,6 +24,7 @@ from torch import nn
 # global variable
 LOGGING_LABEL = __file__.split('/')[-1][:-3]
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 
 
 

@@ -13,10 +13,10 @@
 # ***************************************************
 
 
-from scipy import signal
-import scipy.signal as signal
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+import scipy.signal as signal
+from scipy import signal
 
 
 def limiting_filter(inputs, per):
