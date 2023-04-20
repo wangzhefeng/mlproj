@@ -143,7 +143,6 @@ dmypy.json
 .DS_Store
 .Trashes
 data/
-/models/
 .vector_cache/
 tensorboard/
 *.h5
