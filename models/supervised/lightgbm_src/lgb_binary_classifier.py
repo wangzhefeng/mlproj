@@ -1,24 +1,26 @@
 # -*- coding: utf-8 -*-
 
-
 # ***************************************************
 # * File        : lgb_binary_classifier.py
 # * Author      : Zhefeng Wang
-# * Email       : wangzhefengr@163.com
-# * Date        : 2023-04-09
-# * Version     : 0.1.040922
+# * Email       : zfwang7@gmail.com
+# * Date        : 2024-09-19
+# * Version     : 1.0.091900
 # * Description : description
 # * Link        : link
 # * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
+# * TODO        : 1.
 # ***************************************************
 
+__all__ = []
 
 # python libraries
 import os
 import sys
-_path = os.path.abspath(os.path.dirname(__file__))
-if os.path.join(_path, "..") not in sys.path:
-    sys.path.append(os.path.join(_path, ".."))
+ROOT = os.getcwd()
+if str(ROOT) not in sys.path:
+    sys.path.append(str(ROOT))
+import warnings
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -28,10 +30,7 @@ from sklearn.metrics import accuracy_score
 import lightgbm as lgb
 from dataset.bclf_cancer import get_cancer
 
-import warnings
 warnings.filterwarnings("ignore")
-
-
 # global variable
 LOGGING_LABEL = __file__.split('/')[-1][:-3]
 
@@ -78,42 +77,40 @@ print(f"\nTrain Accuracy Score: {accuracy_score(y_train, train_preds)}")
 print(f"Evaluation Results: {evals_results}")
 
 # model cv
-# params_cv = {
-#     "objective": "binary",
-#     "verbosity": -1,
-#     "metrics": ["acc", "average_precision"],
-#     "eval_names": ["Validation Set"],
-# }
-# cv_output = lgb.cv(
-#     params_cv,
-#     train_set = train_dataset,
-#     num_boost_round = 10,
-#     folds = StratifiedShuffleSplit(n_splits = 3),
-#     verbose_eval = True,
-#     return_cvbooster = True,
-# )
-# for key, val in cv_output.items():
-#     print(f"\n{key} : {val}")
+params_cv = {
+    "objective": "binary",
+    "verbosity": -1,
+    "metrics": ["acc", "average_precision"],
+    "eval_names": ["Validation Set"],
+}
+cv_output = lgb.cv(
+    params_cv,
+    train_set = train_dataset,
+    num_boost_round = 10,
+    folds = StratifiedShuffleSplit(n_splits = 3),
+    verbose_eval = True,
+    return_cvbooster = True,
+)
+for key, val in cv_output.items():
+    print(f"\n{key} : {val}")
 
 # ------------------------------
 # model test
 # ------------------------------
 # model predict
-# test_preds = booster.predict(X_test)
-# test_preds = [1 if pred > 0.5 else 0 for pred in test_preds]
-# print(f"\nTest Accuracy Score: {accuracy_score(y_test, test_preds)}")
-
-
+test_preds = booster.predict(X_test)
+test_preds = [1 if pred > 0.5 else 0 for pred in test_preds]
+print(f"\nTest Accuracy Score: {accuracy_score(y_test, test_preds)}")
 
 # ------------------------------
 # model plot
 # ------------------------------
-# lgb.plot_importance(booster, figsize = (8, 6))
-# lgb.plot_metric(booster, figsize = (8, 6))
-# lgb.plot_metric(booster, metric = "rmse", figsize = (8, 6))
-# lgb.plot_split_value_histogram(booster, feature = "LSTAT", figsize = (8, 6))
-# lgb.plot_tree(booster, tree_index = 1, figsize = (20, 12))
-# plt.show()
+lgb.plot_importance(booster, figsize = (8, 6))
+lgb.plot_metric(booster, figsize = (8, 6))
+lgb.plot_metric(booster, metric = "rmse", figsize = (8, 6))
+lgb.plot_split_value_histogram(booster, feature = "LSTAT", figsize = (8, 6))
+lgb.plot_tree(booster, tree_index = 1, figsize = (20, 12))
+plt.show()
 
 
 # ------------------------------
@@ -126,31 +123,31 @@ print(f"Evaluation Results: {evals_results}")
 # ------------------------------
 # model save
 # ------------------------------
-# model_file = "./models/lgb_bclf_breast.model"
-# if not os.path.exists(model_file):
-#     booster.save_model(model_file)
+model_file = "./models/lgb_bclf_breast.model"
+if not os.path.exists(model_file):
+    booster.save_model(model_file)
 
-# model_string = "./models/lgb_bclf_breast_booster.model"
-# if not os.path.exists(model_string):
-#     model_as_str = booster.model_to_string()
-#     with open(model_string, "w") as f:
-#         f.write(model_as_str)
+model_string = "./models/lgb_bclf_breast_booster.model"
+if not os.path.exists(model_string):
+    model_as_str = booster.model_to_string()
+    with open(model_string, "w") as f:
+        f.write(model_as_str)
 
 # ------------------------------
 # model load
 # ------------------------------
-# if os.path.exists(model_file):
-#     loaded_booster = lgb.Booster(model_file = model_file)
-#     test_preds = loaded_booster.predict(X_test)
-#     test_preds = [1 if pred > 0.5 else 0 for pred in test_preds]
-#     print(f"\nTest Accuracy Score: {accuracy_score(y_test, test_preds)}")
+if os.path.exists(model_file):
+    loaded_booster = lgb.Booster(model_file = model_file)
+    test_preds = loaded_booster.predict(X_test)
+    test_preds = [1 if pred > 0.5 else 0 for pred in test_preds]
+    print(f"\nTest Accuracy Score: {accuracy_score(y_test, test_preds)}")
 
-# if os.path.exists(model_string):
-#     model_str = open(model_string).read()
-#     loaded_booster_str = lgb.Booster(model_str = model_str)
-#     test_preds = loaded_booster_str.predict(X_test)
-#     test_preds = [1 if pred > 0.5 else 0 for pred in test_preds]
-#     print(f"\nTest Accuracy Score: {accuracy_score(y_test, test_preds)}")
+if os.path.exists(model_string):
+    model_str = open(model_string).read()
+    loaded_booster_str = lgb.Booster(model_str = model_str)
+    test_preds = loaded_booster_str.predict(X_test)
+    test_preds = [1 if pred > 0.5 else 0 for pred in test_preds]
+    print(f"\nTest Accuracy Score: {accuracy_score(y_test, test_preds)}")
 
 
 
