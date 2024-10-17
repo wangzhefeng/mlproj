@@ -1,33 +1,35 @@
 # -*- coding: utf-8 -*-
 
-
 # ***************************************************
-# * File        : demo_2.py
+# * File        : lgb_pipeline.py
 # * Author      : Zhefeng Wang
-# * Email       : wangzhefengr@163.com
-# * Date        : 2023-04-08
-# * Version     : 0.1.040822
+# * Email       : zfwang7@gmail.com
+# * Date        : 2024-09-19
+# * Version     : 1.0.091900
 # * Description : description
 # * Link        : link
 # * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
+# * TODO        : 1.
 # ***************************************************
 
+__all__ = []
 
 # python libraries
 import os
 import sys
+ROOT = os.getcwd()
+if str(ROOT) not in sys.path:
+    sys.path.append(str(ROOT))
+import warnings
 import json
 
 import numpy as np
 import pandas as pd
 import lightgbm as lgb
-from bayes_opt import BayesianOptimization
+# from bayes_opt import BayesianOptimization
 from sklearn.model_selection import GridSearchCV
 
-import warnings
 warnings.filterwarnings("ignore")
-
-
 # global variable
 LOGGING_LABEL = __file__.split('/')[-1][:-3]
 
@@ -96,12 +98,12 @@ gbm = lgb.train(
 # 模型保存与加载
 # --------------------------------------------
 # txt
-gbm.save_model("model.txt")
+gbm.save_model("/saved_models/ligtgbm_models/model.txt")
 print("Dumping model to JSON ...")
 
 # json
 model_json = gbm.dump_model()
-with open("model.json", "w+") as f:
+with open("/saved_models/ligtgbm_models/model.json", "w+") as f:
     json.dump(model_json, f, indent = 4)
 
 # --------------------------------------------
@@ -110,14 +112,17 @@ with open("model.json", "w+") as f:
 print("Feature names:", gbm.feature_name())
 print("Feature importances:", list(gbm.feature_importance()))
 
+
+
+
 # --------------------------------------------
-# 训练
+# 重新训练
 # --------------------------------------------
 gbm = lgb.train(
     params, 
     lgb_train, 
     num_boost_round = 10, 
-    init_model = "model.txt", 
+    init_model = "/saved_models/ligtgbm_models/model.txt", 
     valid_sets = lgb_eval, 
 )
 print("Finished 10 - 20 rounds with model file ...")
@@ -180,31 +185,7 @@ print("Finished 40 ~ 50 rounds with self-defined objective function and eval met
 # ----------------------
 # 人工调参
 # ----------------------
-"""
-- 提高速度
-    - Use bagging by setting bagging_fraction and bagging_freq
-    - Use feature sub-sampling by setting feature_fraction
-    - Use small max_bin
-    - Use save_binary to speed up data loading in future learning
-    - Use parallel learning, refer to Parallel Learning Guide
-- 提高准确率
-    - Use large max_bin (may be slower)
-    - Use small learning_rate with large num_iterations
-    - Use large num_leaves (may cause over-fitting)
-    - Use bigger training data
-    - Try dart
-- 处理过拟合
-    - Use small max_bin
-    - Use small num_leaves
-    - Use min_data_in_leaf and min_sum_hessian_in_leaf
-    - Use bagging by set bagging_fraction and bagging_freq
-    - Use feature sub-sampling by set feature_fraction
-    - Use bigger training data
-    - Try lambda_l1, lambda_l2 and min_gain_to_split for regularization
-    - Try max_depth to avoid growing deep tree
-    - Try extra_trees
-    - Try increasing path_smooth
-"""
+
 # ----------------------
 # 网格搜索
 # ----------------------
@@ -245,18 +226,18 @@ def lgb_eval(max_depth, learning_rate, num_leaves, n_estimators):
     return 1.0 * np.array(cv_result["auc-mean"]).max()
 
 
-lgbBO = BayesianOptimization(
-    lgb_eval, 
-    {
-        "max_depth": (4, 8),
-        "learning_rate": (0.05, 0.2),
-        "num_leaves": (20, 1500),
-        "n_estimators": (5, 200)
-    },
-    random_state = 0
-)
-lgbBO.maximize(init_points = 5, n_iter = 50, acq = "ei")
-print(lgbBO.max)
+# lgbBO = BayesianOptimization(
+#     lgb_eval, 
+#     {
+#         "max_depth": (4, 8),
+#         "learning_rate": (0.05, 0.2),
+#         "num_leaves": (20, 1500),
+#         "n_estimators": (5, 200)
+#     },
+#     random_state = 0
+# )
+# lgbBO.maximize(init_points = 5, n_iter = 50, acq = "ei")
+# print(lgbBO.max)
 
 
 

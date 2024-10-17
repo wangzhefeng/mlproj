@@ -3,19 +3,26 @@
 # ***************************************************
 # * File        : memory_optim.py
 # * Author      : Zhefeng Wang
-# * Email       : wangzhefengr@163.com
-# * Date        : 2023-04-24
-# * Version     : 0.1.042416
+# * Email       : zfwang7@gmail.com
+# * Date        : 2024-09-19
+# * Version     : 1.0.091900
 # * Description : 内存优化方法：
 # *               1.查看数据列和行，读取需要的数据
 # *               2.查看数据类型，进行类型转换
 # *               3.分批次或利用磁盘，处理数据
 # * Link        : https://mp.weixin.qq.com/s?__biz=MzIwNDA5NDYzNA==&mid=2247501326&idx=1&sn=a6c3757625cfeb3e897c16a07b435931&chksm=96c7ebcba1b062dd4cca34b31ad21a25d59b75d341152f1052437a46f12d35d2d7e9a0f4fd66&cur_album_id=1364202321906941952&scene=189#wechat_redirect
 # * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
+# * TODO        : 1.
 # ***************************************************
+
+__all__ = []
 
 # python libraries
 import os
+import sys
+ROOT = os.getcwd()
+if str(ROOT) not in sys.path:
+    sys.path.append(str(ROOT))
 import psutil
 from typing import List, Dict
 

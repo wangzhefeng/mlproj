@@ -1,24 +1,25 @@
 # -*- coding: utf-8 -*-
 
-
 # ***************************************************
 # * File        : lgb_multiclass_classifier.py
 # * Author      : Zhefeng Wang
-# * Email       : wangzhefengr@163.com
-# * Date        : 2023-04-10
-# * Version     : 0.1.041011
+# * Email       : zfwang7@gmail.com
+# * Date        : 2024-09-19
+# * Version     : 1.0.091900
 # * Description : description
 # * Link        : link
 # * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
+# * TODO        : 1.
 # ***************************************************
 
+__all__ = []
 
 # python libraries
 import os
 import sys
-_path = os.path.abspath(os.path.dirname(__file__))
-if os.path.join(_path, "..") not in sys.path:
-    sys.path.append(os.path.join(_path, ".."))
+ROOT = os.getcwd()
+if str(ROOT) not in sys.path:
+    sys.path.append(str(ROOT))
 
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -26,7 +27,6 @@ from sklearn.metrics import accuracy_score
 import lightgbm as lgb
 
 from dataset.mclf_wine import get_wine
-
 
 # global variable
 LOGGING_LABEL = __file__.split('/')[-1][:-3]
