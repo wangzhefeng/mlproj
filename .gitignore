@@ -148,3 +148,4 @@ tensorboard/
 *.h5
 flagged/
 *.npy
+.idea/

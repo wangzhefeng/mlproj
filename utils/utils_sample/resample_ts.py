@@ -1,26 +1,26 @@
 # -*- coding: utf-8 -*-
 
-
 # ***************************************************
-# * File        : main.py
+# * File        : resample_ts.py
 # * Author      : Zhefeng Wang
 # * Email       : wangzhefengr@163.com
-# * Date        : 2022-10-07
-# * Version     : 0.1.100716
+# * Date        : 2024-10-17
+# * Version     : 0.1.101716
 # * Description : description
 # * Link        : link
 # * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
 # ***************************************************
 
-
 # python libraries
 import os
 import sys
+ROOT = os.getcwd()
+if str(ROOT) not in sys.path:
+    sys.path.append(str(ROOT))
 
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import signal
-
 
 # global variable
 LOGGING_LABEL = __file__.split('/')[-1][:-3]

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 # ***************************************************
 # * File        : adaboost.py
 # * Author      : Zhefeng Wang
@@ -12,7 +11,6 @@
 # * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
 # ***************************************************
 
-
 # python libraries
 import os
 import sys
@@ -20,7 +18,6 @@ import sys
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import AdaBoostClassifier
-
 
 # global variable
 LOGGING_LABEL = __file__.split('/')[-1][:-3]

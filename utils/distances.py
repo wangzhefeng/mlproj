@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # ***************************************************
-# * File        : pls.py
+# * File        : distance.py
 # * Author      : Zhefeng Wang
 # * Email       : wangzhefengr@163.com
 # * Date        : 2024-10-17
@@ -18,9 +18,30 @@ ROOT = os.getcwd()
 if str(ROOT) not in sys.path:
     sys.path.append(str(ROOT))
 
+import fastdtw
+from dtaidistance import dtw
+from dtaidistance import dtw_vis
+
 # global variable
 LOGGING_LABEL = __file__.split('/')[-1][:-3]
 
+
+class distance:
+
+	def _init__(self, method):
+		self.method = method
+
+	def Eula(self):
+		pass
+
+
+class TimeseriesDistance(object):
+	
+    def __init__(self):
+          pass
+
+    def DTW(self):
+        pass
 
 
 

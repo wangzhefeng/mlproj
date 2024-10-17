@@ -1,21 +1,22 @@
 # -*- coding: utf-8 -*-
 
-
 # ***************************************************
-# * File        : utils.py
+# * File        : resample.py
 # * Author      : Zhefeng Wang
 # * Email       : wangzhefengr@163.com
-# * Date        : 2023-03-19
-# * Version     : 0.1.031900
+# * Date        : 2024-10-17
+# * Version     : 0.1.101716
 # * Description : description
 # * Link        : link
 # * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
 # ***************************************************
 
-
 # python libraries
 import os
 import sys
+ROOT = os.getcwd()
+if str(ROOT) not in sys.path:
+    sys.path.append(str(ROOT))
 
 import numpy as np
 import pandas as pd
@@ -23,7 +24,6 @@ from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import NearestNeighbors
 from sklearn import VarianceThreshold
-
 
 # global variable
 LOGGING_LABEL = __file__.split('/')[-1][:-3]
@@ -256,7 +256,6 @@ def vif_test(data, label, k = None):
             print("feature个数越界!")
     else:
         return vif_value
-
 
 
 

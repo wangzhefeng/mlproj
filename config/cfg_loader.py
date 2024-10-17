@@ -1,21 +1,28 @@
 # -*- coding: utf-8 -*-
 
-
 # ***************************************************
 # * File        : cfg_loader.py
 # * Author      : Zhefeng Wang
 # * Email       : wangzhefengr@163.com
-# * Date        : 2022-06-29
-# * Version     : 0.1.062914
+# * Date        : 2024-10-17
+# * Version     : 0.1.101715
 # * Description : description
 # * Link        : link
 # * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
 # ***************************************************
 
-
+# python libraries
 import os
+import sys
+ROOT = os.getcwd()
+if str(ROOT) not in sys.path:
+    sys.path.append(str(ROOT))
+
 from typing import Dict
 import yaml
+
+# global variable
+LOGGING_LABEL = __file__.split('/')[-1][:-3]
 
 
 def load_yaml(file_name):

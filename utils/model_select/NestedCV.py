@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 # ***************************************************
-# * File        : main.py
+# * File        : NestedCV.py
 # * Author      : Zhefeng Wang
 # * Email       : wangzhefengr@163.com
-# * Date        : 2023-03-17
-# * Version     : 0.1.031720
+# * Date        : 2024-10-17
+# * Version     : 0.1.101718
 # * Description : description
 # * Link        : link
 # * Requirement : 相关模块版本需求(例如: numpy >= 2.1.0)
@@ -14,10 +14,12 @@
 # python libraries
 import os
 import sys
+ROOT = os.getcwd()
+if str(ROOT) not in sys.path:
+    sys.path.append(str(ROOT))
 
 # global variable
 LOGGING_LABEL = __file__.split('/')[-1][:-3]
-
 
 
 
