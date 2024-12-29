@@ -60,3 +60,4 @@ def SeriesDataStandardScaler(series):
     normalized = scaler.transform(series)
 
     return scaler, normalized
+
